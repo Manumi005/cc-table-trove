@@ -1,19 +1,44 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Restaurant extends Authenticatable
+class Restaurant extends Model
 {
-    use Notifiable;
+    use HasFactory;
 
+    // The attributes that are mass assignable.
     protected $fillable = [
-        'restaurant_name', 'email', 'contact_number', 'address', 'cuisine_type', 'password',
+        'name',
+        'email',
+        'contact_number',
+        'address',
+        'cuisine_type', // Stores comma-separated values
+        'password',
     ];
 
+    // The attributes that should be hidden for arrays.
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
     ];
+
+    // The attributes that should be cast to native types.
+    protected $casts = [
+        'cuisine_type' => 'array', // Automatically cast `cuisine_type` to an array when retrieving
+    ];
+
+    // Accessor to get `cuisine_type` as an array
+    public function getCuisineTypeAttribute($value)
+    {
+        // Ensure we handle cases where `cuisine_type` might be null
+        return $value ? explode(',', $value) : [];
+    }
+
+    // Mutator to set `cuisine_type` as a comma-separated string
+    public function setCuisineTypeAttribute($value)
+    {
+        $this->attributes['cuisine_type'] = is_array($value) ? implode(',', $value) : $value;
+    }
 }
