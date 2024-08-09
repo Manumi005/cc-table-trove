@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: url('images/wallpaper1.jpg') no-repeat center center fixed;
+            background: url('{{ asset('images/wallpaper1.jpg') }}') no-repeat center center fixed;
             margin: 0;
             padding: 0;
             background-color: #cd9cc0;
@@ -237,7 +237,7 @@
 <body>
 <header>
     <nav>
-        <img src="images/logo.png" alt="Logo" onclick="location.href='/dashboard'">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/customer/dashboard'">
         <ul>
             <li><a href="#">Restaurants</a></li>
             <li><a href="#">Reservations</a></li>
@@ -245,9 +245,9 @@
     </nav>
     <div class="search-bar">
         <input type="text" placeholder="Search...">
-        <div class="profile-icon" onclick="location.href='/profile'">
+        <div class="profile-icon" onclick="location.href='/customer/profile'">
        
-            <img src="images/profile.jpg" alt="Profile">
+        <img src="{{ asset('images/profile.jpg') }}" alt="Profile">
         </div>
     </div>
 </header>
@@ -257,7 +257,7 @@
             <button class="edit-icon" onclick="document.getElementById('editModal').style.display='block'">✎</button>
             <div class="profile-info">
                 <div class="profile-info-left">
-                    <img src="images/profile.jpg" alt="Profile Image">
+                    <img src="{{ asset('images/profile.jpg') }}" alt="Profile Image">
                 </div>
                 <div class="profile-info-right">
                     <button onclick="document.getElementById('editModal').style.display='block'">Payments</button>

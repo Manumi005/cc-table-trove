@@ -11,10 +11,12 @@ return new class extends Migration
         Schema::create('restaurants', function (Blueprint $table) {
             $table->id(); // Auto-incrementing ID
             $table->string('name'); // Restaurant name
-            $table->string('email')->unique(); // Unique email address
-            $table->string('contact_number', 20)->nullable(); // Contact number, nullable
+            $table->text('description')->nullable(); // Description
+            $table->string('contact_number', 20)->nullable(); // Contact number
             $table->string('address'); // Restaurant address
             $table->json('cuisine_type'); // JSON field for storing cuisine types
+            $table->string('image_url')->nullable(); // URL for restaurant image
+            $table->string('email')->unique(); // Unique email address
             $table->timestamp('email_verified_at')->nullable(); // Timestamp for email verification
             $table->string('password'); // Password field
             $table->rememberToken(); // Token for "remember me" functionality

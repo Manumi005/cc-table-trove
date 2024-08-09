@@ -4,12 +4,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCustomerIdToProfilesTable extends Migration
+class AddCustomerIdToProfilesTableV2 extends Migration
 {
     public function up()
     {
         Schema::table('profiles', function (Blueprint $table) {
-            $table->foreignId('customer_id')->constrained('users')->onDelete('cascade');
+            // Add the customer_id column if it doesn't already exist
+            if (!Schema::hasColumn('profiles', 'customer_id')) {
+                $table->foreignId('customer_id')->constrained('users')->onDelete('cascade');
+            }
         });
     }
 
