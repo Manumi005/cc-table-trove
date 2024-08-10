@@ -1,14 +1,13 @@
 <?php
-
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class Restaurant extends Authenticatable
 {
-    use Notifiable;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'name',
@@ -17,6 +16,9 @@ class Restaurant extends Authenticatable
         'address',
         'cuisine_type',
         'password',
+        'opening_hours',
+        'details',
+        'images', // Use 'images' if that’s the column name
     ];
 
     protected $hidden = [
@@ -25,6 +27,7 @@ class Restaurant extends Authenticatable
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'images' => 'array',        // Cast 'images' as an array if using 'images'
+        'cuisine_type' => 'array',
     ];
 }

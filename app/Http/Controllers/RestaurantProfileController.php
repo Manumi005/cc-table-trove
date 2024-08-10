@@ -9,60 +9,89 @@ use Illuminate\Support\Facades\Storage;
 
 class RestaurantProfileController extends Controller
 {
-    // Show the restaurant profile
+    /**
+     * Display the restaurant profile.
+     *
+     * @return \Illuminate\View\View
+     */
     public function show()
     {
-        $restaurant = Auth::guard('restaurant')->user(); // Get the authenticated restaurant
+        // Retrieve the currently authenticated restaurant
+        $restaurant = Auth::guard('restaurant')->user();
+        
+        // Return the profile view with the restaurant data
         return view('restaurant.profile', compact('restaurant'));
     }
 
-    // Show the edit form
+    /**
+     * Show the form for editing the restaurant profile.
+     *
+     * @return \Illuminate\View\View
+     */
     public function edit()
     {
-        $restaurant = Auth::guard('restaurant')->user(); // Get the authenticated restaurant
-        return view('restaurant.edit-profile', [
-            'restaurant' => $restaurant,
-            'editing' => true // Pass a flag to indicate editing mode
-        ]);
+        // Retrieve the currently authenticated restaurant
+        $restaurant = Auth::guard('restaurant')->user();
+        
+        // Return the edit view with the restaurant data
+        return view('restaurant.profile-edit', compact('restaurant'));
     }
 
-    // Update the restaurant profile
+    /**
+     * Update the restaurant profile.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request)
     {
+        // Validate the incoming request data
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:restaurants,email,' . Auth::id(),
-            'contact_number' => 'nullable|string|max:20',
+            'email' => 'required|string|email|max:255',
+            'contact_number' => 'required|string|max:20',
             'address' => 'required|string|max:255',
             'cuisine_type' => 'nullable|array',
             'cuisine_type.*' => 'string',
-            'profile_image' => 'nullable|image|max:2048' // Validation for image file
+            'opening_hours_start' => 'required|date_format:H:i',
+            'opening_hours_end' => 'required|date_format:H:i',
+            'details' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
-
+    
+        // Retrieve the currently authenticated restaurant
         $restaurant = Auth::guard('restaurant')->user();
-
-        $data = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'contact_number' => $request->contact_number,
-            'address' => $request->address,
-            'cuisine_type' => json_encode($request->cuisine_type),
-        ];
-
-        // Handle image upload
-        if ($request->hasFile('profile_image')) {
-            // Delete the old image if exists
-            if ($restaurant->profile_image && Storage::exists($restaurant->profile_image)) {
-                Storage::delete($restaurant->profile_image);
+    
+        // Update the restaurant details
+        $restaurant->name = $request->input('name');
+        $restaurant->email = $request->input('email');
+        $restaurant->contact_number = $request->input('contact_number');
+        $restaurant->address = $request->input('address');
+        
+        // Default cuisine_type to an empty array if null
+        $cuisineType = $request->input('cuisine_type', []);
+        $restaurant->cuisine_type = json_encode($cuisineType);
+    
+        $restaurant->opening_hours_start = $request->input('opening_hours_start');
+        $restaurant->opening_hours_end = $request->input('opening_hours_end');
+        $restaurant->details = $request->input('details');
+    
+        // Handle image upload if a new image is provided
+        if ($request->hasFile('image')) {
+            // Delete the old image if it exists
+            if ($restaurant->image && Storage::exists($restaurant->image)) {
+                Storage::delete($restaurant->image);
             }
-
-            // Store the new image
-            $path = $request->file('profile_image')->store('public/restaurants');
-            $data['profile_image'] = $path;
+    
+            // Store the new image and update the restaurant record
+            $path = $request->file('image')->store('public/restaurant_images');
+            $restaurant->image = $path;
         }
-
-        $restaurant->update($data);
-
-        return redirect()->route('restaurant.profile.show')->with('success', 'Profile updated successfully!');
+    
+        // Save the restaurant details
+        $restaurant->save();
+    
+        // Redirect back to the profile with a success message
+        return redirect()->route('restaurant.profile.show')->with('success', 'Profile updated successfully.');
     }
-}
+}    
