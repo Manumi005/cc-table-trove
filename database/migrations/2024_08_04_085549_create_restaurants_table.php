@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('contact_number', 20)->nullable(); // Contact number
             $table->string('address'); // Restaurant address
             $table->json('cuisine_type'); // JSON field for storing cuisine types
-            $table->string('image_url')->nullable(); // URL for restaurant image
+            $table->string('profile_image')->nullable(); // Profile image URL
             $table->string('email')->unique(); // Unique email address
             $table->timestamp('email_verified_at')->nullable(); // Timestamp for email verification
             $table->string('password'); // Password field

@@ -23,7 +23,7 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
     Route::get('dashboard', [CustomerAuthController::class, 'dashboard'])->name('dashboard')->middleware('auth:customer');
     
     // Customer Profile Routes
-    Route::middleware('auth:customer')->group(function() {
+    Route::middleware('auth:customer')->group(function () {
         Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
         Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -48,7 +48,5 @@ Route::group(['prefix' => 'restaurant', 'as' => 'restaurant.'], function () {
         Route::get('profile', [RestaurantProfileController::class, 'show'])->name('profile.show');
         Route::get('profile/edit', [RestaurantProfileController::class, 'edit'])->name('profile.edit');
         Route::put('profile', [RestaurantProfileController::class, 'update'])->name('profile.update');
-        Route::get('profile/add-to-customer-page', [RestaurantProfileController::class, 'addToCustomerPage'])->name('profile.addToCustomerPage');
-        Route::get('profile/update-customer-page', [RestaurantProfileController::class, 'updateCustomerPage'])->name('profile.updateCustomerPage');
     });
 });
