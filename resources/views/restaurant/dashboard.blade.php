@@ -105,6 +105,7 @@
 
         <div class="management-buttons">
             <button onclick="location.href='/restaurant/profile'">Profile Management</button>
+            <button onclick="location.href='/restaurant/restaurant'">Restaurant Management</button>
             <button onclick="location.href='menu-management.html'">Menu Management</button>
             <button onclick="location.href='reservation-management.html'">Reservation Management</button>
             <button onclick="location.href='preorder-management.html'">Preorder Management</button>
