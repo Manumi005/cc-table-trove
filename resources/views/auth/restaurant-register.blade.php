@@ -14,39 +14,46 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow-y: auto; /* Enable vertical scrolling */
         }
         .register-container {
-            background-color: #2a1d25;
-            padding: 20px;
+            background: rgba(42, 29, 37, 0.8);
+            padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-            max-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
             width: 100%;
             color: white;
             opacity: 0.95;
+            margin-top: 20px; /* Add margin-top for spacing */
         }
         .register-container h2 {
-            margin-bottom: 20px;
-            font-size: 28px;
+            margin-bottom: 25px;
+            font-size: 32px;
             text-align: center;
             color: #e4cfdc;
         }
         .register-container label {
             display: block;
-            margin-bottom: 8px;
-            font-size: 16px;
+            margin-bottom: 10px;
+            font-size: 18px;
             color: #fff;
         }
         .register-container input[type="text"],
         .register-container input[type="email"],
         .register-container input[type="password"] {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
             border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 16px;
             background-color: #ead8f4;
+        }
+        .register-container input[type="text"].other-cuisine {
+            width: calc(100% - 32px);
+            padding: 12px;
+            margin-top: 5px;
         }
         .error-message {
             color: #ff6f61;
@@ -59,25 +66,25 @@
             text-align: center;
         }
         .logo-container img {
-            width: 150px;
+            width: 180px;
             height: auto;
         }
         .register-container button {
             width: 100%;
             padding: 15px;
             margin: 20px 0;
-            display: block;
-            background-color: #9e1e8b;
+            background: linear-gradient(135deg, #9e1e8b, #892abc);
             border: none;
             border-radius: 8px;
             color: #fff;
             font-size: 18px;
             cursor: pointer;
             font-weight: bold;
-            transition: 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
         }
         .register-container button:hover {
-            background-color: #892abc;
+            background: linear-gradient(135deg, #892abc, #9e1e8b);
+            transform: scale(1.02);
         }
         .register-container .no-account {
             margin-top: 20px;
@@ -93,11 +100,34 @@
         .cuisine-options {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 15px;
+            margin-bottom: 20px;
         }
         .cuisine-options label {
-            font-size: 14px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .cuisine-options input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .cuisine-options .other-cuisine-container {
+            display: flex;
+            flex-direction: column;
+        }
+        .cuisine-options .other-cuisine-container input {
+            margin-top: 5px;
+        }
+        @media (max-width: 600px) {
+            .register-container {
+                padding: 15px;
+            }
+            .register-container h2 {
+                font-size: 24px;
+            }
+            .register-container input,
+            .register-container button {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -133,33 +163,6 @@
                 <div class="error-message">{{ $message }}</div>
             @enderror
 
-            <label for="cuisine_type">Cuisine Type</label>
-            <div class="cuisine-options">
-                <div>
-                    <input type="checkbox" id="indian" name="cuisine_type[]" value="Indian" 
-                        {{ (is_array(old('cuisine_type')) && in_array('Indian', old('cuisine_type'))) ? 'checked' : '' }}>
-                    <label for="indian">Indian</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="srilankan" name="cuisine_type[]" value="Sri Lankan" 
-                        {{ (is_array(old('cuisine_type')) && in_array('Sri Lankan', old('cuisine_type'))) ? 'checked' : '' }}>
-                    <label for="srilankan">Sri Lankan</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="mexican" name="cuisine_type[]" value="Mexican" 
-                        {{ (is_array(old('cuisine_type')) && in_array('Mexican', old('cuisine_type'))) ? 'checked' : '' }}>
-                    <label for="mexican">Mexican</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="japanese" name="cuisine_type[]" value="Japanese" 
-                        {{ (is_array(old('cuisine_type')) && in_array('Japanese', old('cuisine_type'))) ? 'checked' : '' }}>
-                    <label for="japanese">Japanese</label>
-                </div>
-            </div>
-            @error('cuisine_type')
-                <div class="error-message">{{ $message }}</div>
-            @enderror
-
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
             @error('password')
@@ -172,11 +175,67 @@
                 <div class="error-message">{{ $message }}</div>
             @enderror
 
+            <label for="cuisine_type">Cuisine Type</label>
+            <div class="cuisine-options">
+                <div>
+                    <input type="checkbox" id="srilankan" name="cuisine_type[]" value="Sri Lankan" 
+                        {{ (is_array(old('cuisine_type')) && in_array('Sri Lankan', old('cuisine_type'))) ? 'checked' : '' }}>
+                    <label for="srilankan">Sri Lankan</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="italian" name="cuisine_type[]" value="Italian" 
+                        {{ (is_array(old('cuisine_type')) && in_array('Italian', old('cuisine_type'))) ? 'checked' : '' }}>
+                    <label for="italian">Italian</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="chinese" name="cuisine_type[]" value="Chinese" 
+                        {{ (is_array(old('cuisine_type')) && in_array('Chinese', old('cuisine_type'))) ? 'checked' : '' }}>
+                    <label for="chinese">Chinese</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="mexican" name="cuisine_type[]" value="Mexican" 
+                        {{ (is_array(old('cuisine_type')) && in_array('Mexican', old('cuisine_type'))) ? 'checked' : '' }}>
+                    <label for="mexican">Mexican</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="indian" name="cuisine_type[]" value="Indian" 
+                        {{ (is_array(old('cuisine_type')) && in_array('Indian', old('cuisine_type'))) ? 'checked' : '' }}>
+                    <label for="indian">Indian</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="thai" name="cuisine_type[]" value="Thai" 
+                        {{ (is_array(old('cuisine_type')) && in_array('Thai', old('cuisine_type'))) ? 'checked' : '' }}>
+                    <label for="thai">Thai</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="korean" name="cuisine_type[]" value="Korean" 
+                        {{ (is_array(old('cuisine_type')) && in_array('Korean', old('cuisine_type'))) ? 'checked' : '' }}>
+                    <label for="korean">Korean</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="japanese" name="cuisine_type[]" value="Japanese" 
+                        {{ (is_array(old('cuisine_type')) && in_array('Japanese', old('cuisine_type'))) ? 'checked' : '' }}>
+                    <label for="japanese">Japanese</label>
+                </div>
+                <div class="other-cuisine-container">
+                    <input type="checkbox" id="other_cuisine" name="cuisine_type[]" value="Other">
+                    <label for="other_cuisine">Other</label>
+                    <input type="text" id="other_cuisine_type" name="other_cuisine_type" 
+                        value="{{ old('other_cuisine_type') }}" placeholder="Specify Other Cuisine">
+                </div>
+            </div>
+            @error('cuisine_type')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
+            @error('other_cuisine_type')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
+
             <button type="submit">Register</button>
+            <div class="no-account">
+                Already have an account? <a href="{{ route('restaurant.login') }}">Login here</a>
+            </div>
         </form>
-        <div class="no-account">
-            <p>Already have an account? <a href="{{ route('restaurant.login') }}">Login here</a></p>
-        </div>
     </div>
 </body>
 </html>

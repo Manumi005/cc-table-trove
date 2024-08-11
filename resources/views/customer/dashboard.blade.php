@@ -198,7 +198,7 @@
         <nav>
             <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/dashboard'"> <!-- Replace 'logo.png' with your logo image path -->
             <ul>
-                <li><a href="#">Restaurants</a></li>
+            <a href="{{ route('customer.restaurants') }}">Restaurants</a>
                 <li><a href="/reservation">Reservations</a></li>
             </ul>
         </nav>

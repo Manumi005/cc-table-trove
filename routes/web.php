@@ -3,7 +3,7 @@
 use App\Http\Controllers\Auth\CustomerAuthController;
 use App\Http\Controllers\Auth\RestaurantAuthController;
 use App\Http\Controllers\RestaurantProfileController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
 // Home Route
@@ -28,6 +28,11 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
         Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
     });
+
+    // Customer Restaurant Routes
+    Route::get('restaurants', [CustomerController::class, 'listRestaurants'])->name('restaurants');
+    Route::get('restaurant/{id}', [CustomerController::class, 'showRestaurant'])->name('restaurant.details');
+    Route::get('restaurant/{id}/menu', [CustomerController::class, 'showRestaurantMenu'])->name('restaurant.menu');
 });
 
 // Restaurant Authentication Routes
@@ -48,5 +53,14 @@ Route::group(['prefix' => 'restaurant', 'as' => 'restaurant.'], function () {
         Route::get('profile', [RestaurantProfileController::class, 'show'])->name('profile.show');
         Route::get('profile/edit', [RestaurantProfileController::class, 'edit'])->name('profile.edit');
         Route::put('profile', [RestaurantProfileController::class, 'update'])->name('profile.update');
+    });
+
+    // Restaurant Management Routes
+    Route::middleware('auth:restaurant')->group(function () {
+        Route::get('create', [RestaurantProfileController::class, 'create'])->name('create');
+        Route::post('store', [RestaurantProfileController::class, 'store'])->name('store');
+        Route::get('summary', [RestaurantProfileController::class, 'showSummary'])->name('summary');
+        Route::get('details/{id}', [RestaurantProfileController::class, 'showRestaurantDetails'])->name('details');
+        Route::delete('destroy/{id}', [RestaurantProfileController::class, 'destroy'])->name('destroy');
     });
 });
