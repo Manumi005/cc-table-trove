@@ -4,6 +4,8 @@ use App\Http\Controllers\Auth\CustomerAuthController;
 use App\Http\Controllers\Auth\RestaurantAuthController;
 use App\Http\Controllers\RestaurantProfileController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\RestaurantMenuController;
+use App\Http\Controllers\CustomerMenuController;
 use Illuminate\Support\Facades\Route;
 
 // Home Route
@@ -32,7 +34,7 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
     // Customer Restaurant Routes
     Route::get('restaurants', [CustomerController::class, 'listRestaurants'])->name('restaurants');
     Route::get('restaurant/{id}', [CustomerController::class, 'showRestaurant'])->name('restaurant.details');
-    Route::get('restaurant/{id}/menu', [CustomerController::class, 'showRestaurantMenu'])->name('restaurant.menu');
+    Route::get('restaurant/{id}/menu', [CustomerMenuController::class, 'show'])->name('restaurant.menu');
 });
 
 // Restaurant Authentication Routes
@@ -62,5 +64,15 @@ Route::group(['prefix' => 'restaurant', 'as' => 'restaurant.'], function () {
         Route::get('summary', [RestaurantProfileController::class, 'showSummary'])->name('summary');
         Route::get('details/{id}', [RestaurantProfileController::class, 'showRestaurantDetails'])->name('details');
         Route::delete('destroy/{id}', [RestaurantProfileController::class, 'destroy'])->name('destroy');
+    });
+
+    // Restaurant Menu Routes
+    Route::middleware('auth:restaurant')->group(function () {
+        Route::get('menu', [RestaurantMenuController::class, 'index'])->name('menu.index');
+        Route::get('menu/create', [RestaurantMenuController::class, 'create'])->name('menu.create');
+        Route::post('menu', [RestaurantMenuController::class, 'store'])->name('menu.store');
+        Route::get('menu/{menu}/edit', [RestaurantMenuController::class, 'edit'])->name('menu.edit');
+        Route::put('menu/{menu}', [RestaurantMenuController::class, 'update'])->name('menu.update');
+        Route::delete('menu/{menu}', [RestaurantMenuController::class, 'destroy'])->name('menu.destroy');
     });
 });
