@@ -21,10 +21,10 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
     Route::get('register', [CustomerAuthController::class, 'showRegistrationForm'])->name('register');
     Route::post('register', [CustomerAuthController::class, 'register']);
     Route::post('logout', [CustomerAuthController::class, 'logout'])->name('logout');
-    
+
     // Customer Dashboard Route
     Route::get('dashboard', [CustomerAuthController::class, 'dashboard'])->name('dashboard')->middleware('auth:customer');
-    
+
     // Customer Profile Routes
     Route::middleware('auth:customer')->group(function () {
         Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
@@ -45,7 +45,7 @@ Route::group(['prefix' => 'restaurant', 'as' => 'restaurant.'], function () {
     Route::get('register', [RestaurantAuthController::class, 'showRegistrationForm'])->name('register');
     Route::post('register', [RestaurantAuthController::class, 'register']);
     Route::post('logout', [RestaurantAuthController::class, 'logout'])->name('logout');
-    
+
     // Restaurant Dashboard Route
     Route::get('dashboard', function () {
         return view('restaurant.dashboard');

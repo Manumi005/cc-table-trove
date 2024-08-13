@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('contact_number', 20);
+            $table->string('image')->nullable();
+            $table->text('allergens')->nullable();
+            $table->text('dietary')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

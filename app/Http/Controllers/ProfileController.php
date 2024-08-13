@@ -2,64 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use App\Models\Profile;
 
 class ProfileController extends Controller
 {
     public function show()
     {
+        // Fetch the authenticated user
         $user = Auth::user();
-        $profile = $user->profile;
+        
+        // Return the profile view with user data
+        return view('customer.profile', compact('user'));
+    }
 
-        $allergyOptions = ['Peanuts', 'Milk', 'Eggs', 'Shellfish', 'Soy', 'Wheat', 'Fish', 'Tree nuts', 'Sesame', 'Other'];
-        $preferenceOptions = ['Vegetarian', 'Vegan', 'Gluten-Free', 'Dairy-Free', 'Halal', 'Kosher', 'Paleo', 'Keto', 'Other'];
+    public function edit()
+    {
+        // Fetch the authenticated user
+        $user = Auth::user();
 
-        return view('customer.profile', compact('user', 'profile', 'allergyOptions', 'preferenceOptions'));
+        // Return the edit profile view with user data
+        return view('customer.profile', compact('user'));
     }
 
     public function update(Request $request)
     {
-        $user = Auth::user();
-        $profile = $user->profile;
-
+        // Validate the incoming request
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'contact_number' => 'required|string|max:20',
-            'password' => 'nullable|string|min:8|confirmed',
-            'profile_image' => 'nullable|image|max:2048',
+            'email' => 'required|email|max:255',
+            'contact_number' => 'nullable|string|max:20',
             'allergies' => 'nullable|array',
             'preferences' => 'nullable|array',
         ]);
 
-        // Update user details
-        $user->name = $request->name;
-        $user->email = $request->email;
+        // Fetch the authenticated user
+        $user = Auth::user();
 
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
-        }
+        // Update user profile data
+        $user->update([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'contact_number' => $request->input('contact_number'),
+            'allergies' => $request->input('allergies', []),
+            'preferences' => $request->input('preferences', []),
+        ]);
 
-        $user->save();
-
-        // Update profile details
-        $profile->contact_number = $request->contact_number;
-
-        if ($request->hasFile('profile_image')) {
-            if ($profile->profile_image) {
-                \Storage::disk('public')->delete($profile->profile_image);
-            }
-            $profile->profile_image = $request->file('profile_image')->store('profile_images', 'public');
-        }
-
-        $profile->allergies = $request->allergies ?? [];
-        $profile->preferences = $request->preferences ?? [];
-
-        $profile->save();
-
+        // Redirect back with success message
         return redirect()->route('customer.profile.show')->with('success', 'Profile updated successfully');
     }
 }

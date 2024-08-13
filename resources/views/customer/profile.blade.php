@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <style>
+        /* Existing CSS */
         body {
             font-family: Arial, sans-serif;
             background: url('{{ asset('images/wallpaper1.jpg') }}') no-repeat center center fixed;
@@ -231,6 +232,20 @@
             cursor: pointer;
             font-size: 20px;
         }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .checkbox-group label {
+            width: 50%;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-group input {
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -244,9 +259,9 @@
     </nav>
     <div class="search-bar">
         <input type="text" placeholder="Search...">
+        <!div class="profile-icon" onclick="location.href='{{ route('customer.profile.show') }}'">
         <div class="profile-icon" onclick="location.href='/customer/profile'">
-       
-        <img src="{{ asset('images/profile.jpg') }}" alt="Profile">
+            <img src="{{ asset('images/profile.jpg') }}" alt="Profile">
         </div>
     </div>
 </header>
@@ -309,28 +324,36 @@
                 <input type="text" id="editContactNumber" name="contact_number" value="{{ old('contact_number', $user->contact_number) }}">
             </div>
             <div class="profile-info">
-                <label for="editAllergies">Allergies:</label>
-                <select id="editAllergies" name="allergies[]" multiple>
-                    @foreach ($allergyOptions as $allergy)
-                        <option value="{{ $allergy }}" {{ in_array($allergy, old('allergies', $user->allergies ?? [])) ? 'selected' : '' }}>
-                            {{ $allergy }}
-                        </option>
-                    @endforeach
-                </select>
+                <label for="allergiesDropdown">Allergies:</label>
+                <div class="scrollable-container">
+                    <div class="checkbox-group">
+                        @foreach ([
+                            'Peanuts', 'Gluten', 'Dairy', 'Eggs', 'Soy', 'Tree Nuts', 'Shellfish', 
+                            'Fish', 'Wheat', 'Sesame', 'Mustard', 'Sulfites', 'Lupin', 
+                            'Celery', 'Molluscs', 'Corn', 'Sunflower', 'Poppy Seeds', 
+                            'Buckwheat', 'Latex'] as $allergy)
+                            <label>
+                                <input type="checkbox" name="allergies[]" value="{{ $allergy }}" @if(in_array($allergy, old('allergies', $user->allergies ?? []))) checked @endif>
+                                {{ $allergy }}
+                            </label>
+                        @endforeach
+                    </div>
+                </div>
             </div>
             <div class="profile-info">
-                <label for="editPreferences">Dietary Preferences:</label>
-                <select id="editPreferences" name="preferences[]" multiple>
-                    @foreach ($preferenceOptions as $preference)
-                        <option value="{{ $preference }}" {{ in_array($preference, old('preferences', $user->preferences ?? [])) ? 'selected' : '' }}>
-                            {{ $preference }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="profile-info">
-                <label for="profileImage">Profile Image:</label>
-                <input type="file" id="profileImage" name="profile_image">
+                <label for="preferencesDropdown">Dietary Preferences:</label>
+                <div class="scrollable-container">
+                    <div class="checkbox-group">
+                        @foreach ([
+                            'Vegetarian', 'Vegan', 'Non-Vegetarian', 
+                            'Pescatarian', 'Gluten-Free', 'Dairy-Free'] as $preference)
+                            <label>
+                                <input type="checkbox" name="preferences[]" value="{{ $preference }}" @if(in_array($preference, old('preferences', $user->preferences ?? []))) checked @endif>
+                                {{ $preference }}
+                            </label>
+                        @endforeach
+                    </div>
+                </div>
             </div>
             <div class="profile-info">
                 <button type="submit">Save Changes</button>
@@ -341,7 +364,7 @@
 
 <script>
     function logout() {
-        // Add your logout logic here
+        // Implement your logout functionality here
     }
 </script>
 </body>
