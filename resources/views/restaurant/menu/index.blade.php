@@ -55,6 +55,8 @@
         img {
             border-radius: 10px;
             margin-right: 20px;
+            width: 100px;
+            height: auto;
         }
         h2 {
             margin: 0 0 10px;
@@ -86,6 +88,9 @@
         a:hover {
             text-decoration: underline;
         }
+        form {
+            display: inline;
+        }
     </style>
 </head>
 <body>
@@ -97,13 +102,21 @@
         <ul>
             @foreach($menus as $menu)
                 <li>
-                    <img src="{{ $menu->image ? asset('storage/' . $menu->image) : '' }}" alt="{{ $menu->name }}" style="width: 100px; height: auto;">
+                    <img src="{{ $menu->image ? asset('storage/' . $menu->image) : '' }}" alt="{{ $menu->name }}">
                     <div>
                         <h2>{{ $menu->name }}</h2>
                         <p>{{ $menu->description }}</p>
-                        <p>${{ $menu->price }}</p>
+                        <p>${{ number_format($menu->price, 2) }}</p>
+                        <p>Quantity: {{ $menu->quantity }}</p>
+                        
+                        <!-- Check if category is an array and not empty -->
+                        <p>Category: {{ is_array($menu->category) && !empty($menu->category) ? implode(', ', $menu->category) : 'N/A' }}</p>
+                        
+                        <!-- Check if allergens is an array and not empty -->
+                        <p>Allergens: {{ is_array($menu->allergens) && !empty($menu->allergens) ? implode(', ', $menu->allergens) : 'None' }}</p>
+                        
                         <a href="{{ route('restaurant.menu.edit', $menu->id) }}">Edit</a>
-                        <form action="{{ route('restaurant.menu.destroy', $menu->id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('restaurant.menu.destroy', $menu->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit">Delete</button>

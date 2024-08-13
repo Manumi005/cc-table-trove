@@ -13,8 +13,10 @@ class CreateMenusTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->decimal('price', 8, 2);
+            $table->json('category'); // Ensure this line is present;  
             $table->string('image')->nullable();
-            $table->json('allergens')->nullable();
+            $table->text('allergens')->nullable();
+            $table->text('dietary')->nullable();
             $table->timestamps();
         });
     }
