@@ -6,6 +6,7 @@ use App\Http\Controllers\RestaurantProfileController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RestaurantMenuController;
 use App\Http\Controllers\CustomerMenuController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 // Home Route
