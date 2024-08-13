@@ -106,14 +106,11 @@
                     <div>
                         <h2>{{ $menu->name }}</h2>
                         <p>{{ $menu->description }}</p>
-                        <p>${{ number_format($menu->price, 2) }}</p>
-                        <p>Quantity: {{ $menu->quantity }}</p>
+                        <p>Rs.{{ number_format($menu->price, 2) }}</p>
                         
-                        <!-- Check if category is an array and not empty -->
                         <p>Category: {{ is_array($menu->category) && !empty($menu->category) ? implode(', ', $menu->category) : 'N/A' }}</p>
-                        
-                        <!-- Check if allergens is an array and not empty -->
                         <p>Allergens: {{ is_array($menu->allergens) && !empty($menu->allergens) ? implode(', ', $menu->allergens) : 'None' }}</p>
+                        <p>Dietary: {{ $menu->dietary }}</p>
                         
                         <a href="{{ route('restaurant.menu.edit', $menu->id) }}">Edit</a>
                         <form action="{{ route('restaurant.menu.destroy', $menu->id) }}" method="POST">
