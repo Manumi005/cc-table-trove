@@ -167,8 +167,7 @@
             <p>{{ $restaurant->opening_hours_start }} - {{ $restaurant->opening_hours_end }}</p>
 
             <label>Cuisine Type:</label>
-            <p>{{ implode(', ', json_decode($restaurant->cuisine_type, true)) }}</p>
-
+            <p>{{ implode(', ', json_decode($restaurant->cuisine_type)) }}</p>
 
             <label>Details:</label>
             <p>{{ $restaurant->details }}</p>

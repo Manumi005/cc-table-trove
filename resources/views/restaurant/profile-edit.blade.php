@@ -8,15 +8,15 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #98b2b8;
+            background-color: #f8f9fa;
             color: #343a40;
         }
         .container {
             max-width: 800px;
             margin: 50px auto;
             padding: 20px;
-            background-color: #b7d3ee;
-            border-radius: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
         .form-group {
@@ -26,14 +26,13 @@
             display: block;
             margin-bottom: .5rem;
             font-weight: bold;
-            color: #333;
+            color: #495057;
         }
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: .5rem;
             border: 1px solid #ced4da;
-            border-radius: 15px;
-            background-color: #ddefff;
+            border-radius: .25rem;
             box-sizing: border-box;
         }
         .form-group textarea {
@@ -51,25 +50,15 @@
             background-color: #007bff;
             cursor: pointer;
             transition: background-color .3s ease;
-            width: 120px; /* Common width */
-            height: 50px; /* Common height */
-            text-align: center;
-            line-height: 30px;
-            display: inline-flex; /* Aligns items vertically */
-            align-items: center; /* Centers items vertically */
-            justify-content: center; /* Centers items horizontally */
-            align-content: center; /* Centers items vertically */
         }
         .btn:hover {
             background-color: #0056b3;
         }
         .btn-danger {
             background-color: #dc3545;
-            margin-left: 10px;
-            margin-top: 10px;
         }
         .btn-danger:hover {
-            background-color: #b21f2d;
+            background-color: #c82333;
         }
         .checkbox-group label {
             display: inline-flex;
@@ -79,14 +68,9 @@
         .checkbox-group input {
             margin-right: .5rem;
         }
-        .button-group {
-            display: flex;
-            gap: 10px; /* Space between buttons */
-        }
     </style>
 </head>
 <body>
-    
     <div class="container">
         <h1 class="text-2xl font-semibold mb-6">Edit Restaurant Profile</h1>
         
@@ -140,12 +124,10 @@
             <div class="form-group">
                 <label>Cuisine Type</label>
                 <div class="checkbox-group">
-                @php
-                $oldCuisineTypes = old('cuisine_type', json_decode($restaurant->cuisine_type, true) ?? []);
-                @endphp
-
-                <!-- Display selected cuisine types -->
-                <p>{{ implode(', ', json_decode($restaurant->cuisine_type)) }}</p>
+                    @php
+                        $cuisineTypes = json_decode($restaurant->cuisine_type, true) ?? [];
+                        $oldCuisineTypes = old('cuisine_type', $cuisineTypes) ?? [];
+                    @endphp
                     <label>
                         <input type="checkbox" name="cuisine_type[]" value="Italian" {{ in_array('Italian', $oldCuisineTypes) ? 'checked' : '' }}> Italian
                     </label>
