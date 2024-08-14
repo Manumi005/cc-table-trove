@@ -7,6 +7,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RestaurantMenuController;
 use App\Http\Controllers\CustomerMenuController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
 // Home Route
@@ -36,6 +37,12 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
     Route::get('restaurants', [CustomerController::class, 'listRestaurants'])->name('restaurants');
     Route::get('restaurant/{id}', [CustomerController::class, 'showRestaurant'])->name('restaurant.details');
     Route::get('restaurant/{id}/menu', [CustomerMenuController::class, 'show'])->name('restaurant.menu');
+
+       // Customer Reservation Routes
+       Route::middleware('auth:customer')->group(function () {
+        Route::get('reserve', [ReservationController::class, 'create'])->name('reservation.create');
+        Route::post('reserve', [ReservationController::class, 'store'])->name('reservation.store');
+    });
 });
 
 // Restaurant Authentication Routes
@@ -75,5 +82,10 @@ Route::group(['prefix' => 'restaurant', 'as' => 'restaurant.'], function () {
         Route::get('menu/{menu}/edit', [RestaurantMenuController::class, 'edit'])->name('menu.edit');
         Route::put('menu/{menu}', [RestaurantMenuController::class, 'update'])->name('menu.update');
         Route::delete('menu/{menu}', [RestaurantMenuController::class, 'destroy'])->name('menu.destroy');
+    });
+
+    Route::middleware('auth:restaurant')->group(function () {
+        Route::get('reservation', [ReservationController::class, 'index'])->name('reservation.index');
+        Route::post('reservation/{id}/approve', [ReservationController::class, 'approve'])->name('reservation.approve');
     });
 });

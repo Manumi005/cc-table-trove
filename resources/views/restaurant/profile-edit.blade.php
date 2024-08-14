@@ -47,6 +47,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            border-radius:15px;
         }
         .btn:hover {
             background-color: #0056b3;

@@ -7,104 +7,181 @@
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #e0f7ff;
-            color: #333;
+            font-family: Arial, sans-serif;
+            background: url('{{ asset('images/wallpaper3.jpg') }}') no-repeat center center fixed;
             margin: 0;
             padding: 0;
+            background-color: #98b2b8;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        nav img {
+            cursor: pointer;
+            width: 150px; /* Adjust size as needed */
+            height: auto;
+            margin-right: 20px;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            position: relative;
+        }
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            display: block;
+            margin-top: 5px;
+            right: 0;
+            background: #fff;
+            transition: width 0.3s ease;
+            -webkit-transition: width 0.3s ease;
+        }
+        nav ul li a:hover::after {
+            width: 100%;
+            left: 0;
+            background-color: #fff;
+        }
+        .search-bar {
+            display: flex;
+            align-items: right;
+            flex-grow: 1;
+            justify-content: right;
+            margin: 0 20px;
+        }
+        .search-bar input {
+            padding: 5px 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 300px;
+            background-color: #d9edff;
+        }
+        .profile-icon {
+            margin-left: 15px;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+        .profile-icon img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
         }
         .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 30px;
-            background-color: #0056b3;
-            border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #b7d3ee;
+            border-radius: 50px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
             position: relative;
-            color: #000;
         }
         h1 {
             text-align: center;
             margin-bottom: 20px;
-            font-size: 2em;
-            color: #000;
         }
         .profile-image {
             display: block;
-            width: 150px;
-            height: 150px;
+            max-width: 200px;
             margin: 0 auto;
             border-radius: 50%;
-            object-fit: cover;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .details {
-            margin-top: 15px;
+            margin-bottom: 20px;
         }
         .details label {
-            font-weight: 600;
+            font-weight: bold;
             display: block;
-            margin: 8px 0 3px;
-            color: #000;
-            font-size: 0.9em;
+            margin: 5px 0 2px;
+            margin-left: 10%;
         }
         .details p {
             margin: 0 0 15px;
-            padding: 10px 12px;
-            border: 1px solid #ced4da;
-            border-radius: 8px;
-            background-color: #cce0ff;
-            font-size: 0.95em;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
-            color: #000;
+            padding: 8px;
+            border: 1px solid #333;
+            border-radius: 20px;
+            background-color: #ddefff;
+            width: 80%;
+            align-items: center;
+            margin-left: 10%;
         }
         .actions {
             text-align: center;
-            margin-top: 25px;
         }
         .actions a, .actions button {
             display: inline-block;
             padding: 10px 20px;
-            margin: 8px;
+            margin: 5px;
             color: #fff;
-            background-color: #00408a;
+            background-color: #568e7a;
             text-decoration: none;
-            border-radius: 25px;
+            border-radius: 20px;
             border: none;
             cursor: pointer;
-            font-size: 1em;
-            box-shadow: 0 5px 15px rgba(0,64,138,0.3);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
         .actions button.logout-btn {
-            background-color: #c82333;
+            background-color: #dc3545;
         }
         .actions a:hover, .actions button:hover {
-            background-color: #002d61;
-            box-shadow: 0 7px 20px rgba(0,45,97,0.4);
+            background-color: #248958;
         }
         .actions button.logout-btn:hover {
-            background-color: #a71d2a;
-            box-shadow: 0 7px 20px rgba(167,29,42,0.4);
+            background-color: #c82333;
         }
         .edit-icon {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 20px;
+            right: 20px;
             width: 30px;
             height: 30px;
             cursor: pointer;
-            transition: transform 0.2s;
         }
         .edit-icon img {
             width: 100%;
             height: 100%;
-        }
-        .edit-icon:hover {
-            transform: scale(1.1);
+            border-radius: 50%;
         }
     </style>
 </head>
+<header>
+        <nav>
+            <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/restaurant/dashboard'"> <!-- Replace 'logo.png' with your logo image path -->
+            <ul>
+                <li> <a href='/restaurant/menu'>Menu Management</a></li>
+                <li><a href="/reservation">Reservation Management</a></li>
+                <li> <a href='/pre-order'>Pre-Order Management</a></li>
+                <li> <a href='/payment-verification'>Payment Verification</a></li>
+            </ul>
+        </nav>
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+            <div class="profile-icon" onclick="location.href='/restaurant/profile'">
+                <img src="{{ asset('images/restaurant.png') }}" alt="Profile">
+            </div>
+        </div>
+    </header>
 <body>
     <div class="container">
         <!-- Edit Profile Icon -->
@@ -113,34 +190,27 @@
                 <img src="{{ asset('images/edit-icon.png') }}" alt="Edit Profile">
             </a>
         </div>
-
         <h1>Restaurant Profile</h1>
-
         <!-- Display Restaurant Image -->
         @if ($restaurant->image)
             <img src="{{ asset('storage/' . $restaurant->image) }}" alt="Restaurant Image" class="profile-image">
         @else
             <img src="{{ asset('images/default-restaurant.png') }}" alt="Default Restaurant Image" class="profile-image">
         @endif
-
         <div class="details">
             <!-- Restaurant Detailed Information -->
             <label for="name">Restaurant Name:</label>
             <p>{{ $restaurant->name }}</p>
-
             <label for="email">Email:</label>
             <p>{{ $restaurant->email }}</p>
-
             <label for="contact_number">Contact Number:</label>
             <p>{{ $restaurant->contact_number }}</p>
-
             <label for="address">Address:</label>
             <p>{{ $restaurant->address }}</p>
-
             <label for="cuisine_type">Cuisine Type:</label>
             <p>
                 @php
-                    $cuisineTypes = json_decode($restaurant->cuisine_type, true);
+                    $cuisineTypes = $restaurant->cuisine_type;
                     if (is_array($cuisineTypes) && !empty($cuisineTypes)) {
                         echo htmlspecialchars(implode(', ', $cuisineTypes), ENT_QUOTES, 'UTF-8');
                     } else {
@@ -148,7 +218,6 @@
                     }
                 @endphp
             </p>
-
             <label for="opening_hours">Opening Hours:</label>
             <p>
                 @if ($restaurant->opening_hours_start && $restaurant->opening_hours_end)
@@ -157,13 +226,11 @@
                     Not specified
                 @endif
             </p>
-
             <label for="details">Details:</label>
             <p>{{ $restaurant->details }}</p>
         </div>
 
         <div class="actions">
-            <a href="{{ route('restaurant.dashboard') }}">Back to Dashboard</a>
 
             <!-- View Summary Button -->
             <a href="{{ route('restaurant.summary') }}">View Summary</a>
@@ -176,4 +243,4 @@
         </div>
     </div>
 </body>
-</html>
+</html>  

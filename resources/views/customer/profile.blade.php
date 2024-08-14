@@ -294,11 +294,11 @@
             </div>
             <div class="profile-info">
                 <label for="allergies">Allergies:</label>
-                <p id="allergies">{{ $user->allergies  }}</p>
+                <p id="allergies">{{ implode(', ', $user->allergies ?? []) }}</p>
             </div>
             <div class="profile-info">
                 <label for="preferences">Dietary Preferences:</label>
-                <p id="preferences">{{ $user->preferences }}</p>
+                <p id="preferences">{{ implode(', ', $user->preferences ?? []) }}</p>
             </div>
         </div>
     </div>
