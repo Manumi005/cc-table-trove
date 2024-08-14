@@ -7,79 +7,101 @@
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Poppins', sans-serif;
+            background-color: #e0f7ff;
+            color: #333;
             margin: 0;
             padding: 0;
         }
         .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #0056b3;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
             position: relative;
+            color: #000;
         }
         h1 {
             text-align: center;
             margin-bottom: 20px;
+            font-size: 2em;
+            color: #000;
         }
         .profile-image {
             display: block;
-            max-width: 200px;
+            width: 150px;
+            height: 150px;
             margin: 0 auto;
             border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .details {
-            margin-bottom: 20px;
+            margin-top: 15px;
         }
         .details label {
-            font-weight: bold;
+            font-weight: 600;
             display: block;
-            margin: 5px 0 2px;
+            margin: 8px 0 3px;
+            color: #000;
+            font-size: 0.9em;
         }
         .details p {
             margin: 0 0 15px;
-            padding: 8px;
+            padding: 10px 12px;
             border: 1px solid #ced4da;
-            border-radius: 5px;
-            background-color: #e9ecef;
+            border-radius: 8px;
+            background-color: #cce0ff;
+            font-size: 0.95em;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+            color: #000;
         }
         .actions {
             text-align: center;
+            margin-top: 25px;
         }
         .actions a, .actions button {
             display: inline-block;
             padding: 10px 20px;
-            margin: 5px;
+            margin: 8px;
             color: #fff;
-            background-color: #007bff;
+            background-color: #00408a;
             text-decoration: none;
-            border-radius: 4px;
+            border-radius: 25px;
             border: none;
             cursor: pointer;
+            font-size: 1em;
+            box-shadow: 0 5px 15px rgba(0,64,138,0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
         .actions button.logout-btn {
-            background-color: #dc3545;
+            background-color: #c82333;
         }
         .actions a:hover, .actions button:hover {
-            background-color: #0056b3;
+            background-color: #002d61;
+            box-shadow: 0 7px 20px rgba(0,45,97,0.4);
         }
         .actions button.logout-btn:hover {
-            background-color: #c82333;
+            background-color: #a71d2a;
+            box-shadow: 0 7px 20px rgba(167,29,42,0.4);
         }
         .edit-icon {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
             width: 30px;
             height: 30px;
             cursor: pointer;
+            transition: transform 0.2s;
         }
         .edit-icon img {
             width: 100%;
             height: 100%;
+        }
+        .edit-icon:hover {
+            transform: scale(1.1);
         }
     </style>
 </head>

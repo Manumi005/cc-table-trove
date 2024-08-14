@@ -8,65 +8,66 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            background-color: #98b2b8;
             color: #343a40;
         }
         .container {
             max-width: 800px;
             margin: 50px auto;
             padding: 20px;
-            background-color: #ffffff;
-            border-radius: 10px;
+            background-color: #b7d3ee;
+            border-radius: 30px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
         .form-group {
-            margin-bottom: 1rem;
-        }
-        .form-group label {
             display: block;
             margin-bottom: .5rem;
             font-weight: bold;
-            color: #495057;
+            color: #333;
         }
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: .5rem;
             border: 1px solid #ced4da;
-            border-radius: .25rem;
+            border-radius: 15px;
+            background-color: #ddefff;
             box-sizing: border-box;
         }
         .form-group textarea {
-            resize: vertical;
-        }
-        .form-group input[type="file"] {
-            border: none;
-            padding: .5rem 0;
+            height: 200px; /* Adjust the height as needed */
         }
         .btn {
-            padding: .75rem 1.5rem;
-            border: none;
-            border-radius: .25rem;
-            color: #ffffff;
             background-color: #007bff;
             cursor: pointer;
             transition: background-color .3s ease;
+            width: 120px;
+            height: 50px;
+            text-align: center;
+            line-height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn:hover {
             background-color: #0056b3;
         }
         .btn-danger {
             background-color: #dc3545;
+            margin-left: 10px;
+            margin-top: 10px;
         }
         .btn-danger:hover {
-            background-color: #c82333;
+            background-color: #b21f2d;
         }
         .checkbox-group label {
             display: inline-flex;
-            align-items: center;
-            margin-right: 1rem;
         }
         .checkbox-group input {
             margin-right: .5rem;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
         }
     </style>
 </head>
@@ -172,7 +173,7 @@
             <!-- Details -->
             <div class="form-group">
                 <label for="details">Details</label>
-                <textarea id="details" name="details" rows="4" class="form-control @error('details') border-red-500 @enderror">{{ old('details', $restaurant->details) }}</textarea>
+                <textarea id="details" name="details" rows="8" class="form-control @error('details') border-red-500 @enderror">{{ old('details', $restaurant->details) }}</textarea>
                 @error('details')
                     <p class="text-red-500 text-sm">{{ $message }}</p>
                 @enderror

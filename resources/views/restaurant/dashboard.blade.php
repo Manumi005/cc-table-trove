@@ -6,112 +6,213 @@
     <title>Restaurant Dashboard</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #98b2b8;
             margin: 0;
             padding: 0;
-            text-align: center;
-        }
-        .dashboard-container {
-            margin: 20px auto;
-            max-width: 800px;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
             color: #333;
         }
-        .section-title {
-            color: #555;
-            margin: 20px 0;
-            font-size: 18px;
-        }
-        .feature-list {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-        .feature-list li {
-            margin-bottom: 10px;
-        }
-        .management-buttons {
-            margin-top: 20px;
-        }
-        .management-buttons button {
+        /* Navbar Styles */
+        nav {
+            background-color: #333;
             padding: 10px 20px;
-            margin: 10px;
-            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+            height: 60px;
         }
-        .management-buttons button:hover {
-            background-color: #0056b3;
+        nav img.logo {
+            cursor: pointer;
+            width: 150px;
+            height: auto;
+        }
+        .slider {
+            width: 100%;
+            overflow: hidden;
+        }
+        .slide {
+            display: none;
+        }
+        .slide img {
+            width: 100%;
+            height: 400px;
+        }
+        .slide.active {
+            display: block;
+        }
+        .search-bar {
+            display: flex;
+            align-items: right;
+            flex-grow: 1;
+            justify-content: right;
+            margin: 0 20px;
+        }
+        .search-bar input {
+            padding: 5px 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 300px;
+            background-color: #d9edff;
+        }
+        .profile-icon {
+            cursor: pointer;
+        }
+        .profile-icon img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            padding: 0 20px;
+            justify-content: center;
+            margin-bottom: 50px;
+        }       
+        .card {
+            background-color: #d9edff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            width: 200px;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .card h3 {
+            margin-top: 0;
+            color: #1b8094;
+            margin-bottom: 15px;
+        }
+        .card p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        .card a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            position: absolute;
+            bottom: 20px;
+        }
+        .card img {
+            width: 40%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .search-bar {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="dashboard-container">
-        <h1>Welcome to Restaurant Dashboard</h1>
-        
-        <div class="section-title">Restaurant Features:</div>
-        <ul class="feature-list">
-            <li><strong>Manage Restaurant Profile:</strong></li>
-            <ul>
-                <li>Restaurant sign-up and log-in process.</li>
-                <li>Create and edit restaurant profile information (name, address, contact details, opening hours).</li>
-                <li>Upload restaurant logo and images.</li>
-            </ul>
-            
-            <li><strong>Create and Edit Menus:</strong></li>
-            <ul>
-                <li>Add new menu items with descriptions, prices, and images.</li>
-                <li>Edit existing menu items (update descriptions, prices, availability).</li>
-                <li>Organize menu items into categories (appetizers, mains, desserts).</li>
-            </ul>
-            
-            <li><strong>Update Dietary Information and Allergen Warnings:</strong></li>
-            <ul>
-                <li>Include dietary labels (vegan, gluten-free, etc.) for each menu item.</li>
-                <li>Add allergen information to menu items (nuts, dairy, etc.).</li>
-                <li>Ensure that dietary and allergen information is prominently displayed.</li>
-            </ul>
-            
-            <li><strong>Handle Reservations:</strong></li>
-            <ul>
-                <li>Allow restaurants to set available reservation slots.</li>
-                <li>Enable customers to book reservations through the app.</li>
-                <li>Provide restaurants with a reservation management interface (view, confirm, cancel reservations).</li>
-            </ul>
-            
-            <li><strong>Manage Preorders:</strong></li>
-            <ul>
-                <li>Allow customers to place orders in advance.</li>
-                <li>Provide an interface for restaurants to view and manage preorders.</li>
-                <li>Send notifications to restaurants for new preorders.</li>
-            </ul>
-            
-            <li><strong>Verify Payments:</strong></li>
-            <ul>
-                <li>Integrate payment gateway for handling customer payments.</li>
-                <li>Ensure secure payment processing (credit card, mobile payment options).</li>
-                <li>Implement payment verification and confirmation for restaurants.</li>
-            </ul>
-        </ul>
+    <!-- Navbar -->
+    <nav>
+        <a href="/restaurant/dashboard">
+        <img src="{{ asset('images/logo.png') }}" alt="Restaurant Logo" class="logo">
+        </a>
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+        </div>
+        <a href="/restaurant/profile" class="profile-icon">
+            <img src="{{ asset('images/restaurant.png') }}" alt="Profile">
+        </a>
+    </nav>
 
-        <div class="management-buttons">
-            <button onclick="location.href='/restaurant/profile'">Profile Management</button>
-            <button onclick="location.href='/restaurant/restaurant'">Restaurant Management</button>
-            <button onclick="location.href='{{ route('restaurant.menu.index') }}'">Menu Management</button>
-            <button onclick="location.href='reservation-management.html'">Reservation Management</button>
-            <button onclick="location.href='preorder-management.html'">Preorder Management</button>
-            <button onclick="location.href='payment-verification.html'">Payment Verification</button>
+    <!-- Slider -->
+    <section class="slider">
+        <div class="slide active">
+            <img src="{{ asset('images/1.png') }}" alt="Offer 1">
+        </div>
+        <div class="slide">
+            <img src="{{ asset('images/2.png') }}" alt="Offer 2">
+        </div>
+
+    </section>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <h1>Welcome to Your Restaurant's Dashboard!</h1>
+
+        <!-- Cards Container -->
+        <div class="cards-container">
+            <!-- Profile Management Card -->
+            <div class="card" onclick="location.href='/restaurant/profile'">
+                <img src="{{ asset('images/restaurant.png') }}" alt="Profile Management">
+                <h3>Profile Management</h3>
+                <p>Manage and update your restaurant's profile, including contact details and opening hours.</p>
+            </div>
+
+            <!-- Menu Management Card -->
+            <div class="card" onclick="location.href='/restaurant/menu'">
+                <img src="{{ asset('images/restaurantmenu.png') }}" alt="Menu Management">
+                <h3>Menu Management</h3>
+                <p>Create, edit, and organize your restaurant's menu items with ease.</p>
+            </div>
+
+            <!-- Reservation Management Card -->
+            <div class="card" onclick="location.href='/restaurant/reservation'">
+                <img src="{{ asset('images/restaurantreservation.png') }}" alt="Reservation Management">
+                <h3>Reservation Management</h3>
+                <p>Handle customer reservations efficiently with our intuitive tools.</p>
+            </div>
+
+            <!-- Preorder Management Card -->
+            <div class="card" onclick="location.href='/restaurant/preorder'">
+                <img src="{{ asset('images/restaurantpreorder.png') }}" alt="Preorder Management">
+                <h3>Preorder Management</h3>
+                <p>Manage and process customer preorders seamlessly.</p>
+            </div>
+
+            <!-- Payment Verification Card -->
+            <div class="card" onclick="location.href='/restaurant/payment'">
+                <img src="{{ asset('images/restaurantpayment.png') }}" alt="Payment Verification">
+                <h3>Payment Verification</h3>
+                <p>Ensure secure and verified transactions for all customer payments.</p>
+            </div>
         </div>
     </div>
+
+    <!-- JavaScript for Slider -->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+        }
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+        // Show the first slide initially
+        showSlide(currentSlide);
+        // Automatically switch slides every 5 seconds
+        setInterval(nextSlide, 5000);
+    </script>
 
 </body>
 </html>
