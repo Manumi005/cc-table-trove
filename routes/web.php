@@ -38,8 +38,8 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
     Route::get('restaurant/{id}', [CustomerController::class, 'showRestaurant'])->name('restaurant.details');
     Route::get('restaurant/{id}/menu', [CustomerMenuController::class, 'show'])->name('restaurant.menu');
 
-       // Customer Reservation Routes
-       Route::middleware('auth:customer')->group(function () {
+    // Customer Reservation Routes
+    Route::middleware('auth:customer')->group(function () {
         Route::get('reserve', [ReservationController::class, 'create'])->name('reservation.create');
         Route::post('reserve', [ReservationController::class, 'store'])->name('reservation.store');
     });
@@ -84,6 +84,7 @@ Route::group(['prefix' => 'restaurant', 'as' => 'restaurant.'], function () {
         Route::delete('menu/{menu}', [RestaurantMenuController::class, 'destroy'])->name('menu.destroy');
     });
 
+    // Restaurant Reservation Routes
     Route::middleware('auth:restaurant')->group(function () {
         Route::get('reservation', [ReservationController::class, 'index'])->name('reservation.index');
         Route::post('reservation/{id}/approve', [ReservationController::class, 'approve'])->name('reservation.approve');

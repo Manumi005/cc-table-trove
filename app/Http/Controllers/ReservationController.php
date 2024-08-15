@@ -4,52 +4,58 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Reservation;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Restaurant;
 
 class ReservationController extends Controller
 {
-    // Show reservation creation form for customers
-    public function create()
+    public function index()
     {
-        return view('customer.reservation');
+        $reservations = Reservation::all();
+        return view('customer.reservations.index', compact('reservations'));
     }
 
-    // Handle reservation creation
+    public function create()
+    {
+        // Fetch all restaurants
+        $restaurants = Restaurant::all();
+
+        // Pass the restaurants to the view
+        return view('customer.reservations.create', compact('restaurants'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
+            'user_id' => 'required|integer',
+            'restaurant_id' => 'required|integer',
             'reservation_date' => 'required|date',
-            'time_slot' => 'required',
-            'party_size' => 'required|integer|min:1|max:20',
-            'restaurant_id' => 'required|exists:restaurants,id',
+            'time_slot' => ['required', 'regex:/^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/'],
+            'party_size' => 'required|integer',
         ]);
 
-        $reservation = new Reservation();
-        $reservation->user_id = Auth::id(); // Assuming Auth is for customer
-        $reservation->reservation_date = $request->reservation_date;
-        $reservation->time_slot = $request->time_slot;
-        $reservation->party_size = $request->party_size;
-        $reservation->status = 'pending'; // Default status
-        $reservation->restaurant_id = $request->restaurant_id; // Set restaurant_id
-        $reservation->save();
+        Reservation::create([
+            'user_id' => $request->user_id,
+            'restaurant_id' => $request->restaurant_id,
+            'reservation_date' => $request->reservation_date,
+            'time_slot' => $request->time_slot,
+            'party_size' => $request->party_size,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
-        return redirect()->route('customer.reservation.create')->with('success', 'Reservation made successfully!');
+        return redirect()->route('reservations.index')->with('success', 'Reservation created successfully.');
     }
 
-    // List all reservations for the restaurant
-    public function index()
-    {
-        $reservations = Reservation::where('restaurant_id', Auth::user()->id)->get();
-        return view('restaurant.reservation', compact('reservations'));
-    }
-
-    // Handle reservation approval
-    public function approve($id)
+    public function show($id)
     {
         $reservation = Reservation::findOrFail($id);
-        $reservation->status = 'approved';
-        $reservation->save();
+        return view('customer.reservations.show', compact('reservation'));
+    }
 
-        return redirect()->back()->with('success', 'Reservation approved');
+    public function destroy($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        $reservation->delete();
+        return redirect()->route('reservations.index')->with('success', 'Reservation cancelled successfully.');
     }
 }

@@ -198,8 +198,8 @@
         <nav>
             <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/dashboard'"> <!-- Replace 'logo.png' with your logo image path -->
             <ul>
-            <a href="{{ route('customer.restaurants') }}">Restaurants</a>
-            <a href="{{ route('customer.reservation.create') }}">Reservations</a>
+            <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
+            <li><a href="{{ route('customer.reservation.create') }}">Reservations</a></li>
             </ul>
         </nav>
         <div class="search-bar">
