@@ -1,23 +1,31 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCustomerIdToProfilesTable extends Migration
+class CreateProfilesTable extends Migration
 {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
-        Schema::table('profiles', function (Blueprint $table) {
-            $table->foreignId('customer_id')->constrained('users')->onDelete('cascade');
+        Schema::create('profiles', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
-        Schema::table('profiles', function (Blueprint $table) {
-            $table->dropForeign(['customer_id']);
-            $table->dropColumn('customer_id');
-        });
+        Schema::dropIfExists('profiles');
     }
 }

@@ -28,6 +28,8 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
+
+       
         // Validate the incoming request
         $request->validate([
             'name' => 'required|string|max:255',
