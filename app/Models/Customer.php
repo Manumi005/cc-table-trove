@@ -9,7 +9,12 @@ class Customer extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'contact_number', 'password',
+        'name', 
+        'email', 
+        'contact_number', 
+        'password',
+        'allergies',
+        'preferences',
     ];
 
     protected $hidden = [
@@ -18,6 +23,8 @@ class Customer extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'allergies' => 'array',
+        'preferences' => 'array',
     ];
 
     public function profile()

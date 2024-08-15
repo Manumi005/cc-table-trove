@@ -209,14 +209,19 @@
             <p>{{ $restaurant->address }}</p>
             <label for="cuisine_type">Cuisine Type:</label>
             <p>
-                @php
-                    $cuisineTypes = $restaurant->cuisine_type;
-                    if (is_array($cuisineTypes) && !empty($cuisineTypes)) {
+            @php
+                $cuisineTypes = $restaurant->cuisine_type;
+                if (!is_null($cuisineTypes)) {
+                    $cuisineTypes = is_array($cuisineTypes) ? $cuisineTypes : (is_string($cuisineTypes) ? explode(',', $cuisineTypes) : []);
+                    if (!empty($cuisineTypes)) {
                         echo htmlspecialchars(implode(', ', $cuisineTypes), ENT_QUOTES, 'UTF-8');
                     } else {
                         echo 'Not specified';
                     }
-                @endphp
+                } else {
+                    echo 'Not specified';
+                }
+            @endphp
             </p>
             <label for="opening_hours">Opening Hours:</label>
             <p>
@@ -243,4 +248,4 @@
         </div>
     </div>
 </body>
-</html>  
+</html>

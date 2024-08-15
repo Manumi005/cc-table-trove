@@ -7,34 +7,119 @@
     <title>Add Menu Item</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
+
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
+            font-family: Arial, sans-serif;
+            background: url('{{ asset('images/wallpaper3.jpg') }}') no-repeat center center fixed;
             margin: 0;
             padding: 0;
+            background-color: #98b2b8;
         }
-
         header {
-            background-color: #6C63FF;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        nav img {
+            cursor: pointer;
+            width: 150px; /* Adjust size as needed */
+            height: auto;
+            margin-right: 20px;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            position: relative;
+        }
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            display: block;
+            margin-top: 5px;
+            right: 0;
+            background: #fff;
+            transition: width 0.3s ease;
+            -webkit-transition: width 0.3s ease;
+        }
+        nav ul li a:hover::after {
+            width: 100%;
+            left: 0;
+            background-color: #fff;
+        }
+        .search-bar {
+            display: flex;
+            align-items: right;
+            flex-grow: 1;
+            justify-content: right;
+            margin: 0 20px;
+        }
+        .search-bar input {
+            padding: 5px 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 300px;
+            background-color: #d9edff;
+        }
+        .profile-icon {
+            margin-left: 15px;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+        .profile-icon img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+        .top {
+            background-color:#6397b5;
             color: white;
             padding: 20px;
-            text-align: center;
+            
+          
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
 
-        header h1 {
+        .top h1 {
             margin: 0;
-            font-size: 2.5rem;
+           
+            text-align: center;
+            margin-top:-90px;
+            margin-bottom: 30px;
+            margin-left: 150px;
+
         }
+
 
         main {
-            padding: 20px;
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 600px;
+            padding: 30px;
+            margin: 40px auto;
+            background: #9bbfbe;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         form {
@@ -42,75 +127,117 @@
             flex-direction: column;
         }
 
+        .form-group {
+            margin-bottom: 25px;
+        }
+
         label {
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            display: block;
         }
 
-        input[type="text"],
+        .form-group input[type="text"],
         input[type="number"],
         textarea,
-        select {
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+        select,
+        input[type="file"] {
+            display: block;
+            margin-top: 5px;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 6px;
             font-size: 1rem;
+            width: 95%;
+            background-color: #b1e3d5;
         }
 
-        input[type="checkbox"] {
-            margin-right: 10px;
+        textarea {
+            resize: vertical;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit; /* Inherit the font from the parent element */
+            width: 100%; /* Ensure it has the same width as other input elements */
+            box-sizing: border-box; /* Include padding and border in the element's width */
+        
         }
 
         .checkbox-group {
             display: flex;
             flex-wrap: wrap;
-            margin-bottom: 15px;
-        }
-
-        .checkbox-group label {
-            margin-right: 20px;
-            font-weight: normal;
-        }
-
-        .checkbox-group input {
-            margin-right: 5px;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
         .checkbox-group div {
-            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 10px;
         }
 
         button {
-            padding: 10px 20px;
-            background-color: #6C63FF;
+            padding: 12px 24px;
+            background-color: #0288d1;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.1rem;
             align-self: flex-start;
         }
 
         button:hover {
-            background-color: #5a54e0;
+            background-color: #0277bd;
         }
 
         .error {
-            color: #FF5C5C;
+            color: #e57373;
             margin: 5px 0;
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        .checkbox-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .menu-icon {
+            width: 100px; /* Adjust size as needed */
+            height: auto;
+            margin: 30px;
+            margin-left: 400px
+        
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <h1>Add New Menu Item</h1>
+<header>
+        <nav>
+            <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/restaurant/dashboard'"> <!-- Replace 'logo.png' with your logo image path -->
+            <ul>
+                <li> <a href='/restaurant/menu'>Menu Management</a></li>
+                <li><a href="/reservation">Reservation Management</a></li>
+                <li> <a href='/pre-order'>Pre-Order Management</a></li>
+                <li> <a href='/payment-verification'>Payment Verification</a></li>
+            </ul>
+        </nav>
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+            <div class="profile-icon" onclick="location.href='/restaurant/profile'">
+                <img src="{{ asset('images/restaurant.png') }}" alt="Profile">
+            </div>
+        </div>
     </header>
+    <div class="top">
+    <img src="{{ asset('images/add.png') }}" alt="Menu Icon" class="menu-icon">
+       <h1> Add New Menu Item </h1>
+    </div>
     <main>
         <form id="menuForm" action="{{ route('restaurant.menu.store') }}" method="POST" enctype="multipart/form-data">
             @csrf

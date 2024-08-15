@@ -130,25 +130,31 @@
                         $cuisineTypes = json_decode($restaurant->cuisine_type, true) ?? [];
                         $oldCuisineTypes = old('cuisine_type', $cuisineTypes) ?? [];
                     @endphp
-                    <label>
-                        <input type="checkbox" name="cuisine_type[]" value="Italian" {{ in_array('Italian', $oldCuisineTypes) ? 'checked' : '' }}> Italian
-                    </label>
-                    <label>
-                        <input type="checkbox" name="cuisine_type[]" value="Chinese" {{ in_array('Chinese', $oldCuisineTypes) ? 'checked' : '' }}> Chinese
-                    </label>
-                    <label>
-                        <input type="checkbox" name="cuisine_type[]" value="Mexican" {{ in_array('Mexican', $oldCuisineTypes) ? 'checked' : '' }}> Mexican
-                    </label>
-                    <label>
-                        <input type="checkbox" name="cuisine_type[]" value="Indian" {{ in_array('Indian', $oldCuisineTypes) ? 'checked' : '' }}> Indian
-                    </label>
-                    <label>
-                        <input type="checkbox" name="cuisine_type[]" value="Japanese" {{ in_array('Japanese', $oldCuisineTypes) ? 'checked' : '' }}> Japanese
-                    </label>
-                    <label>
-                        <input type="checkbox" name="cuisine_type[]" value="Thai" {{ in_array('Thai', $oldCuisineTypes) ? 'checked' : '' }}> Thai
-                    </label>
-                    <!-- Add more options as needed -->
+                <label>
+                    <input type="checkbox" name="cuisine_type[]" value="Italian" {{ in_array('Italian', $oldCuisineTypes) ? 'checked' : '' }}> Italian
+                </label>
+                <label>
+                    <input type="checkbox" name="cuisine_type[]" value="Chinese" {{ in_array('Chinese', $oldCuisineTypes) ? 'checked' : '' }}> Chinese
+                </label>
+                <label>
+                    <input type="checkbox" name="cuisine_type[]" value="Mexican" {{ in_array('Mexican', $oldCuisineTypes) ? 'checked' : '' }}> Mexican
+                </label>
+                <label>
+                    <input type="checkbox" name="cuisine_type[]" value="Indian" {{ in_array('Indian', $oldCuisineTypes) ? 'checked' : '' }}> Indian
+                </label>
+                <label>
+                    <input type="checkbox" name="cuisine_type[]" value="Japanese" {{ in_array('Japanese', $oldCuisineTypes) ? 'checked' : '' }}> Japanese
+                </label>
+                <label>
+                    <input type="checkbox" name="cuisine_type[]" value="Thai" {{ in_array('Thai', $oldCuisineTypes) ? 'checked' : '' }}> Thai
+                </label>
+                <label>
+                    <input type="checkbox" name="cuisine_type[]" value="Sri Lankan" {{ in_array('Sri Lankan', $oldCuisineTypes) ? 'checked' : '' }}> SriLankan
+                </label>
+                <label>
+                    <input type="checkbox" name="cuisine_type[]" value="Other" {{ in_array('Other', $oldCuisineTypes) ? 'checked' : '' }}> Other
+                </label>
+                 <!-- Add more options as needed -->
                 </div>
                 @error('cuisine_type')
                     <p class="text-red-500 text-sm">{{ $message }}</p>

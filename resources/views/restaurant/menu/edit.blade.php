@@ -6,105 +6,234 @@
     <title>Edit Menu Item</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f2f2f2;
-            color: #333;
+    body {
+            font-family: Arial, sans-serif;
+            background: url('{{ asset('images/wallpaper3.jpg') }}') no-repeat center center fixed;
             margin: 0;
             padding: 0;
+            background-color: #98b2b8;
         }
         header {
-            background-color: #6C63FF;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        nav img {
+            cursor: pointer;
+            width: 150px; /* Adjust size as needed */
+            height: auto;
+            margin-right: 20px;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            position: relative;
+        }
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            display: block;
+            margin-top: 5px;
+            right: 0;
+            background: #fff;
+            transition: width 0.3s ease;
+            -webkit-transition: width 0.3s ease;
+        }
+        nav ul li a:hover::after {
+            width: 100%;
+            left: 0;
+            background-color: #fff;
+        }
+        .search-bar {
+            display: flex;
+            align-items: right;
+            flex-grow: 1;
+            justify-content: right;
+            margin: 0 20px;
+        }
+        .search-bar input {
+            padding: 5px 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 300px;
+            background-color: #d9edff;
+        }
+        .profile-icon {
+            margin-left: 15px;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+        .profile-icon img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+        .top {
+            background-color:#6397b5;
             color: white;
             padding: 20px;
-            text-align: center;
+            
+          
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
-        header h1 {
+
+        .top h1 {
             margin: 0;
-            font-size: 2.5rem;
+           
+            text-align: center;
+            margin-top:-90px;
+            margin-bottom: 30px;
+            margin-left: 150px;
+
         }
+
+
         main {
-            padding: 20px;
-            max-width: 800px;
+            padding: 30px;
+            max-width: 600px;
+            padding: 30px;
             margin: 40px auto;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: #9bbfbe;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
+
         form {
             display: flex;
             flex-direction: column;
         }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
         label {
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            display: block;
         }
-        input[type="text"], input[type="number"], textarea, select {
+
+        .form-group input[type="text"],
+        input[type="number"],
+        textarea,
+        select,
+        input[type="file"] {
+            display: block;
+            margin-top: 5px;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            font-size: 1rem;
+            width: 95%;
+            background-color: #b1e3d5;
+        }
+
+        textarea {
+            resize: vertical;
             margin-bottom: 15px;
             padding: 10px;
-            border: 1px solid #ddd;
+            border: 1px solid #333;
             border-radius: 4px;
             font-size: 1rem;
+            font-family: inherit; /* Inherit the font from the parent element */
+            width: 100%; /* Ensure it has the same width as other input elements */
+            box-sizing: border-box; /* Include padding and border in the element's width */
+        
         }
-        input[type="file"] {
-            padding: 10px 0;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #6C63FF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        button:hover {
-            background-color: #5a54e0;
-        }
-        .error {
-            color: #FF5C5C;
-            margin: 5px 0;
-        }
+
         .checkbox-group {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
-        .checkbox-group label {
-            margin-right: 10px;
-            font-weight: normal;
+
+        .checkbox-group div {
+            display: flex;
+            align-items: center;
         }
+
         .checkbox-group input[type="checkbox"] {
-            margin-right: 5px;
+            margin-right: 10px;
         }
-        .image-preview {
-            margin-top: 10px;
-            max-width: 200px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        button {
+            padding: 12px 24px;
+            background-color: #0288d1;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            align-self: flex-start;
+        }
+
+        button:hover {
+            background-color: #0277bd;
+        }
+
+        .error {
+            color: #e57373;
+            margin: 5px 0;
+        }
+
+        .checkbox-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .menu-icon {
+            width: 100px; /* Adjust size as needed */
+            height: auto;
+            margin: 30px;
+            margin-left: 400px
+        
         }
     </style>
 </head>
+
 <body>
-    <header>
-        <h1>Edit Menu Item</h1>
-    </header>
+
+    <div class="top">
+    <img src="{{ asset('images/add.png') }}" alt="Menu Icon" class="menu-icon">
+       <h1> Add New Menu Item </h1>
+    </div>
+   
     <main>
         <form action="{{ route('restaurant.menu.update', $menu->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
-            <!-- Name -->
-            <div>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" value="{{ old('name', $menu->name) }}" required>
-                @error('name')
-                    <div class="error">{{ $message }}</div>
-                @enderror
-            </div>
-
+<!-- Name -->
+<div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" value="{{ old('name', $menu->name) }}" required>
+    @error('name')
+        <div class="error">{{ $message }}</div>
+    @enderror
+</div>
             <!-- Description -->
             <div>
                 <label for="description">Description:</label>

@@ -186,10 +186,10 @@
 <body>
     <header>
         <nav>
-            <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/dashboard'">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/customer/dashboard'">
             <ul>
                 <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
-                <li><a href="/reservation">Reservations</a></li>
+                <li><a href="{{ route('customer.reservation.create') }}">Reservations</a></li>
             </ul>
         </nav>
         <div class="search-bar">
@@ -225,7 +225,3 @@
     </div>
 </body>
 </html>
-
-
-
-

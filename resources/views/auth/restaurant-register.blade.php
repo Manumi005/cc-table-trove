@@ -7,47 +7,48 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: url('{{ asset('images/wallpaper4.jpg') }}') no-repeat center center fixed;
+            background: url('{{ asset('images/wallpaper1.jpg') }}') no-repeat center center fixed;
             background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+           
             margin: 0;
             overflow-y: auto; /* Enable vertical scrolling */
         }
         .register-container {
-            background: rgba(42, 29, 37, 0.8);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            max-width: 500px;
+            background-color: #2a1d25;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
             width: 100%;
             color: white;
-            opacity: 0.95;
-            margin-top: 20px; /* Add margin-top for spacing */
+            margin-top: 20px;
+            margin-bottom: 20px;
+            opacity: 0.9;
         }
         .register-container h2 {
             margin-bottom: 25px;
-            font-size: 32px;
+            font-size: 24px;
             text-align: center;
             color: #e4cfdc;
         }
         .register-container label {
             display: block;
             margin-bottom: 10px;
-            font-size: 18px;
+            font-size: 14px;
             color: #fff;
         }
         .register-container input[type="text"],
         .register-container input[type="email"],
         .register-container input[type="password"] {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 15px;
             border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 15px;
+            font-size: 14px;
             background-color: #ead8f4;
         }
         .register-container input[type="text"].other-cuisine {
@@ -98,25 +99,34 @@
             text-decoration: underline;
         }
         .cuisine-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .cuisine-options label {
-            font-size: 16px;
-            margin-right: 10px;
-        }
-        .cuisine-options input[type="checkbox"] {
-            margin-right: 5px;
-        }
-        .cuisine-options .other-cuisine-container {
-            display: flex;
-            flex-direction: column;
-        }
-        .cuisine-options .other-cuisine-container input {
-            margin-top: 5px;
-        }
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjust columns based on available space */
+    gap: 10px; /* Space between grid items */
+    margin-bottom: 20px;
+}
+
+.other-cuisine-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    gap: 10px; /* Adds space between the checkbox and the input field */
+}
+
+.other-cuisine-container label {
+    margin: 0; /* Remove any default margin on the label */
+    white-space: nowrap; /* Prevents the text from wrapping to the next line */
+}
+
+.other-cuisine-container input[type="text"] {
+    flex-grow: 1; /* Allows the text input to take up the remaining space */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+
         @media (max-width: 600px) {
             .register-container {
                 padding: 15px;

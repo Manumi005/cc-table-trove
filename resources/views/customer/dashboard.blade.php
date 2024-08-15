@@ -11,7 +11,6 @@
             padding: 0;
             background-color: #cd9cc0; 
         }
-
         header {
             background-color: #333;
             color: #fff;
@@ -20,36 +19,30 @@
             justify-content: space-between;
             align-items: center;
         }
-
         nav {
             display: flex;
             align-items: center;
         }
-
         nav img {
             cursor: pointer;
             width: 150px; /* Adjust size as needed */
             height: 60px;
             margin-right: 20px;
         }
-
         nav ul {
             list-style-type: none;
             margin: 0;
             padding: 0;
             display: flex;
         }
-
         nav ul li {
             margin: 0 15px;
         }
-
         nav ul li a {
             color: #fff;
             text-decoration: none;
             position: relative;
         }
-
         nav ul li a::after {
             content: '';
             position: absolute;
@@ -62,58 +55,48 @@
             transition: width 0.3s ease;
             -webkit-transition: width 0.3s ease;
         }
-
         nav ul li a:hover::after {
             width: 100%;
             left: 0;
             background-color: #fff;
         }
-
         .search-bar {
             display: flex;
             align-items: center;
         }
-
         .search-bar input {
             padding: 5px;
             font-size: 16px;
             border: none;
             border-radius: 5px;
         }
-
         .profile-icon {
             margin-left: 15px;
             margin-right: 20px;
             cursor: pointer;
         }
-
         .profile-icon img {
             width: 30px;
             height: 30px;
             border-radius: 50%;
         }
-
         .slider {
             width: 100%;
             overflow: hidden;
         }
-
         .slide {
             display: none;
         }
-
         .slide img {
             width: 100%;
             height: 500px;
         }
-
         .horizontal-scroll {
             display: flex;
             overflow-x: auto;
             padding: 20px;
             background-color: #545353;
         }
-
         .card {
             display: inline-block;
             margin: 10px;
@@ -126,17 +109,14 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
         }
-
         .card img {
             width: 100%;
             height: auto;
             border-bottom: 1px solid #ddd;
         }
-
         .card h3, .card h4 {
             margin: 10px 0;
         }
-
         .card button {
             margin: 5px;
             padding: 10px;
@@ -150,41 +130,34 @@
         .card button:hover {
             background-color: #7c347d;
         }
-
         .card:hover {
             transform: translateY(-10px);
             box-shadow: 0 10px 20px rgba(2, 2, 2, 0.8);
         }
-
         .categories-section {
             background-color: #f9b6da;
             padding: 20px;
             text-align: center;
         }
-
         .categories-section a {
             text-decoration: none;
             color: #333;
             font-weight: bold;
         }
-
         .categories-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
         }
-
         .categories-grid .card {
             width: calc(23.33% - 20px);
             margin: 10px;
         }
-
         @media (max-width: 768px) {
             .categories-grid .card {
                 width: calc(50% - 20px);
             }
         }
-
         @media (max-width: 480px) {
             .categories-grid .card {
                 width: 100%;
@@ -209,7 +182,6 @@
             </div>
         </div>
     </header>
-
     <section class="slider">
         <div class="slide">
             <img src="{{ asset('images/offers1.png') }}" alt="Offer 1">
@@ -221,7 +193,6 @@
             <img src="{{ asset('images/offer3.png') }}" alt="Offer 3">
         </div>
     </section>
-
     <section class="recommended-restaurants">
         <h2>Recommended Restaurants</h2>
         <div class="horizontal-scroll">
@@ -257,7 +228,6 @@
             </div>
         </div>
     </section>
-
     <section class="categories-section">
         <h2>Categories</h2>
         <div class="categories-grid">
@@ -295,11 +265,9 @@
             </div>
         </div>
     </section>
-
     <script>
         let slideIndex = 0;
         showSlides();
-
         function showSlides() {
             let slides = document.querySelectorAll('.slide');
             slides.forEach((slide, index) => {

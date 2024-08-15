@@ -21,6 +21,7 @@ class ReservationController extends Controller
             'reservation_date' => 'required|date',
             'time_slot' => 'required',
             'party_size' => 'required|integer|min:1|max:20',
+            'restaurant_id' => 'required|exists:restaurants,id',
         ]);
 
         $reservation = new Reservation();
@@ -29,6 +30,7 @@ class ReservationController extends Controller
         $reservation->time_slot = $request->time_slot;
         $reservation->party_size = $request->party_size;
         $reservation->status = 'pending'; // Default status
+        $reservation->restaurant_id = $request->restaurant_id; // Set restaurant_id
         $reservation->save();
 
         return redirect()->route('customer.reservation.create')->with('success', 'Reservation made successfully!');

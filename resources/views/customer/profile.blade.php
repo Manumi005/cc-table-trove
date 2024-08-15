@@ -253,8 +253,8 @@
     <nav>
         <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/customer/dashboard'">
         <ul>
-            <li><a href="#">Restaurants</a></li>
-            <li><a href="#">Reservations</a></li>
+        <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
+        <li><a href="{{ route('customer.reservation.create') }}">Reservations</a></li>
         </ul>
     </nav>
     <div class="search-bar">
