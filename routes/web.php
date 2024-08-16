@@ -17,7 +17,7 @@ Route::get('/', function () {
 })->name('home');
 
 // Customer Authentication Routes
-Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
+Route::prefix('customer')->as('customer.')->group(function () {
     Route::get('login', [CustomerAuthController::class, 'showLoginForm'])->name('login');
     Route::post('login', [CustomerAuthController::class, 'login']);
     Route::get('register', [CustomerAuthController::class, 'showRegistrationForm'])->name('register');
@@ -25,7 +25,7 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
     Route::post('logout', [CustomerAuthController::class, 'logout'])->name('logout');
 
     // Customer Dashboard Route
-    Route::get('dashboard', [CustomerAuthController::class, 'dashboard'])->name('dashboard')->middleware('auth:customer');
+    Route::middleware('auth:customer')->get('dashboard', [CustomerAuthController::class, 'dashboard'])->name('dashboard');
 
     // Customer Profile Routes
     Route::middleware('auth:customer')->group(function () {
@@ -38,20 +38,20 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
     Route::get('restaurants', [CustomerController::class, 'listRestaurants'])->name('restaurants');
     Route::get('restaurant/{id}', [CustomerController::class, 'showRestaurant'])->name('restaurant.details');
     Route::get('restaurant/{id}/menu', [CustomerMenuController::class, 'show'])->name('restaurant.menu');
+    Route::post('filter-menu', [CustomerMenuController::class, 'filter'])->name('menu.filter');
 
     // Customer Reservation Routes
     Route::middleware('auth:customer')->group(function () {
-        Route::get('/reservations', [CustomerReservationController::class, 'index'])->name('customer.reservations.index')->middleware('auth:customer');
+        Route::get('reservations', [CustomerReservationController::class, 'index'])->name('reservations.index');
         Route::get('reserve', [CustomerReservationController::class, 'create'])->name('reservation.create');
         Route::post('reserve', [CustomerReservationController::class, 'store'])->name('reservations.store');
-
         Route::get('reservation/{id}', [CustomerReservationController::class, 'show'])->name('reservation.show');
         Route::delete('reservation/{id}', [CustomerReservationController::class, 'destroy'])->name('reservation.destroy');
     });
 });
 
 // Restaurant Authentication Routes
-Route::group(['prefix' => 'restaurant', 'as' => 'restaurant.'], function () {
+Route::prefix('restaurant')->as('restaurant.')->group(function () {
     Route::get('login', [RestaurantAuthController::class, 'showLoginForm'])->name('login');
     Route::post('login', [RestaurantAuthController::class, 'login']);
     Route::get('register', [RestaurantAuthController::class, 'showRegistrationForm'])->name('register');
@@ -59,9 +59,9 @@ Route::group(['prefix' => 'restaurant', 'as' => 'restaurant.'], function () {
     Route::post('logout', [RestaurantAuthController::class, 'logout'])->name('logout');
 
     // Restaurant Dashboard Route
-    Route::get('dashboard', function () {
+    Route::middleware('auth:restaurant')->get('dashboard', function () {
         return view('restaurant.dashboard');
-    })->name('dashboard')->middleware('auth:restaurant');
+    })->name('dashboard');
 
     // Restaurant Profile Routes
     Route::middleware('auth:restaurant')->group(function () {
