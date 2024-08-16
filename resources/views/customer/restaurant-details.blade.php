@@ -121,7 +121,7 @@
             <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/dashboard'"> <!-- Replace 'logo.png' with your logo image path -->
             <ul>
                 <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
-                <li><a href="/reservation">Reservations</a></li>
+                <li><a href="{{ route('customer.reservation.create') }}">Reservations</a></li>
             </ul>
         </nav>
         <div class="search-bar">
@@ -147,10 +147,8 @@
             <label>Cuisine Type:</label>
             <p>{{ implode(', ', json_decode($restaurant->cuisine_type, true)) }}</p>
 
-
             <label>Details:</label>
             <p>{{ $restaurant->details }}</p>
-
         </div>
         <div class="actions">
             <a href="{{ route('customer.restaurants') }}">Back to Restaurants</a>

@@ -198,8 +198,8 @@
         <nav>
             <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/dashboard'"> <!-- Replace 'logo.png' with your logo image path -->
             <ul>
-            <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
-            <li><a href="{{ route('customer.reservation.create') }}">Reservations</a></li>
+                <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
+                <li><a href="/customer/reservations">Reservations</a></li> <!-- Updated link -->
             </ul>
         </nav>
         <div class="search-bar">
@@ -284,14 +284,6 @@
             <div class="card">
                 <img src="{{ asset('images/thaicat.jpg') }}" alt="Thai">
                 <h4><a href="#">Thai</a></h4>
-            </div>
-            <div class="card">
-                <img src="{{ asset('images/koreancat.jpg') }}" alt="Korean">
-                <h4><a href="#">Korean</a></h4>
-            </div>
-            <div class="card">
-                <img src="{{ asset('images/japcat.jpg') }}" alt="Japanese">
-                <h4><a href="#">Japanese</a></h4>
             </div>
         </div>
     </section>

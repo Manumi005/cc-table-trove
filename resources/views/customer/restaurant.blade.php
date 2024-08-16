@@ -170,6 +170,26 @@
             background-color: #ff1493; /* Darker pink on hover */
         }
 
+        .action-buttons {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .action-buttons a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff69b4;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .action-buttons a:hover {
+            background-color: #ff1493;
+        }
+
         @media (max-width: 768px) {
             .restaurant-card {
                 width: calc(50% - 20px);
@@ -186,7 +206,7 @@
 <body>
     <header>
         <nav>
-        <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/customer/dashboard'">
+            <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/customer/dashboard'">
             <ul>
                 <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
                 <li><a href="{{ route('customer.reservation.create') }}">Reservations</a></li>
@@ -205,6 +225,9 @@
 
     <div class="container">
         <h1>Restaurants</h1>
+        <div class="action-buttons">
+            <a href="{{ route('customer.reservation.create') }}">Make a Reservation</a>
+        </div>
         <div class="restaurant-card-container">
             @if($restaurants->isEmpty())
                 <p>No restaurants found matching your search criteria.</p>
