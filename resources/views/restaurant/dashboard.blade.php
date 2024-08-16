@@ -173,7 +173,7 @@
             </div>
 
             <!-- Reservation Management Card -->
-            <div class="card" onclick="location.href='/restaurant/reservation'">
+            <div class="card" onclick="location.href='/restaurant/reservations'">
                 <img src="{{ asset('images/restaurantreservation.png') }}" alt="Reservation Management">
                 <h3>Reservation Management</h3>
                 <p>Handle customer reservations efficiently with our intuitive tools.</p>

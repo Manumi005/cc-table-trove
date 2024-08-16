@@ -239,7 +239,7 @@
        <h1> Add New Menu Item </h1>
     </div>
     <main>
-        <form id="menuForm" action="{{ route('restaurant.menu.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('customer.reservation.store') }}" method="POST"> enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="name">Name:</label>

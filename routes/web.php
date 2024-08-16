@@ -7,7 +7,8 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RestaurantMenuController;
 use App\Http\Controllers\CustomerMenuController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\CustomerReservationController;
+use App\Http\Controllers\RestaurantReservationController;
 use Illuminate\Support\Facades\Route;
 
 // Home Route
@@ -40,8 +41,12 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
 
     // Customer Reservation Routes
     Route::middleware('auth:customer')->group(function () {
-        Route::get('reserve', [ReservationController::class, 'create'])->name('reservation.create');
-        Route::post('reserve', [ReservationController::class, 'store'])->name('reservation.store');
+        Route::get('/reservations', [CustomerReservationController::class, 'index'])->name('customer.reservations.index')->middleware('auth:customer');
+        Route::get('reserve', [CustomerReservationController::class, 'create'])->name('reservation.create');
+        Route::post('reserve', [CustomerReservationController::class, 'store'])->name('reservations.store');
+
+        Route::get('reservation/{id}', [CustomerReservationController::class, 'show'])->name('reservation.show');
+        Route::delete('reservation/{id}', [CustomerReservationController::class, 'destroy'])->name('reservation.destroy');
     });
 });
 
@@ -86,7 +91,8 @@ Route::group(['prefix' => 'restaurant', 'as' => 'restaurant.'], function () {
 
     // Restaurant Reservation Routes
     Route::middleware('auth:restaurant')->group(function () {
-        Route::get('reservation', [ReservationController::class, 'index'])->name('reservation.index');
-        Route::post('reservation/{id}/approve', [ReservationController::class, 'approve'])->name('reservation.approve');
+        Route::get('reservations', [RestaurantReservationController::class, 'index'])->name('reservation.index');
+        Route::post('reservation/{id}/approve', [RestaurantReservationController::class, 'approve'])->name('reservation.approve');
+        Route::delete('reservation/{id}', [RestaurantReservationController::class, 'destroy'])->name('reservation.destroy');
     });
 });

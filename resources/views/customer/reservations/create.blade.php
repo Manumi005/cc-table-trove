@@ -39,7 +39,7 @@
 <body>
     <div class="container">
         <h1>Create Reservation</h1>
-        <form action="{{ route('customer.reservation.store') }}" method="POST">
+        <form action="{{ route('customer.reservations.store') }}" method="POST">
             @csrf
             <div class="form-group">
                 <label for="restaurant_id">Restaurant</label>
