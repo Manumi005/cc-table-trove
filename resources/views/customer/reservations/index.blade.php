@@ -97,10 +97,10 @@
                             <td>{{ $reservation->time_slot }}</td>
                             <td>{{ $reservation->party_size }}</td>
                             <td>
-                                <form action="{{ route('customer.reservations.destroy', $reservation->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this reservation?');">
+                                <form action="{{ route('customer.reservations.destroy', $reservation->id) }}" method="POST" style="display: inline-block;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to cancel this reservation?')">Cancel</button>
                                 </form>
                             </td>
                         </tr>
@@ -109,7 +109,8 @@
             </table>
         @endif
 
-        <a href="{{ route('customer.reservations.create') }}" class="btn btn-primary mt-3">Make a New Reservation</a>
+        <a href="{{ route('customer.reservation.create') }}" class="btn btn-primary mt-3">Make a New Reservation</a>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

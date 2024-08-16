@@ -26,15 +26,15 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|integer',
-            'restaurant_id' => 'required|integer',
+            'customer_id' => 'required|integer|exists:customers,id', // Update validation to use 'id'
+            'restaurant_id' => 'required|integer|exists:restaurants,id',
             'reservation_date' => 'required|date',
             'time_slot' => ['required', 'regex:/^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/'],
             'party_size' => 'required|integer',
         ]);
 
         Reservation::create([
-            'user_id' => $request->user_id,
+            'customer_id' => $request->id, // Use 'id' here
             'restaurant_id' => $request->restaurant_id,
             'reservation_date' => $request->reservation_date,
             'time_slot' => $request->time_slot,

@@ -4,26 +4,30 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Reservation;
 
-
-class Reservation extends Model{
-
+class Reservation extends Model
+{
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'customer_id',
         'restaurant_id',
         'reservation_date',
         'time_slot',
         'party_size',
-        'updated_at',
     ];
-    public function user()
+
+    /**
+     * Get the customer that owns the reservation.
+     */
+    public function customer()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Customer::class);
     }
 
+    /**
+     * Get the restaurant that owns the reservation.
+     */
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class);
