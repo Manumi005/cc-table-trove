@@ -87,6 +87,7 @@ Route::prefix('restaurant')->as('restaurant.')->group(function () {
         // Reservation Routes
         Route::get('reservations', [RestaurantReservationController::class, 'index'])->name('reservation.index');
         Route::post('reservation/{id}/approve', [RestaurantReservationController::class, 'approve'])->name('reservation.approve');
+        Route::post('reservation/{id}/cancel', [RestaurantReservationController::class, 'cancel'])->name('reservation.cancel');  // New route for canceling reservations
         Route::delete('reservation/{id}', [RestaurantReservationController::class, 'destroy'])->name('reservation.destroy');
     });
 });

@@ -25,6 +25,11 @@
         .form-group label {
             font-weight: bold;
         }
+        .text-danger {
+            color: red;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
         .btn-primary {
             background-color: #007bff;
             border-color: #007bff;
@@ -49,25 +54,33 @@
                         <option value="{{ $restaurant->id }}">{{ $restaurant->name }}</option>
                     @endforeach
                 </select>
+                @error('restaurant_id')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group">
-                <label for="reservation_date">Date</label>
-                <input type="date" name="reservation_date" id="reservation_date" class="form-control" required>
+                <label for="reservation_date">Reservation Date</label>
+                <input type="date" name="reservation_date" id="reservation_date" class="form-control" value="{{ old('reservation_date') }}" required>
+                @error('reservation_date')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group">
-                <label for="time_slot">Time</label>
-                <input type="time" name="time_slot" id="time_slot" class="form-control" required>
+                <label for="time_slot">Time Slot</label>
+                <input type="time" name="time_slot" id="time_slot" class="form-control" value="{{ old('time_slot') }}" required>
+                @error('time_slot')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group">
-                <label for="party_size">Number of Guests</label>
-                <input type="number" name="party_size" id="party_size" class="form-control" min="1" required>
+                <label for="party_size">Party Size</label>
+                <input type="number" name="party_size" id="party_size" class="form-control" value="{{ old('party_size') }}" min="1" max="10" required>
+                @error('party_size')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit Reservation</button>
         </form>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

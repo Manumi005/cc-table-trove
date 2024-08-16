@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('reservation_date');
             $table->time('time_slot');
             $table->integer('party_size');
+            $table->string('status')->default('Pending'); // Add status column with a default value of 'Pending'
             $table->timestamps();
         });
     }

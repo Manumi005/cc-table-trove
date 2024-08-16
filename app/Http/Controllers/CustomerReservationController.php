@@ -44,17 +44,30 @@ class CustomerReservationController extends Controller
             'restaurant_id' => 'required|integer|exists:restaurants,id',
             'reservation_date' => 'required|date|after_or_equal:today',
             'time_slot' => ['required', 'regex:/^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/'],
-            'party_size' => 'required|integer|min:1',
+            'party_size' => 'required|integer|min:1|max:4', // Limit party size to a maximum of 4
         ], [
             'restaurant_id.required' => 'Please select a restaurant.',
             'restaurant_id.exists' => 'Selected restaurant does not exist.',
             'reservation_date.required' => 'Please select a reservation date.',
             'reservation_date.after_or_equal' => 'Reservation date must be today or a future date.',
-            'time_slot.required' => 'Please select a time slot.',
-            'time_slot.regex' => 'Time slot must be in HH:MM format (24-hour clock).',
-            'party_size.required' => 'Please specify the party size.',
+           'time_slot.required' => 'Please select a time slot.',
+          'time_slot.regex' => 'Time slot must be in HH:MM format (24-hour clock).',
+            'party_size.max' => 'Party size cannot exceed 4 people.', // Error message for exceeding party size
             'party_size.min' => 'Party size must be at least 1.',
         ]);
+
+        // Check if there are available seats in the restaurant for the requested date and time slot
+        $restaurant = Restaurant::find($validated['restaurant_id']);
+        $reservationsAtTimeSlot = Reservation::where('restaurant_id', $validated['restaurant_id'])
+            ->where('reservation_date', $validated['reservation_date'])
+            ->where('time_slot', $validated['time_slot'])
+            ->sum('party_size');
+
+        // Assuming the restaurant has a maximum seating capacity, adjust as needed
+        $maxSeats = 20; // Example capacity, adjust according to your needs
+        if ($reservationsAtTimeSlot + $validated['party_size'] > $maxSeats) {
+            return redirect()->back()->withErrors(['party_size' => 'Sorry, no available seats for the selected time slot.'])->withInput();
+        }
 
         Reservation::create([
             'customer_id' => Auth::id(),
@@ -62,9 +75,10 @@ class CustomerReservationController extends Controller
             'reservation_date' => $validated['reservation_date'],
             'time_slot' => $validated['time_slot'],
             'party_size' => $validated['party_size'],
+            'status' => 'Pending',
         ]);
 
-        return redirect()->route('customer.reservations.index')->with('success', 'Reservation created successfully.');
+        return redirect()->route('customer.reservations.index')->with('success', 'Reservation is pending approval.');
     }
 
     /**

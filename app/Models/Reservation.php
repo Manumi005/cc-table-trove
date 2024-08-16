@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Reservation extends Model
 {
@@ -15,7 +15,11 @@ class Reservation extends Model
         'reservation_date',
         'time_slot',
         'party_size',
+        'status',
     ];
+
+    // Cast reservation_date to a date object
+    protected $dates = ['reservation_date'];
 
     /**
      * Get the customer that owns the reservation.

@@ -15,7 +15,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // Example: Schedule a command to run every day at midnight
+        // $schedule->command('your:command')->daily();
+
+        // Example: Schedule a task to run every hour
+        // $schedule->command('your:command')->hourly();
     }
 
     /**
@@ -25,8 +29,10 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
+        // Load commands from the Commands directory
         $this->load(__DIR__.'/Commands');
 
+        // Register console routes
         require base_path('routes/console.php');
     }
 }
