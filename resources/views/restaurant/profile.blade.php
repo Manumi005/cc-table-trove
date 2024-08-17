@@ -104,8 +104,10 @@
         }
         .profile-image {
             display: block;
-            max-width: 200px;
-            margin: 0 auto;
+            margin-left: 200px;
+            align-items: center;
+            width: 200px;
+           height: 200px;
             border-radius: 50%;
         }
         .details {
@@ -192,11 +194,9 @@
         </div>
         <h1>Restaurant Profile</h1>
         <!-- Display Restaurant Image -->
-        @if ($restaurant->image)
-            <img src="{{ asset('storage/' . $restaurant->image) }}" alt="Restaurant Image" class="profile-image">
-        @else
-            <img src="{{ asset('images/default-restaurant.png') }}" alt="Default Restaurant Image" class="profile-image">
-        @endif
+    
+        <img src="{{ Storage::url($restaurant->image) }}" alt="{{ $restaurant->name }}" class="profile-image">
+       
         <div class="details">
             <!-- Restaurant Detailed Information -->
             <label for="name">Restaurant Name:</label>

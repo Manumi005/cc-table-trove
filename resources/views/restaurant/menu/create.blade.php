@@ -222,7 +222,7 @@
             <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/restaurant/dashboard'"> <!-- Replace 'logo.png' with your logo image path -->
             <ul>
                 <li> <a href='/restaurant/menu'>Menu Management</a></li>
-                <li><a href="/reservation">Reservation Management</a></li>
+                <li><a href="/restaurant/reservations">Reservation Management</a></li>
                 <li> <a href='/pre-order'>Pre-Order Management</a></li>
                 <li> <a href='/payment-verification'>Payment Verification</a></li>
             </ul>

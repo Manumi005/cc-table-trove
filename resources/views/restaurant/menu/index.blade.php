@@ -162,8 +162,8 @@
 img {
     border-radius: 15px; /* Same radius as the card for consistency */
     margin-right: 20px;
-    width: 100px;
-    height: auto;
+    width: 250px;
+    height: 250px;
 }
 
 h2 {
@@ -239,7 +239,7 @@ form {
             <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/restaurant/dashboard'"> <!-- Replace 'logo.png' with your logo image path -->
             <ul>
                 <li> <a href='/restaurant/menu'>Menu Management</a></li>
-                <li><a href="/restaurant/reservation">Reservation Management</a></li>
+                <li><a href="/restaurant/reservations">Reservation Management</a></li>
                 <li> <a href='/pre-order'>Pre-Order Management</a></li>
                 <li> <a href='/payment-verification'>Payment Verification</a></li>
             </ul>
@@ -268,16 +268,33 @@ form {
                             <h2>{{ $menu->name }}</h2>
                             <p>Description: <span>{{ $menu->description }}</span></p>
                             <p>Price: <span>Rs.{{ number_format($menu->price, 2) }}</span></p>
-                            <p>Category: <span>{{ is_array($menu->category) ? implode(', ', $menu->category) : $menu->category }}</span></p>
-                            <p>Allergens: <span>{{ is_array($menu->allergens) ? implode(', ', $menu->allergens) : $menu->allergens }}</span></p>
-                            <p>Dietary: <span>
-                                @if(is_array($menu->dietary))
-                            {{ implode(',', $menu->dietary) ?: 'N/A' }}
-                        @else
-                            {{ $menu->dietary ?: 'N/A' }}
-                        @endif
-                        </span>
-                        
+                            <p>Category: 
+                                        <span>
+                                            {{
+                                                is_array(json_decode($menu->category)) 
+                                                ? implode(', ', array_filter(json_decode($menu->category))) 
+                                                : ($menu->category ?: 'N/A')
+                                            }}
+                                        </span>
+                                    </p>
+                                    <p>Allergens: 
+                                        <span>
+                                            {{
+                                                is_array(json_decode($menu->allergens)) 
+                                                ? implode(', ', array_filter(json_decode($menu->allergens))) 
+                                                : ($menu->allergens ?: 'N/A')
+                                            }}
+                                        </span>
+                                    </p>
+<p>Dietary: 
+    <span>
+        {{
+            is_array(json_decode($menu->dietary)) 
+            ? implode(', ', array_filter(json_decode($menu->dietary))) 
+            : ($menu->dietary ?: 'N/A')
+        }}
+    </span>
+</p>
                         </p>
                             <a href="{{ route('restaurant.menu.edit', $menu->id) }}">Edit</a>
                             <form action="{{ route('restaurant.menu.destroy', $menu->id) }}" method="POST">

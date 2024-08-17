@@ -21,6 +21,12 @@ class CustomerMenuController extends Controller
         $user = Auth::user();
         $userAllergens = $user ? explode(',', $user->allergens) : [];
 
+        // Convert allergens and dietary_preferences to arrays
+        foreach ($menus as $menu) {
+            $menu->allergens = explode(',', $menu->allergens);
+            $menu->dietary_preferences = explode(',', $menu->dietary_preferences);
+        }
+
         return view('customer.menu.index', compact('restaurant', 'menus', 'userAllergens'));
     }
 
@@ -64,7 +70,7 @@ class CustomerMenuController extends Controller
         if (!empty($dietary)) {
             $query->where(function ($q) use ($dietary) {
                 foreach ($dietary as $preference) {
-                    $q->where('dietary', 'like', '%' . $preference . '%');
+                    $q->where('dietary_preferences', 'like', '%' . $preference . '%');
                 }
             });
         }
@@ -73,6 +79,12 @@ class CustomerMenuController extends Controller
         $query->whereBetween('price', [1000, $priceRange]);
 
         $menus = $query->get();
+
+        // Convert allergens and dietary_preferences to arrays
+        foreach ($menus as $menu) {
+            $menu->allergens = explode(',', $menu->allergens);
+            $menu->dietary_preferences = explode(',', $menu->dietary_preferences);
+        }
 
         Log::info('Filtered menus', ['menus' => $menus]);
 

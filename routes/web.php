@@ -2,6 +2,7 @@
 use App\Http\Controllers\Auth\CustomerAuthController;
 use App\Http\Controllers\Auth\RestaurantAuthController;
 use App\Http\Controllers\RestaurantProfileController;
+use App\Http\Controllers\PreOrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RestaurantMenuController;
 use App\Http\Controllers\CustomerMenuController;
@@ -48,6 +49,27 @@ Route::prefix('customer')->as('customer.')->group(function () {
         Route::post('/filter-menu', [CustomerMenuController::class, 'filter'])->name('filter-menu');
         Route::post('/customer/menu/add', [CustomerMenuController::class, 'add'])->name('customer.menu.add');
     });
+   
+    Route::get('/pre-order', function () {
+        return view('pre-order');
+    });
+    
+    Route::post('/submit-order', function (Illuminate\Http\Request $request) {
+        // Handle order submission
+        // You can save the order to the database or perform other actions
+        return response()->json(['success' => true]);
+    });
+    Route::get('/pre-order', [PreOrderController::class, 'index'])->name('preorder.index');
+Route::post('/pre-order', [PreOrderController::class, 'store'])->name('preorder.store');
+Route::get('/preorders', [PreOrderController::class, 'index'])->name('preorders.index');
+Route::get('/preorders/create', [PreOrderController::class, 'create'])->name('preorder.create');
+Route::get('/preorders/{id}/edit', [PreOrderController::class, 'edit'])->name('preorder.edit');
+Route::put('/preorders/{id}', [PreOrderController::class, 'update'])->name('preorder.update');
+Route::get('/pre-order', [PreOrderController::class, 'showPreOrder'])->name('preorder.show');
+Route::post('/preorder/store', [PreOrderController::class, 'store'])->name('preorder.store');
+
+
+
 
 // Restaurant Routes
 Route::prefix('restaurant')->as('restaurant.')->group(function () {
