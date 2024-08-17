@@ -92,6 +92,7 @@
                         <th>Guests</th>
                         <th>Status</th>
                         <th>Actions</th>
+                        <th>Pre-Order</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -112,6 +113,13 @@
                                 <!-- Show reservation details within the same page -->
                                 <button class="btn btn-info reservation-details" data-toggle="modal" data-target="#reservationModal" data-id="{{ $reservation->id }}" data-restaurant="{{ $reservation->restaurant->name }}" data-date="{{ $reservation->reservation_date }}" data-time="{{ $reservation->time_slot }}" data-guests="{{ $reservation->party_size }}" data-status="{{ $reservation->status }}">Details</button>
                             </td>
+                            <td>
+                                @if($reservation->status == 'Approved')
+                                    <a href="{{ route('customer.restaurant.menu', $reservation->restaurant->id) }}" class="btn btn-primary">Pre-Order</a>
+                                @else
+                                    <span class="text-muted">Not Available</span>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -119,8 +127,7 @@
         @endif
 
         <!-- Link to create a new reservation -->
-     <a href="{{ route('customer.reservation.create') }}" class="btn btn-primary ml-2">Make a New Reservation</a>
-            </div>
+        <a href="{{ route('customer.reservation.create') }}" class="btn btn-primary ml-2">Make a New Reservation</a>
     </div>
 
     <!-- Reservation Details Modal -->

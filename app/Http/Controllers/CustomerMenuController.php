@@ -6,9 +6,11 @@ use App\Models\Menu;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CustomerMenuController extends Controller
 {
+    // Show the menu page with menu items for a specific restaurant
     public function show($restaurantId)
     {
         // Validate that restaurantId is an integer
@@ -22,6 +24,7 @@ class CustomerMenuController extends Controller
         return view('customer.menu.index', compact('restaurant', 'menus', 'userAllergens'));
     }
 
+    // Filter menu items based on the selected criteria
     public function filter(Request $request)
     {
         // Validate and sanitize inputs
@@ -38,6 +41,13 @@ class CustomerMenuController extends Controller
         $allergies = $validated['allergies'] ?? [];
         $dietaryPreferences = $validated['dietaryPreferences'] ?? [];
         $priceRange = $validated['priceRange'] ?? 1000;
+
+        Log::info('Filter request received', [
+            'restaurantId' => $restaurantId,
+            'allergies' => $allergies,
+            'dietaryPreferences' => $dietaryPreferences,
+            'priceRange' => $priceRange
+        ]);
 
         $query = Menu::where('restaurant_id', $restaurantId);
 
@@ -63,6 +73,8 @@ class CustomerMenuController extends Controller
         $query->where('price', '<=', $priceRange);
 
         $menus = $query->get();
+
+        Log::info('Filtered menus', ['menus' => $menus]);
 
         return response()->json($menus);
     }

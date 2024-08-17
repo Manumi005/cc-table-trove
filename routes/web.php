@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\Auth\CustomerAuthController;
 use App\Http\Controllers\Auth\RestaurantAuthController;
 use App\Http\Controllers\RestaurantProfileController;
@@ -46,7 +45,7 @@ Route::prefix('customer')->as('customer.')->group(function () {
     Route::get('restaurants', [CustomerController::class, 'listRestaurants'])->name('restaurants');
     Route::get('restaurant/{id}', [CustomerController::class, 'showRestaurant'])->name('restaurant.details');
     Route::get('restaurant/{id}/menu', [CustomerMenuController::class, 'show'])->name('restaurant.menu');
-    Route::post('filter-menu', [CustomerMenuController::class, 'filter'])->name('menu.filter');
+    Route::post('/customer/menu/filter', [CustomerMenuController::class, 'filter'])->name('customer.menu.filter');
 });
 
 // Restaurant Routes
@@ -87,7 +86,7 @@ Route::prefix('restaurant')->as('restaurant.')->group(function () {
         // Reservation Routes
         Route::get('reservations', [RestaurantReservationController::class, 'index'])->name('reservation.index');
         Route::post('reservation/{id}/approve', [RestaurantReservationController::class, 'approve'])->name('reservation.approve');
-        Route::post('reservation/{id}/cancel', [RestaurantReservationController::class, 'cancel'])->name('reservation.cancel');  // New route for canceling reservations
+        Route::post('reservation/{id}/cancel', [RestaurantReservationController::class, 'cancel'])->name('reservation.cancel');
         Route::delete('reservation/{id}', [RestaurantReservationController::class, 'destroy'])->name('reservation.destroy');
     });
 });
