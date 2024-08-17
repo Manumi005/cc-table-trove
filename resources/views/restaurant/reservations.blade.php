@@ -6,30 +6,200 @@
     <title>Reservations - {{ config('app.name') }}</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
-        .table th, .table td {
-            text-align: center;
+        body {
+            font-family: Arial, sans-serif;
+            background: url('{{ asset('images/wallpaper3.jpg') }}') no-repeat center center fixed;
+            margin: 0;
+            padding: 0;
+            background-color: #98b2b8;
         }
-        .btn {
-            margin: 0 5px;
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        nav img {
+            cursor: pointer;
+            width: 150px;
+            height: auto;
+            margin-right: 20px;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            position: relative;
+        }
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            display: block;
+            margin-top: 5px;
+            right: 0;
+            background: #fff;
+            transition: width 0.3s ease;
+            -webkit-transition: width 0.3s ease;
+        }
+        nav ul li a:hover::after {
+            width: 100%;
+            left: 0;
+            background-color: #fff;
+        }
+        .search-bar {
+            display: flex;
+            align-items: right;
+            flex-grow: 1;
+            justify-content: right;
+            margin: 0 20px;
+        }
+        .search-bar input {
+            padding: 5px 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 300px;
+            background-color: #d9edff;
+        }
+        .profile-icon {
+            margin-left: 15px;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+        .profile-icon img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #b7d3ee;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 60px;
+            margin-top: -90px
+        }
+        .reserve-icon {
+            width: 80px; /* Adjust size as needed */
+            height: auto;
+            margin: 30px;
+            margin-left: 300px;
+    
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border-radius: 20px;
+        }
+        .table th{
+            padding: 10px;
+            border: 1px solid #333;
+            background-color: #4984ac;
+            text-align: center;
+            color: #333;
+        }
+        
+        
+        .table td {
+            padding: 10px;
+            border: 1px solid #333;
+            background-color: #ddefff;
+            text-align: center;
         }
         .badge-warning { background-color: #ffc107; }
         .badge-success { background-color: #28a745; }
         .badge-danger { background-color: #dc3545; }
-        .btn-success, .btn-danger, .btn-warning {
-            font-size: 0.9rem;
+        .btn {
+            display: inline-block;
+            padding: 20px ;
+            margin: 5px;
+            color: #fff;
+            background-color: #568e7a;
+            text-decoration: none;
+            border-radius: 100px;
+            border: 1px solid #333;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
         }
+                .bg-warning {
+            background-color: #ffc107 !important;
+        }
+
+        .bg-success {
+            background-color: #28a745 !important;
+        }
+
+        .bg-danger {
+            background-color: #dc3545 !important;
+        }
+
+        .text-dark {
+            color: #000 !important;
+        }
+
+        .text-white {
+            color: #fff !important;
+        }
+        .btn-success { background-color: #28a745; }
+        .btn-danger { background-color: #dc3545; }
+        .btn-warning { background-color: #ffc107; }
+        .btn:hover {
+            background-color: #248958;
+        }
+        .btn-success:hover { background-color: #218838; }
+        .btn-danger:hover { background-color: #c82333; }
+        .btn-warning:hover { background-color: #e0a800; }
     </style>
 </head>
+<header>
+    <nav>
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/restaurant/dashboard'">
+        <ul>
+            <li> <a href='/restaurant/menu'>Menu Management</a></li>
+            <li><a href="/restaurant/reservations">Reservation Management</a></li>
+            <li> <a href='/pre-order'>Pre-Order Management</a></li>
+            <li> <a href='/payment-verification'>Payment Verification</a></li>
+        </ul>
+    </nav>
+    <div class="search-bar">
+        <input type="text" placeholder="Search...">
+        <div class="profile-icon" onclick="location.href='/restaurant/profile'">
+            <img src="{{ asset('images/restaurant.png') }}" alt="Profile">
+        </div>
+    </div>
+</header>
 <body>
     <div id="app">
-        <!-- Navigation Bar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{{ url('/') }}">{{ config('app.name') }}</a>
-            <!-- Add more navigation items if needed -->
-        </nav>
-
         <!-- Main Content Area -->
         <div class="container mt-4">
+        <img src="{{ asset('images/restaurantreservation.png') }}" alt="reserve Icon" class="reserve-icon">
+        
             <h1>Reservations</h1>
 
             @if(session('status'))
@@ -61,14 +231,13 @@
                             <td>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('Y-m-d') }}</td>
                             <td>{{ $reservation->time_slot }}</td>
                             <td>{{ $reservation->party_size }}</td>
-                            <td>
-                                @if($reservation->status == 'Pending')
-                                    <span class="badge badge-warning">Pending</span>
-                                @elseif($reservation->status == 'Approved')
-                                    <span class="badge badge-success">Approved</span>
-                                @elseif($reservation->status == 'Cancelled')
-                                    <span class="badge badge-danger">Cancelled</span>
+                            <td class="
+                                @if($reservation->status == 'Pending') bg-warning text-dark
+                                @elseif($reservation->status == 'Approved') bg-success text-white
+                                @elseif($reservation->status == 'Cancelled') bg-danger text-white
                                 @endif
+                            ">                             
+                           {{ $reservation->status }}
                             </td>
                             <td>
                                 @if($reservation->status == 'Pending')

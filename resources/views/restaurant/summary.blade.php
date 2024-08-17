@@ -129,7 +129,7 @@
 
         <div class="actions">
             <a href='/restaurant/profile' class="back-btn">Go Back to Profile</a>
-            <a href="{{ route('customer.restaurants') }}" class="add-btn">Add Restaurant</a>
+            <!--a href="{{ route('customer.restaurants') }}" class="add-btn">Add Restaurant</a-->
         </div>
     </div>
 </body>

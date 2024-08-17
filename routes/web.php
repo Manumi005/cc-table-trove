@@ -59,17 +59,17 @@ Route::prefix('customer')->as('customer.')->group(function () {
         // You can save the order to the database or perform other actions
         return response()->json(['success' => true]);
     });
-    Route::get('/pre-order', [PreOrderController::class, 'index'])->name('preorder.index');
-Route::post('/pre-order', [PreOrderController::class, 'store'])->name('preorder.store');
+
+
 Route::get('/preorders', [PreOrderController::class, 'index'])->name('preorders.index');
-Route::get('/preorders/create', [PreOrderController::class, 'create'])->name('preorder.create');
-Route::get('/preorders/{id}/edit', [PreOrderController::class, 'edit'])->name('preorder.edit');
-Route::put('/preorders/{id}', [PreOrderController::class, 'update'])->name('preorder.update');
-Route::get('/pre-order', [PreOrderController::class, 'showPreOrder'])->name('preorder.show');
-Route::post('/preorder/store', [PreOrderController::class, 'store'])->name('preorder.store');
-
-
-
+Route::get('/preorders/create', [PreOrderController::class, 'create'])->name('preorders.create');
+Route::post('/preorders', [PreOrderController::class, 'store'])->name('preorders.store');
+Route::get('/preorders/{id}/edit', [PreOrderController::class, 'edit'])->name('preorders.edit');
+Route::put('/preorders/{id}', [PreOrderController::class, 'update'])->name('preorders.update');
+Route::delete('/preorders/{id}', [PreOrderController::class, 'destroy'])->name('preorders.destroy');
+Route::post('/submit-preorder', [PreOrderController::class, 'submit'])->name('preorders.submit');
+Route::get('/submit-preorder', [PreOrderController::class, 'submitPreOrder']);
+Route::post('/preorder/summary', [PreOrderController::class, 'showSummary'])->name('preorder.summary');
 
 // Restaurant Routes
 Route::prefix('restaurant')->as('restaurant.')->group(function () {

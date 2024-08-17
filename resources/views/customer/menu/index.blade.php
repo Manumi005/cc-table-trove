@@ -408,63 +408,61 @@
 
         <div class="quantity-modal" id="quantity-modal">
             <div class="quantity-modal-content">
-                <h2>Enter Quantity</h2>
-                <input type="number" id="quantity-input" min="1" value="1">
-                <button onclick="addToPreOrder()">Add to Pre-Order</button>
-                <button onclick="closeQuantityModal()">Cancel</button>
+            <h3>Add to Pre-Order</h3>
+            <input type="number" id="quantity-input" min="1" value="1">
+            <button type="button" onclick="addToCart()">Add to Cart</button>
+            <button type="button" onclick="closeQuantityModal()">Cancel</button>
             </div>
         </div>
 
-        <button onclick="goToPreOrderPage()">Go to Pre-Order Page</button>
+        <button onclick="location.href='{{ route('preorders.index') }}'">Go to Pre Order</button>
     </main>
 
-    <script>
-        let selectedMenuItem = null;
-        let preOrderItems = JSON.parse(localStorage.getItem('preOrderItems')) || [];
+   
+<script>
+    // Function to open the filter modal
+    function openFilterModal() {
+        document.getElementById('filter-modal').style.display = 'flex';
+    }
 
-        function openQuantityModal(menuItem) {
-            selectedMenuItem = menuItem;
-            document.getElementById('quantity-modal').style.display = 'flex';
-        }
+    // Function to close the filter modal
+    function closeFilterModal() {
+        document.getElementById('filter-modal').style.display = 'none';
+    }
 
-        function closeQuantityModal() {
-            document.getElementById('quantity-modal').style.display = 'none';
-        }
+    // Function to apply filters (you can implement filtering logic here)
+    function applyFilters() {
+        closeFilterModal();
+    }
 
-        function addToPreOrder() {
-            const quantity = document.getElementById('quantity-input').value;
-            preOrderItems.push({ ...selectedMenuItem, quantity });
-            localStorage.setItem('preOrderItems', JSON.stringify(preOrderItems));
-            closeQuantityModal();
-            console.log('Pre-Order Items:', preOrderItems);
-        }
+    // Function to open the quantity modal
+    function openQuantityModal(menu) {
+        document.getElementById('quantity-modal').style.display = 'flex';
+        console.log(menu);
+    }
 
-        function goToPreOrderPage() {
-            window.location.href = '/pre-order';
-        }
+    // Function to close the quantity modal
+    function closeQuantityModal() {
+        document.getElementById('quantity-modal').style.display = 'none';
+    }
 
-        function updateMenuList(menus) {
-            const menuList = document.getElementById('menu-list');
-            menuList.innerHTML = '';
+    // Function to add an item to the cart and redirect to the pre-order summary page
+    function addToCart() {
+        var quantity = document.getElementById('quantity-input').value;
+        
+        // Simulate adding to cart
+        var menu = { /* Add menu details here */ };
+        console.log('Adding to cart:', menu, 'Quantity:', quantity);
+        alert("Item added to the cart!");
 
-            menus.forEach(menu => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <img src="/images/${menu.image}" alt="${menu.name}">
-                    <div class="details">
-                        <h2>${menu.name}</h2>
-                        <p class="price">Rs. ${parseFloat(menu.price).toFixed(2)}</p>
-                        <p class="category"><span>Category:</span> ${menu.category}</p>
-                        <p class="allergens"><span>Allergens:</span> ${menu.allergens}</p>
-                        <p class="dietary"><span>Dietary Preferences:</span> ${menu.dietary_preferences}</p>
-                        <i class="fas fa-shopping-cart order-icon" onclick='openQuantityModal(${JSON.stringify(menu)})'></i>
-                    </div>
-                `;
-                menuList.appendChild(li);
-            });
-        }
-    </script>
+        // Redirect to the pre-order summary page
+        window.location.href = '{{ route("preorders.index") }}';
+    }
 
+    // Update the displayed price range as the slider moves
+    document.getElementById('price-range').addEventListener('input', function () {
+        document.getElementById('price-value').textContent = this.value;
+    });
+</script>
 </body>
-
 </html>
