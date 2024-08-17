@@ -18,11 +18,11 @@ Route::get('/', function () {
 // Customer Routes
 Route::prefix('customer')->as('customer.')->group(function () {
     // Authentication Routes
-    Route::get('login', [CustomerAuthController::class, 'showLoginForm'])->name('login');
-    Route::post('login', [CustomerAuthController::class, 'login']);
-    Route::get('register', [CustomerAuthController::class, 'showRegistrationForm'])->name('register');
-    Route::post('register', [CustomerAuthController::class, 'register']);
-    Route::post('logout', [CustomerAuthController::class, 'logout'])->name('logout');
+        Route::get('login', [CustomerAuthController::class, 'showLoginForm'])->name('login');
+        Route::post('login', [CustomerAuthController::class, 'login']);
+        Route::get('register', [CustomerAuthController::class, 'showRegistrationForm'])->name('register');
+        Route::post('register', [CustomerAuthController::class, 'register']);
+        Route::post('logout', [CustomerAuthController::class, 'logout'])->name('logout');
 
     // Authenticated Routes
     Route::middleware('auth:customer')->group(function () {
@@ -42,20 +42,21 @@ Route::prefix('customer')->as('customer.')->group(function () {
     });
 
     // Restaurant Routes
-    Route::get('restaurants', [CustomerController::class, 'listRestaurants'])->name('restaurants');
-    Route::get('restaurant/{id}', [CustomerController::class, 'showRestaurant'])->name('restaurant.details');
-    Route::get('restaurant/{id}/menu', [CustomerMenuController::class, 'show'])->name('restaurant.menu');
-    Route::post('/customer/menu/filter', [CustomerMenuController::class, 'filter'])->name('customer.menu.filter');
-});
+        Route::get('restaurants', [CustomerController::class, 'listRestaurants'])->name('restaurants');
+        Route::get('restaurant/{id}', [CustomerController::class, 'showRestaurant'])->name('restaurant.details');
+        Route::get('restaurant/{id}/menu', [CustomerMenuController::class, 'show'])->name('restaurant.menu');
+        Route::post('/filter-menu', [CustomerMenuController::class, 'filter'])->name('filter-menu');
+        Route::post('/customer/menu/add', [CustomerMenuController::class, 'add'])->name('customer.menu.add');
+    });
 
 // Restaurant Routes
 Route::prefix('restaurant')->as('restaurant.')->group(function () {
     // Authentication Routes
-    Route::get('login', [RestaurantAuthController::class, 'showLoginForm'])->name('login');
-    Route::post('login', [RestaurantAuthController::class, 'login']);
-    Route::get('register', [RestaurantAuthController::class, 'showRegistrationForm'])->name('register');
-    Route::post('register', [RestaurantAuthController::class, 'register']);
-    Route::post('logout', [RestaurantAuthController::class, 'logout'])->name('logout');
+        Route::get('login', [RestaurantAuthController::class, 'showLoginForm'])->name('login');
+        Route::post('login', [RestaurantAuthController::class, 'login']);
+        Route::get('register', [RestaurantAuthController::class, 'showRegistrationForm'])->name('register');
+        Route::post('register', [RestaurantAuthController::class, 'register']);
+        Route::post('logout', [RestaurantAuthController::class, 'logout'])->name('logout');
 
     // Authenticated Routes
     Route::middleware('auth:restaurant')->group(function () {

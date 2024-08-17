@@ -44,7 +44,7 @@ class CustomerReservationController extends Controller
             'restaurant_id' => 'required|integer|exists:restaurants,id',
             'reservation_date' => 'required|date|after_or_equal:today',
             'time_slot' => ['required', 'regex:/^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/'],
-            'party_size' => 'required|integer|min:1|max:4', // Limit party size to a maximum of 4
+            'party_size' => 'required|integer|min:1|max:15', // Limit party size to a maximum of 4
         ], [
             'restaurant_id.required' => 'Please select a restaurant.',
             'restaurant_id.exists' => 'Selected restaurant does not exist.',
@@ -52,7 +52,7 @@ class CustomerReservationController extends Controller
             'reservation_date.after_or_equal' => 'Reservation date must be today or a future date.',
            'time_slot.required' => 'Please select a time slot.',
           'time_slot.regex' => 'Time slot must be in HH:MM format (24-hour clock).',
-            'party_size.max' => 'Party size cannot exceed 4 people.', // Error message for exceeding party size
+            'party_size.max' => 'Party size cannot exceed 15 people.', // Error message for exceeding party size
             'party_size.min' => 'Party size must be at least 1.',
         ]);
 

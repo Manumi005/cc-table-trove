@@ -32,20 +32,20 @@ class CustomerMenuController extends Controller
             'restaurantId' => 'required|integer|exists:restaurants,id',
             'allergies' => 'array',
             'allergies.*' => 'string',
-            'dietaryPreferences' => 'array',
-            'dietaryPreferences.*' => 'string',
-            'priceRange' => 'nullable|numeric|min:0'
+            'dietary' => 'array',
+            'dietary.*' => 'string',
+            'priceRange' => 'nullable|numeric|min:1000|max:10000'
         ]);
 
         $restaurantId = $validated['restaurantId'];
         $allergies = $validated['allergies'] ?? [];
-        $dietaryPreferences = $validated['dietaryPreferences'] ?? [];
-        $priceRange = $validated['priceRange'] ?? 1000;
+        $dietary = $validated['dietary'] ?? [];
+        $priceRange = $validated['priceRange'] ?? 10000;
 
         Log::info('Filter request received', [
             'restaurantId' => $restaurantId,
             'allergies' => $allergies,
-            'dietaryPreferences' => $dietaryPreferences,
+            'dietary' => $dietary,
             'priceRange' => $priceRange
         ]);
 
@@ -55,22 +55,22 @@ class CustomerMenuController extends Controller
         if (!empty($allergies)) {
             $query->where(function ($q) use ($allergies) {
                 foreach ($allergies as $allergy) {
-                    $q->where('allergens', 'like', '%' . $allergy . '%');
+                    $q->where('allergens', 'not like', '%' . $allergy . '%');
                 }
             });
         }
 
         // Filter by dietary preferences
-        if (!empty($dietaryPreferences)) {
-            $query->where(function ($q) use ($dietaryPreferences) {
-                foreach ($dietaryPreferences as $preference) {
-                    $q->where('dietary_preferences', 'like', '%' . $preference . '%');
+        if (!empty($dietary)) {
+            $query->where(function ($q) use ($dietary) {
+                foreach ($dietary as $preference) {
+                    $q->where('dietary', 'like', '%' . $preference . '%');
                 }
             });
         }
 
         // Filter by price range
-        $query->where('price', '<=', $priceRange);
+        $query->whereBetween('price', [1000, $priceRange]);
 
         $menus = $query->get();
 

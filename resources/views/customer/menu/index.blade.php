@@ -199,7 +199,7 @@
                         @endforeach
                     </fieldset>
 
-                    <!-- Dietary Preferences -->
+                    <!-- Dietary -->
                     <fieldset>
                         <legend>Dietary Preferences</legend>
                         @foreach(['Vegetarian', 'Vegan', 'Non-Vegetarian', 'Pescatarian', 'Halal', 'Kosher'] as $dietary)
@@ -213,92 +213,95 @@
                     <!-- Price Range -->
                     <fieldset>
                         <legend>Price Range</legend>
-                        <input type="range" id="price-range" min="0" max="1000" step="10" value="500" class="slider">
-                        <p class="slider-label">Up to Rs. <span id="price-value">500</span></p>
+                        <input type="range" min="1000" max="10000" value="10000" class="slider" id="priceRange" name="priceRange">
+                        <span class="slider-label">Up to ₹<span id="priceRangeValue">10000</span></span>
                     </fieldset>
 
-                    <!-- Apply Button -->
-                    <button type="button" onclick="applyFilters()">Apply Filters</button>
+                    <button type="button" onclick="applyFilter()">Apply Filters</button>
                     <button type="button" onclick="closeFilterModal()">Close</button>
                 </form>
             </div>
         </div>
 
         <ul id="menu-list">
-            @foreach ($menus as $menu)
-            <li>
-                <img src="{{ asset('images/' . $menu->image) }}" alt="{{ $menu->name }}">
-                <div class="details">
-                    <h2>{{ $menu->name }}</h2>
-                    <p class="price">Rs. {{ number_format($menu->price, 2) }}</p>
-                    <p class="category"><span>Category:</span> {{ $menu->category }}</p>
-                    <p class="allergens"><span>Allergens:</span> {{ $menu->allergens }}</p>
-                    <p class="dietary"><span>Dietary Preferences:</span> {{ $menu->dietary_preferences }}</p>
-                </div>
-            </li>
+            @foreach($menus as $menu)
+                <li>
+                    <img src="{{ $menu->image_url }}" alt="{{ $menu->name }}">
+                    <div class="details">
+                        <h2>{{ $menu->name }}</h2>
+                        <p class="price">₹{{ $menu->price }}</p>
+                        <p class="category"><span>Category:</span> {{ $menu->category }}</p>
+                        <p class="allergens"><span>Allergens:</span> {{ $menu->allergens }}</p>
+                        <p class="dietary"><span>Dietary:</span> {{ $menu->dietary }}</p>
+                    </div>
+                </li>
             @endforeach
         </ul>
     </main>
 
     <script>
+    // Update price range display as slider value changes
+    document.getElementById('priceRange').addEventListener('input', function () {
+        document.getElementById('priceRangeValue').textContent = this.value;
+    });
+
+    // Open the filter modal
     function openFilterModal() {
         document.getElementById('filter-modal').style.display = 'flex';
     }
 
+    // Close the filter modal
     function closeFilterModal() {
         document.getElementById('filter-modal').style.display = 'none';
     }
 
-    document.getElementById('price-range').addEventListener('input', function() {
-        document.getElementById('price-value').textContent = this.value;
-    });
+    // Apply filters and fetch filtered menu items
+    function applyFilter() {
+        const form = document.getElementById('filter-form');
+        const formData = new FormData(form);
+        
+        // Append restaurantId to formData
+        formData.append('restaurantId', '{{ $restaurant->id }}');
 
-    function applyFilters() {
-        const allergies = Array.from(document.querySelectorAll('input[name="allergy[]"]:checked')).map(el => el.value);
-        const dietaryPreferences = Array.from(document.querySelectorAll('input[name="dietary[]"]:checked')).map(el => el.value);
-        const priceRange = document.getElementById('price-range').value;
-
-        console.log('Allergies:', allergies);
-        console.log('Dietary Preferences:', dietaryPreferences);
-        console.log('Price Range:', priceRange);
-
-        fetch('/filter-menu', {
+        fetch("{{ route('customer.filter-menu') }}", {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
-            body: JSON.stringify({ allergies, dietaryPreferences, priceRange })
+            body: formData
         })
         .then(response => response.json())
         .then(data => {
-            updateMenuList(data);
+            const menuList = document.getElementById('menu-list');
+            menuList.innerHTML = ''; // Clear existing items
+
+            if (data.length > 0) {
+                data.forEach(menu => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                        <img src="${menu.image_url}" alt="${menu.name}">
+                        <div class="details">
+                            <h2>${menu.name}</h2>
+                            <p class="price">$${menu.price}</p>
+                            <p class="category"><span>Category:</span> ${menu.category}</p>
+                            <p class="allergens"><span>Allergens:</span> ${menu.allergens}</p>
+                            <p class="dietary"><span>Dietary:</span> ${menu.dietary}</p>
+                        </div>
+                    `;
+                    menuList.appendChild(listItem);
+                });
+            } else {
+                menuList.innerHTML = '<li>No items match the selected filters.</li>';
+            }
         })
-        .catch(error => console.error('Error:', error));
-
-        closeFilterModal();
-    }
-
-    function updateMenuList(menus) {
-        const menuList = document.getElementById('menu-list');
-        menuList.innerHTML = '';
-
-        menus.forEach(menu => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <img src="/images/${menu.image}" alt="${menu.name}">
-                <div class="details">
-                    <h2>${menu.name}</h2>
-                    <p class="price">Rs. ${parseFloat(menu.price).toFixed(2)}</p>
-                    <p class="category"><span>Category:</span> ${menu.category}</p>
-                    <p class="allergens"><span>Allergens:</span> ${menu.allergens}</p>
-                    <p class="dietary"><span>Dietary Preferences:</span> ${menu.dietary_preferences}</p>
-                </div>
-            `;
-            menuList.appendChild(li);
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while applying filters. Please try again.');
         });
+
+        closeFilterModal(); // Close the modal after applying filters
     }
-    </script>
-</body> 
+</script>
+</body>
 
 </html>

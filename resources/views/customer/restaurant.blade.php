@@ -10,7 +10,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+            background-color: #b9d1ea;
         }
 
         header {
@@ -110,10 +110,34 @@
             padding: 20px;
         }
 
-        h1 {
-            text-align: center;
+        .top {
+            background-color:#8a6378;
+            color: white;
+            padding: 20px;
+            align-items: center;
+            
+          
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
+        .top h1 {
+            margin: 0 0 10px;
+            font-size: 40px;
+            color: #fff;
+            margin-top:-70px;
+            text-align:center;
+            margin-bottom:50px;
+            font-weight: bold; /* Make the heading bold */
+        }
+
+        .top img {
+            border-radius: 15px; /* Same radius as the card for consistency */
+            margin-left: 390px ;
+            width: 100px;
+            height: auto;
+            align-items:center;
+        }
+    
 
         .restaurant-card-container {
             display: flex;
@@ -123,14 +147,21 @@
         }
 
         .restaurant-card {
-            background-color: #fff;
+            background-color: #e5dbf0;
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: 30px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             width: calc(33.333% - 20px);
             margin-bottom: 20px;
             transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            padding-bottom: 60px; /* Add space for buttons */
+        }
+
+        .restaurant-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
         .restaurant-card img {
@@ -154,21 +185,32 @@
             color: #666;
         }
 
+        .restaurant-card .button-container {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            right: 15px;
+            display: flex;
+            justify-content: space-between; /* Keep buttons side by side */
+        }
+
         .restaurant-card a {
-            display: inline-block;
             padding: 10px 20px;
-            background-color: #ff69b4; /* Pink color */
+            background-color: #5481a9;
             color: #fff;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 15px;
             text-align: center;
-            font-weight: bold;
-            margin-right: 10px;
+
+            transition: background-color 0.3s;
+            flex: 1;
+            margin: 0 5px; /* Add spacing between buttons */
         }
 
         .restaurant-card a:hover {
-            background-color: #ff1493; /* Darker pink on hover */
+            background-color: #315778;
         }
+            
 
         .action-buttons {
             text-align: center;
@@ -178,7 +220,7 @@
         .action-buttons a {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #ff69b4;
+            background-color: #7769a7;
             color: #fff;
             text-decoration: none;
             border-radius: 5px;
@@ -187,7 +229,7 @@
         }
 
         .action-buttons a:hover {
-            background-color: #ff1493;
+            background-color: #5c6492;
         }
 
         @media (max-width: 768px) {
@@ -209,22 +251,28 @@
             <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/customer/dashboard'">
             <ul>
                 <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
-                <li><a href="{{ route('customer.reservation.create') }}">Reservations</a></li>
+                <li><a href="{{ route('customer.reservations.index') }}">Reservations</a></li>
             </ul>
         </nav>
         <div class="search-bar">
             <form method="GET" action="{{ route('customer.restaurants') }}">
-                <input type="text" name="query" placeholder="Search by name or cuisine type..." value="{{ request('query') }}">
-                <button type="submit">Search</button>
+                <input type="text" name="query" placeholder="Search..." value="{{ request('query') }}">
+              
             </form>
             <div class="profile-icon" onclick="location.href='/customer/profile'">
                 <img src="{{ asset('images/profile.jpg') }}" alt="Profile">
             </div>
         </div>
     </header>
+    
+    <div class="top">
+    <img src="{{ asset('images/restaurant.png') }}" alt="Menu Icon" class="menu-icon"> 
+        <h1>Restaurants</h1>
+      </div>
+   
 
     <div class="container">
-        <h1>Restaurants</h1>
+       
         <div class="action-buttons">
             <a href="{{ route('customer.reservation.create') }}">Make a Reservation</a>
         </div>
