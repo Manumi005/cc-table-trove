@@ -24,28 +24,49 @@ class PreOrderController extends Controller
     // Store a new pre-order
     public function store(Request $request)
     {
+        // Code for storing a new pre-order can be added here
+    }
+
+    // Submit the pre-order
+    public function submitPreOrder(Request $request)
+    {
         try {
-            // Validate the incoming request
-            $validatedData = $request->validate([
-                'item_name' => 'required|string|max:255',
-                'quantity' => 'required|integer|min:1',
-                'price' => 'required|numeric|min:0',
+            $preOrderItems = $request->input('preorder_items');
+
+            // Validate the pre-order items
+            $validated = $request->validate([
+                'preorder_items' => 'required|array',
+                'preorder_items.*.menu_item_id' => 'required|integer',
+                'preorder_items.*.quantity' => 'required|integer|min:1',
+                'preorder_items.*.price' => 'required|numeric',
+                'preorder_items.*.total_price' => 'required|numeric',
+                'preorder_items.*.user_id' => 'required|integer',
             ]);
 
-            // Create a new pre-order
-            PreOrder::create([
-                'items' => json_encode([[
-                    'name' => $validatedData['item_name'],
-                    'quantity' => $validatedData['quantity'],
-                    'price' => $validatedData['price'],
-                ]]),
-            ]);
+            if (empty($preOrderItems)) {
+                return response()->json(['success' => false, 'message' => 'No items in pre-order.']);
+            }
 
-            return redirect()->route('customer.preorders.index')->with('success', 'Pre-order submitted successfully.');
+            // Save pre-order to the database
+            $preOrder = new PreOrder();
+            $preOrder->items = $preOrderItems;
+            $preOrder->user_id = auth()->id(); // Assuming you want to save the user who made the pre-order
+            $preOrder->save();
+
+            // Store pre-order items in the session to show in the summary
+            session(['preOrderItems' => $preOrderItems]);
+
+            return response()->json(['success' => true, 'message' => 'Pre-order submitted successfully!', 'redirect_url' => route('preorder.summary')]);
         } catch (\Exception $e) {
-            // Log the error
-            Log::error('Error storing pre-order:', ['error' => $e->getMessage()]);
-            return redirect()->route('customer.preorders.create')->withErrors(['error' => 'An error occurred while submitting the pre-order.']);
+            Log::error('Error submitting pre-order:', ['error' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => 'Error submitting pre-order.']);
         }
+    }
+
+    // Display the pre-order summary
+    public function summary()
+    {
+        $preOrderItems = session('preOrderItems', []);
+        return view('customer.preorders.summary', compact('preOrderItems'));
     }
 }

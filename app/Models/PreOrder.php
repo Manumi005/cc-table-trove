@@ -9,5 +9,14 @@ class PreOrder extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['menu_item_id', 'quantity', 'price', 'total_price', 'user_id'];
+    // Table name if it's not the plural of the model name
+    protected $table = 'pre_orders';
+
+    // Fillable fields
+    protected $fillable = ['customer_id', 'items'];
+
+    // Cast items as an array for easy access
+    protected $casts = [
+        'items' => 'array',
+    ];
 }

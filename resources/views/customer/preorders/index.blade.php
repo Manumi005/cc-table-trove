@@ -35,15 +35,33 @@
             right: 20px;
             z-index: 1000; /* Ensure the button is above other content */
         }
+        .media img {
+            width: 64px;
+            height: 64px;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+        .media-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .preorder-summary {
+            margin-top: 20px;
+        }
+        .preorder-summary table th,
+        .preorder-summary table td {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <main>
+    <main class="container">
         <div class="restaurant-info">
             <h2 id="restaurant-name">Select a Restaurant</h2>
         </div>
 
-        <ul id="menu-list">
+        <ul id="menu-list" class="list-unstyled">
             <!-- Menu items will be dynamically populated here -->
         </ul>
 
@@ -117,7 +135,7 @@
             alert('No menu item selected.');
             return;
         }
-        const quantity = document.getElementById('quantity-input').value;
+        const quantity = parseInt(document.getElementById('quantity-input').value, 10);
         if (quantity <= 0) {
             alert('Please enter a valid quantity.');
             return;
@@ -131,7 +149,7 @@
 
         const existingItemIndex = preOrderItems.findIndex(item => item.id === selectedMenuItem.id);
         if (existingItemIndex >= 0) {
-            preOrderItems[existingItemIndex].quantity = quantity;
+            preOrderItems[existingItemIndex].quantity += quantity;
         } else {
             preOrderItems.push({ ...selectedMenuItem, quantity });
         }
@@ -142,29 +160,8 @@
     }
 
     function submitPreOrder() {
-        fetch('/submit-preorder', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-            },
-            body: JSON.stringify({ preorder_items: preOrderItems }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Pre-order submitted successfully!');
-                localStorage.removeItem('preOrderItems');
-                updatePreOrderList();
-                window.location.href = "{{ route('preorder.summary') }}"; // Redirect to summary page
-            } else {
-                alert('Error submitting pre-order.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error submitting pre-order.');
-        });
+        const preorderSummaryUrl = "{{ route('preorder.summary') }}";
+        window.location.href = preorderSummaryUrl;
     }
 
     function updateMenuList(menus) {
@@ -175,13 +172,13 @@
             const li = document.createElement('li');
             li.className = 'media mb-3';
             li.innerHTML = `
-                <img src="/images/${menu.image}" alt="${menu.name}">
-                <div class="media-body details">
-                    <h2>${menu.name}</h2>
+                <img src="/images/${menu.image}" alt="${menu.name}" class="mr-3">
+                <div class="media-body">
+                    <h5 class="mt-0 mb-1">${menu.name}</h5>
                     <p class="price">Rs. ${parseFloat(menu.price).toFixed(2)}</p>
-                    <p class="category"><span>Category:</span> ${menu.category}</p>
-                    <p class="allergens"><span>Allergens:</span> ${menu.allergens}</p>
-                    <p class="dietary"><span>Dietary Preferences:</span> ${menu.dietary_preferences}</p>
+                    <p class="category"><strong>Category:</strong> ${menu.category}</p>
+                    <p class="allergens"><strong>Allergens:</strong> ${menu.allergens}</p>
+                    <p class="dietary"><strong>Dietary Preferences:</strong> ${menu.dietary_preferences}</p>
                     <i class="fas fa-shopping-cart order-icon" onclick='openQuantityModal(${JSON.stringify(menu).replace(/'/g, "\\'")})'></i>
                 </div>
             `;
@@ -199,15 +196,15 @@
         } else {
             preOrderItems.forEach(item => {
                 const row = document.createElement('tr');
-                row.setAttribute('data-id', item.id); // Set a data attribute for easy row deletion
+                row.setAttribute('data-id', item.id); // Set a data attribute for easy row access
                 row.innerHTML = `
                     <td>${item.name}</td>
                     <td>Rs. ${parseFloat(item.price).toFixed(2)}</td>
                     <td>${item.quantity}</td>
                     <td>Rs. ${(item.quantity * item.price).toFixed(2)}</td>
                     <td>
-                        <button onclick='editQuantity(${item.id})' class="btn btn-sm btn-warning">Edit</button>
-                        <button onclick='deleteItem(${item.id})' class="btn btn-sm btn-danger">Delete</button>
+                        <button onclick='adjustQuantity(${item.id})' class="btn btn-sm btn-warning">Adjust Quantity</button>
+                        <button onclick='deleteItem(${item.id})' class="btn btn-sm btn-danger">Remove</button>
                     </td>
                 `;
                 preorderList.appendChild(row);
@@ -219,45 +216,51 @@
         document.getElementById('total-summary').innerHTML = `<strong>Total: Rs. ${total.toFixed(2)}</strong>`;
     }
 
-    function editQuantity(id) {
-        const newQuantity = prompt('Enter new quantity:');
-        if (newQuantity > 0) {
-            const itemIndex = preOrderItems.findIndex(item => item.id === id);
-            if (itemIndex >= 0) {
-                preOrderItems[itemIndex].quantity = newQuantity;
-                localStorage.setItem('preOrderItems', JSON.stringify(preOrderItems));
-                updatePreOrderList();
+    function adjustQuantity(id) {
+        const itemIndex = preOrderItems.findIndex(item => item.id === id);
+        if (itemIndex >= 0) {
+            const newQuantity = prompt('Enter new quantity:', preOrderItems[itemIndex].quantity);
+            if (newQuantity >= 0) {
+                if (parseInt(newQuantity, 10) === 0) {
+                    deleteItem(id); // Remove item if quantity set to 0
+                } else {
+                    preOrderItems[itemIndex].quantity = parseInt(newQuantity, 10);
+                    localStorage.setItem('preOrderItems', JSON.stringify(preOrderItems));
+                    updatePreOrderList();
+                }
+            } else {
+                alert('Please enter a valid quantity.');
             }
-        } else {
-            alert('Please enter a valid quantity.');
         }
     }
 
     function deleteItem(id) {
-    // Find the item by id
-    const itemIndex = preOrderItems.findIndex(item => item.id === id);
-    
-    if (itemIndex >= 0) {
-        // If the item's quantity is greater than 1, reduce the quantity by 1
-        if (preOrderItems[itemIndex].quantity > 1) {
-            preOrderItems[itemIndex].quantity--;
-        } else {
-            // If the quantity is 1, remove the item from the list
-            preOrderItems.splice(itemIndex, 1);
+        const itemIndex = preOrderItems.findIndex(item => item.id === id);
+        if (itemIndex >= 0) {
+            const quantityToRemove = parseInt(prompt('Enter quantity to remove:', '1'), 10);
+
+            if (quantityToRemove > 0 && quantityToRemove <= preOrderItems[itemIndex].quantity) {
+                preOrderItems[itemIndex].quantity -= quantityToRemove;
+
+                if (preOrderItems[itemIndex].quantity === 0) {
+                    preOrderItems.splice(itemIndex, 1); // Remove item if quantity is 0
+                }
+
+                localStorage.setItem('preOrderItems', JSON.stringify(preOrderItems));
+                updatePreOrderList();
+            } else {
+                alert('Invalid quantity. Please enter a number between 1 and ' + preOrderItems[itemIndex].quantity + '.');
+            }
         }
-        
-        // Save the updated pre-order items back to localStorage
-        localStorage.setItem('preOrderItems', JSON.stringify(preOrderItems));
-        
-        // Refresh the pre-order list displayed to the user
-        updatePreOrderList();
     }
-}
 
     document.addEventListener('DOMContentLoaded', () => {
         updatePreOrderList();
     });
-    </script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

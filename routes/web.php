@@ -68,10 +68,9 @@ Route::post('/preorders', [PreOrderController::class, 'store'])->name('preorders
 Route::get('/preorders/{id}/edit', [PreOrderController::class, 'edit'])->name('preorders.edit');
 Route::put('/preorders/{id}', [PreOrderController::class, 'update'])->name('preorders.update');
 Route::delete('/preorders/{id}', [PreOrderController::class, 'destroy'])->name('preorders.destroy');
-Route::post('/submit-preorder', [PreOrderController::class, 'submit'])->name('preorders.submit');
-Route::get('/submit-preorder', [PreOrderController::class, 'submitPreOrder']);
+Route::get('/preorder/summary', [PreOrderController::class, 'summary'])->name('preorder.summary');
 Route::post('/submit-preorder', [PreOrderController::class, 'submitPreOrder'])->name('submit.preorder');
-Route::post('/preorder/summary', [PreOrderController::class, 'showSummary'])->name('preorder.summary');
+
 
 // Restaurant Routes
 Route::prefix('restaurant')->as('restaurant.')->group(function () {
@@ -121,5 +120,6 @@ Route::post('/restaurant/preorders', [RestaurantPreOrderController::class, 'stor
 Route::get('/restaurant/preorders/{id}/edit', [RestaurantPreOrderController::class, 'edit'])->name('preorders.edit');
 Route::put('/restaurant/preorders/{id}', [RestaurantPreOrderController::class, 'update'])->name('preorders.update');
 Route::delete('/restaurant/preorders/{id}', [RestaurantPreOrderController::class, 'destroy'])->name('preorders.destroy');
-    });
+Route::get('restaurant/preorder/summary', [RestaurantPreOrderController::class, 'summary'])->name('preorder.summary');
+});
 });
