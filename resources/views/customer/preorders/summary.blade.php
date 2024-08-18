@@ -25,6 +25,7 @@
         <div id="totalAmount" class="mt-3">
             <strong>Total Amount: Rs. 0.00</strong>
         </div>
+        <a href="{{ route('payment') }}" class="btn btn-primary mt-3">Proceed to Payment</a>
     </div>
 
     <script>

@@ -230,8 +230,8 @@
     }
 
     img {
-        width: 120px;
-        height: 120px;
+        width: 250px;
+        height: 250px;
         border-radius: 8px;
         margin-right: 20px;
     }
@@ -304,6 +304,32 @@
         border: 1px solid #ccc;
         border-radius: 5px;
     }
+    /* Your existing styles */
+
+/* Add these styles for the 'Go to Pre Order' button */
+button.preorder {
+    background-color: #6C63FF; /* Match the color theme */
+    color: #fff; /* White text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px; /* Spacing around the text */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 1rem; /* Font size */
+    text-align: center; /* Center the text */
+    display: block; /* Block level element */
+    margin: 20px auto; /* Center the button horizontally with margin */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+button.preorder:hover {
+    background-color: #5a54d7; /* Slightly darker shade on hover */
+    transform: scale(1.05); /* Slightly increase size on hover */
+}
+
+button.preorder:focus {
+    outline: none; /* Remove default outline */
+}
+
 
     .quantity-modal-content button {
         background-color: #6C63FF;
@@ -396,10 +422,34 @@
                     <div class="details">
                         <h2>{{ $menu->name }}</h2>
                         <p class="price">Rs. {{ number_format($menu->price, 2) }}</p>
-                        <p class="category"><span>Category:</span> {{ $menu->category }}</p>
-                        <p class="allergens"><span>Allergens:</span> {{ is_array($menu->allergens) ? implode(', ', $menu->allergens) : $menu->allergens }}</p>
-                        <p class="dietary"><span>Dietary Preferences:</span> {{ is_array($menu->dietary_preferences) ? implode(', ', $menu->dietary_preferences) : $menu->dietary_preferences }}</p>
-                        <i class="fas fa-shopping-cart order-icon" onclick='openQuantityModal(@json($menu))'></i>
+                        <p>Category: 
+    <span>
+        {{
+            is_array($menu->category) 
+            ? implode(', ', array_filter($menu->category)) 
+            : ($menu->category ? implode(', ', array_filter(json_decode($menu->category))) : 'N/A')
+        }}
+    </span>
+</p>
+<p>Allergens: 
+    <span>
+        {{
+            is_array($menu->allergens) 
+            ? implode(', ', array_filter($menu->allergens)) 
+            : ($menu->allergens ? implode(', ', array_filter(json_decode($menu->allergens))) : 'N/A')
+        }}
+    </span>
+</p>
+<p>Dietary: 
+    <span>
+        {{
+            is_array($menu->dietary) 
+            ? implode(', ', array_filter($menu->dietary)) 
+            : ($menu->dietary ? implode(', ', array_filter(json_decode($menu->dietary))) : 'N/A')
+        }}
+    </span>
+</p>
+ <i class="fas fa-shopping-cart order-icon" onclick='openQuantityModal(@json($menu))'></i>
                     </div>
                 </li>
                 @endforeach
@@ -415,7 +465,7 @@
             </div>
         </div>
 
-        <button onclick="location.href='{{ route('preorders.index') }}'">Go to Pre Order</button>
+        <button class= "preorder" onclick="location.href='{{ route('preorders.index') }}'">Go to Pre Order</button>
     </main>
 
     <script>

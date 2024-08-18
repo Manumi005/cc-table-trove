@@ -10,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerReservationController;
 use App\Http\Controllers\RestaurantReservationController;
 use App\Http\Controllers\RestaurantPreOrderController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 // Home Route
@@ -121,5 +122,15 @@ Route::get('/restaurant/preorders/{id}/edit', [RestaurantPreOrderController::cla
 Route::put('/restaurant/preorders/{id}', [RestaurantPreOrderController::class, 'update'])->name('preorders.update');
 Route::delete('/restaurant/preorders/{id}', [RestaurantPreOrderController::class, 'destroy'])->name('preorders.destroy');
 Route::get('restaurant/preorder/summary', [RestaurantPreOrderController::class, 'summary'])->name('preorder.summary');
-});
+
+
+        //Payment Routes
+        
+        Route::get('/summary', function () {
+            return view('customer.preorders.summary');
+        })->name('summary');
+        
+        Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('payment');
+        Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('processPayment');      
+    });
 });

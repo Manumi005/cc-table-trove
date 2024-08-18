@@ -6,6 +6,56 @@
     <title>Menu Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('{{ asset('images/wallpaper3.jpg') }}') no-repeat center center fixed;
+            margin: 0;
+            padding: 0;
+            background-color: #98b2b8;
+        }
+
+  
+
+
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+            margin-top: 50px;
+            background-color:#b86a8f;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .restaurant-info {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .restaurant-info h2 {
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .media img {
+            width: 64px;
+            height: 64px;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+
+        .media-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .order-icon {
+            cursor: pointer;
+            color: #d63f77;
+            font-size: 1.2rem;
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -17,48 +67,103 @@
             justify-content: center;
             align-items: center;
         }
+
         .modal-content {
             background: #fff;
             padding: 20px;
-            border-radius: 5px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .order-icon {
-            cursor: pointer;
-            color: #007bff;
-        }
-        .restaurant-info {
-            margin-bottom: 20px;
-        }
+
+        .preorder-summary table {
+    border-collapse: collapse; /* Ensures borders don't have gaps */
+}
+
+.preorder-summary table, 
+.preorder-summary table th, 
+.preorder-summary table td {
+    border: 1px solid black; /* Sets the border color to black */
+}
+
+.preorder-summary table th {
+    text-align: center;
+    background-color: #d63f77 !important; /* Dark pink color with higher priority */
+    color: #fff !important;
+}
+
+.preorder-summary table td {
+    text-align: center;
+    background-color: #fdd8e9;
+}
+
         .fixed-bottom-btn {
             position: fixed;
             bottom: 20px;
             right: 20px;
             z-index: 1000; /* Ensure the button is above other content */
         }
-        .media img {
-            width: 64px;
-            height: 64px;
-            margin-right: 20px;
-            object-fit: cover;
+
+        .btn-primary {
+            background-color: #d63f77;
+            border-color: #d63f77;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
         }
-        .media-body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        .btn-submit {
+    background-color: #715193; 
+    border-color: #4b0082; 
+    color: #fff; 
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    position: relative;
+    margin-top: 20px; 
+    transtion: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #3e0074;
+    color: #fff; 
+    border-color: #3e0074; 
+}
+
+.fixed-bottom-btn {
+    display: none; 
+}
+
+
+        .btn-primary:hover {
+            background-color: #b83a6b;
+            border-color: #b83a6b;
         }
-        .preorder-summary {
-            margin-top: 20px;
+
+        .btn-secondary {
+            background-color: #568e7a;
+            border-color: #568e7a;
         }
-        .preorder-summary table th,
-        .preorder-summary table td {
-            text-align: center;
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #218838;
+        }
+
+        #total-summary {
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <main class="container">
         <div class="restaurant-info">
-            <h2 id="restaurant-name">Select a Restaurant</h2>
+            <h1 id="restaurant-name">Place your order and enjoy dining </h1>
         </div>
 
         <ul id="menu-list" class="list-unstyled">
@@ -95,9 +200,10 @@
                 <strong>Total: Rs. 0.00</strong>
             </div>
         </div>
+        <button id="submitPreOrderBtn" class="btn btn-submit" onclick="submitPreOrder()">Submit Pre-Order</button>
     </main>
 
-    <button id="submitPreOrderBtn" class="btn btn-success fixed-bottom-btn" onclick="submitPreOrder()">Submit Pre-Order</button>
+   
 
     <script>
     let selectedMenuItem = null;

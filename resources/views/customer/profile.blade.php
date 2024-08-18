@@ -274,7 +274,7 @@
                     <img src="{{ asset('images/profile.jpg') }}" alt="Profile Image">
                 </div>
                 <div class="profile-info-right">
-                    <button onclick="document.getElementById('editModal').style.display='block'">Payments</button>
+
                     <div class="profile-info-logout">
                         <button onclick="logout()">Logout</button>
                     </div> 
