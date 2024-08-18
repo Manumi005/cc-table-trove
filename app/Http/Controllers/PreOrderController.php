@@ -41,99 +41,11 @@ class PreOrderController extends Controller
                 ]]),
             ]);
 
-            return redirect()->route('preorders.index')->with('success', 'Pre-order created successfully!');
+            return redirect()->route('customer.preorders.index')->with('success', 'Pre-order submitted successfully.');
         } catch (\Exception $e) {
             // Log the error
-            Log::error('Error creating pre-order:', ['error' => $e->getMessage()]);
-            return redirect()->back()->with('error', 'An error occurred while creating the pre-order.');
+            Log::error('Error storing pre-order:', ['error' => $e->getMessage()]);
+            return redirect()->route('customer.preorders.create')->withErrors(['error' => 'An error occurred while submitting the pre-order.']);
         }
     }
-
-    // Show the form for editing a specific pre-order
-    public function edit($id)
-    {
-        $preOrder = PreOrder::findOrFail($id);
-        return view('customer.preorders.edit', compact('preOrder'));
-    }
-
-    // Update the specific pre-order
-    public function update(Request $request, $id)
-    {
-        try {
-            // Validate the incoming request
-            $validatedData = $request->validate([
-                'preorder_items' => 'required|array',
-                'preorder_items.*.id' => 'required|integer',
-                'preorder_items.*.name' => 'required|string',
-                'preorder_items.*.price' => 'required|numeric',
-                'preorder_items.*.quantity' => 'required|integer|min:1',
-            ]);
-
-            // Log the validated data
-            Log::info('Validated PreOrder Items for update:', $validatedData);
-
-            // Find the pre-order and update it
-            $preOrder = PreOrder::findOrFail($id);
-            $preOrder->update([
-                'items' => json_encode($validatedData['preorder_items']),
-                'updated_at' => now(), // Ensure timestamp is updated
-            ]);
-
-            return redirect()->route('preorders.index')->with('success', 'Pre-order updated successfully!');
-        } catch (\Exception $e) {
-            // Log the error
-            Log::error('Error updating pre-order:', ['error' => $e->getMessage()]);
-            return redirect()->back()->with('error', 'An error occurred while updating the pre-order.');
-        }
-    }
-
-    // Delete the specific pre-order
-    public function destroy($id)
-    {
-        try {
-            // Find the pre-order and delete it
-            $preOrder = PreOrder::findOrFail($id);
-            $preOrder->delete();
-
-            return redirect()->route('preorders.index')->with('success', 'Pre-order deleted successfully!');
-        } catch (\Exception $e) {
-            // Log the error
-            Log::error('Error deleting pre-order:', ['error' => $e->getMessage()]);
-            return redirect()->back()->with('error', 'An error occurred while deleting the pre-order.');
-        }
-    }
-
-    // Submit a pre-order
-    public function submit(Request $request)
-    {
-        try {
-            // Validate the incoming request
-            $validatedData = $request->validate([
-                'preorder_items' => 'required|array',
-                'preorder_items.*.id' => 'required|integer',
-                'preorder_items.*.name' => 'required|string',
-                'preorder_items.*.price' => 'required|numeric',
-                'preorder_items.*.quantity' => 'required|integer|min:1',
-            ]);
-
-            // Process the pre-order submission
-            PreOrder::create([
-                'items' => json_encode($validatedData['preorder_items']),
-            ]);
-
-            return response()->json(['success' => true]);
-        } catch (\Exception $e) {
-            // Log the error
-            Log::error('Error submitting pre-order:', ['error' => $e->getMessage()]);
-            return response()->json(['success' => false, 'message' => 'An error occurred while submitting the pre-order.']);
-        }
-        
-    }
-    public function showSummary(Request $request)
-{
-    $reservationDetails = $request->only(['reservation_id', 'reservation_date', 'reservation_time', 'reservation_guests', 'reservation_restaurant']);
-    $preorderItems = $request->input('preorder_items', []);
-
-    return view('customer.preorders.summary', compact('reservationDetails', 'preorderItems'));
-}
 }

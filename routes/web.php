@@ -9,6 +9,7 @@ use App\Http\Controllers\CustomerMenuController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerReservationController;
 use App\Http\Controllers\RestaurantReservationController;
+use App\Http\Controllers\RestaurantPreOrderController;
 use Illuminate\Support\Facades\Route;
 
 // Home Route
@@ -69,6 +70,7 @@ Route::put('/preorders/{id}', [PreOrderController::class, 'update'])->name('preo
 Route::delete('/preorders/{id}', [PreOrderController::class, 'destroy'])->name('preorders.destroy');
 Route::post('/submit-preorder', [PreOrderController::class, 'submit'])->name('preorders.submit');
 Route::get('/submit-preorder', [PreOrderController::class, 'submitPreOrder']);
+Route::post('/submit-preorder', [PreOrderController::class, 'submitPreOrder'])->name('submit.preorder');
 Route::post('/preorder/summary', [PreOrderController::class, 'showSummary'])->name('preorder.summary');
 
 // Restaurant Routes
@@ -111,5 +113,13 @@ Route::prefix('restaurant')->as('restaurant.')->group(function () {
         Route::post('reservation/{id}/approve', [RestaurantReservationController::class, 'approve'])->name('reservation.approve');
         Route::post('reservation/{id}/cancel', [RestaurantReservationController::class, 'cancel'])->name('reservation.cancel');
         Route::delete('reservation/{id}', [RestaurantReservationController::class, 'destroy'])->name('reservation.destroy');
+
+        // Pre-Order Routes
+        Route::get('/restaurant/preorders', [RestaurantPreOrderController::class, 'index'])->name('preorders.index');
+Route::get('/restaurant/preorders/create', [RestaurantPreOrderController::class, 'create'])->name('preorders.create');
+Route::post('/restaurant/preorders', [RestaurantPreOrderController::class, 'store'])->name('preorders.store');
+Route::get('/restaurant/preorders/{id}/edit', [RestaurantPreOrderController::class, 'edit'])->name('preorders.edit');
+Route::put('/restaurant/preorders/{id}', [RestaurantPreOrderController::class, 'update'])->name('preorders.update');
+Route::delete('/restaurant/preorders/{id}', [RestaurantPreOrderController::class, 'destroy'])->name('preorders.destroy');
     });
 });

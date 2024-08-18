@@ -15,7 +15,11 @@ return new class extends Migration
     {
         Schema::create('pre_orders', function (Blueprint $table) {
             $table->id();
-            $table->json('items');
+            $table->foreignId('menu_item_id')->constrained('menu_items');
+            $table->integer('quantity');
+            $table->decimal('price', 8, 2);
+            $table->decimal('total_price', 8, 2);
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }

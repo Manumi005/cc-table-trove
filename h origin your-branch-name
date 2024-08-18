@@ -1,0 +1,200 @@
+[33mcommit e59e651906be207fb58dd59d5e184b6492883ab1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Sun Aug 18 03:26:58 2024 +0530
+
+    Reservation frontend and Pre Ordering backend
+
+[33mcommit 21c6e8e8a68f2261309dd0fb1b5d287f176ab9a6[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Sat Aug 17 18:30:57 2024 +0530
+
+    Pre Ordering
+
+[33mcommit a216f2dd908f2eb0356a61c30ab4f4daa9145143[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Sat Aug 17 10:07:01 2024 +0530
+
+    Allergy filtering
+
+[33mcommit b424a34a0bfa9df2a6c1fb5cb38de59eb9846669[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Sat Aug 17 07:43:08 2024 +0530
+
+    Updated reservation and CustomerMenuController
+
+[33mcommit 712133ed055b5f214336b7e7d90ec976ae32f246[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Sat Aug 17 05:11:46 2024 +0530
+
+    Updated reservation
+
+[33mcommit 1a66ca93e4fa30fe866a9f6b4b0f6e832a8f941a[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Sat Aug 17 04:43:34 2024 +0530
+
+    Reservation backend for restaurants and customers
+
+[33mcommit ac5504027be6eacb2316f9a7912d0f98b260e9ed[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Fri Aug 16 21:39:11 2024 +0530
+
+    Reservation for Customers
+
+[33mcommit e11b0d0e399b40db83acb21a471ae189776ca60b[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Fri Aug 16 11:06:51 2024 +0530
+
+    Filtering oprion
+
+[33mcommit 8066ff12492ad8168ccfd2d4c4c834113ee2a849[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Fri Aug 16 09:33:08 2024 +0530
+
+    Your commit message here
+
+[33mcommit 97366b36a9c81bb178f9e0f85b80fae3d92e42be[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Fri Aug 16 02:50:26 2024 +0530
+
+    Reservation Page
+
+[33mcommit 347f62bc7ee6d827f9132491910a7c90c530365e[m[33m ([m[1;32mrevert[m[33m)[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Fri Aug 16 01:16:41 2024 +0530
+
+    Updated code after reverting
+
+[33mcommit 6cd80a3f740ac9b44bc8bb97cb826292fb5d14af[m[33m ([m[1;31morigin/revert[m[33m)[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Thu Aug 15 18:15:21 2024 +0530
+
+    Your commit message here
+
+[33mcommit f992731e4a622fa26b0ccf8863cd180002db0d0b[m[33m ([m[1;32mrecovery-branch[m[33m)[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Thu Aug 15 00:54:15 2024 +0530
+
+    Reservation for customers
+
+[33mcommit 185ea9b0a0b5cdddfdfb8999b6ff5870cda67eab[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Thu Aug 15 00:34:22 2024 +0530
+
+    Reservation Management
+
+[33mcommit 687edce7fc1f5b96370e48cb3be76843d45f6abc[m
+Merge: 61d0334 f75ae1a
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Wed Aug 14 15:09:59 2024 +0530
+
+    Resolved merge conflicts
+
+[33mcommit 61d03341b1fdb2856088ae2ddc057e1fe7885efc[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Wed Aug 14 15:06:55 2024 +0530
+
+    Updated dashboard
+
+[33mcommit f75ae1ac662827234c20214e038ec64f2eb6dace[m
+Author: SooryaDS <cb011855@students.apiitlk>
+Date:   Wed Aug 14 09:59:05 2024 +0530
+
+    Revert "Added my project"
+    
+    This reverts commit 4348897bb8fe8df6e2c8ec2f09c93cc8a49e3feb.
+
+[33mcommit 4348897bb8fe8df6e2c8ec2f09c93cc8a49e3feb[m
+Author: SooryaDS <cb011855@students.apiitlk>
+Date:   Wed Aug 14 09:09:30 2024 +0530
+
+    Added my project
+
+[33mcommit 864af01951a7103191357273063372c2333648b1[m
+Author: SooryaDS <cb011855@students.apiitlk>
+Date:   Wed Aug 14 09:00:00 2024 +0530
+
+    Soorya first commit
+
+[33mcommit f0d984dfb53999c15945e52de41c605f0edef72c[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Tue Aug 13 22:45:06 2024 +0530
+
+    Updated customer profile
+
+[33mcommit c0350ded25f59290b5428123ac554a8628a0da3b[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Tue Aug 13 15:56:44 2024 +0530
+
+    Customer Profile Updated
+
+[33mcommit 2a2cf80596657eaece70652d76389e24d78da754[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Tue Aug 13 13:56:31 2024 +0530
+
+    Updated the customer menu pages
+
+[33mcommit f8a8675470ffa3379c081377cb0dea91447b598b[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Tue Aug 13 13:18:31 2024 +0530
+
+    Menus Updated
+
+[33mcommit 93029ee9e46d7895d0b11d6af9c25f8212d5b969[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Tue Aug 13 08:38:10 2024 +0530
+
+    Crud operations for menus
+
+[33mcommit 1bfbcf875d5796158657135d79612408f71e792c[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Mon Aug 12 20:55:07 2024 +0530
+
+    Profile Error handling
+
+[33mcommit d6a2185a6d31978b3de16924c7e0d471a76b1796[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Mon Aug 12 19:37:49 2024 +0530
+
+    Updated restaurannt side menu management
+
+[33mcommit 720ca705e315917f063d1c2638a91d7c8033be38[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Sun Aug 11 20:18:23 2024 +0530
+
+    Restaurant and Customer Details Updated
+
+[33mcommit 138f0284cb49dfb5957194213d48b88d0a039ddf[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Sun Aug 11 02:20:39 2024 +0530
+
+    Updated Profile in the restaurant page
+
+[33mcommit 00fb1c3fa333f61141ab61ede308ba0070f2e0ef[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Sat Aug 10 17:06:40 2024 +0530
+
+    Updated restaurant profile
+
+[33mcommit 533c0da41701edddf0e85d1f3261d3ba34772205[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Sat Aug 10 10:54:34 2024 +0530
+
+    Updated the Restaurant Profile
+
+[33mcommit f7ec5b3f44352f6c2a3c90bb0a7b253c0448b87f[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Fri Aug 9 14:41:42 2024 +0530
+
+    Update the profiles
+
+[33mcommit e8d766f412972d0eecff51eaae123899e196e027[m[33m ([m[1;31morigin/feature/auth-fix[m[33m)[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Thu Aug 8 20:40:56 2024 +0530
+
+    Updted the restaurant auth
+
+[33mcommit e7bf065d061c825b0334679e164ba3016b4c04a4[m
+Author: Manumi005 <cb012043@students.apiit.lk>
+Date:   Thu Aug 8 10:30:25 2024 +0530
+
+    first commit

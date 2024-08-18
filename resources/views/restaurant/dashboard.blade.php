@@ -180,7 +180,7 @@
             </div>
 
             <!-- Preorder Management Card -->
-            <div class="card" onclick="location.href='/restaurant/preorders'">
+            <div class="card" onclick="location.href='{{ route('preorders.index') }}'">
                 <img src="{{ asset('images/restaurantpreorder.png') }}" alt="Preorder Management">
                 <h3>Preorder Management</h3>
                 <p>Manage and process customer preorders seamlessly.</p>

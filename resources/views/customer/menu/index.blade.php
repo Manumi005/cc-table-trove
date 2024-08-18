@@ -418,8 +418,7 @@
         <button onclick="location.href='{{ route('preorders.index') }}'">Go to Pre Order</button>
     </main>
 
-   
-<script>
+    <script>
     // Function to open the filter modal
     function openFilterModal() {
         document.getElementById('filter-modal').style.display = 'flex';
@@ -438,7 +437,7 @@
     // Function to open the quantity modal
     function openQuantityModal(menu) {
         document.getElementById('quantity-modal').style.display = 'flex';
-        console.log(menu);
+        document.getElementById('quantity-input').dataset.menu = JSON.stringify(menu);
     }
 
     // Function to close the quantity modal
@@ -449,10 +448,21 @@
     // Function to add an item to the cart and redirect to the pre-order summary page
     function addToCart() {
         var quantity = document.getElementById('quantity-input').value;
+        var menu = JSON.parse(document.getElementById('quantity-input').dataset.menu);
         
-        // Simulate adding to cart
-        var menu = { /* Add menu details here */ };
-        console.log('Adding to cart:', menu, 'Quantity:', quantity);
+        // Retrieve existing pre-order items from localStorage
+        var preOrderItems = JSON.parse(localStorage.getItem('preOrderItems')) || [];
+        
+        // Add new item to the pre-order items array
+        preOrderItems.push({
+            name: menu.name,
+            price: menu.price,
+            quantity: parseInt(quantity)
+        });
+        
+        // Store updated pre-order items back to localStorage
+        localStorage.setItem('preOrderItems', JSON.stringify(preOrderItems));
+        
         alert("Item added to the cart!");
 
         // Redirect to the pre-order summary page

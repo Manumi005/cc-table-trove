@@ -15,6 +15,7 @@
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.12",
         "spatie/laravel-medialibrary": "^10.15",
+        "stripe/stripe-php": "^15.7",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
