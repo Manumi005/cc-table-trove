@@ -63,6 +63,7 @@ Route::prefix('customer')->as('customer.')->group(function () {
     });
 
 
+
 Route::get('/preorders', [PreOrderController::class, 'index'])->name('preorders.index');
 Route::get('/preorders/create', [PreOrderController::class, 'create'])->name('preorders.create');
 Route::post('/preorders', [PreOrderController::class, 'store'])->name('preorders.store');
@@ -71,6 +72,12 @@ Route::put('/preorders/{id}', [PreOrderController::class, 'update'])->name('preo
 Route::delete('/preorders/{id}', [PreOrderController::class, 'destroy'])->name('preorders.destroy');
 Route::get('/preorder/summary', [PreOrderController::class, 'summary'])->name('preorder.summary');
 Route::post('/submit-preorder', [PreOrderController::class, 'submitPreOrder'])->name('submit.preorder');
+
+
+  //Payment Routes
+        
+Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('payment');
+  Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('process.payment');
 
 
 // Restaurant Routes
@@ -123,14 +130,6 @@ Route::put('/restaurant/preorders/{id}', [RestaurantPreOrderController::class, '
 Route::delete('/restaurant/preorders/{id}', [RestaurantPreOrderController::class, 'destroy'])->name('preorders.destroy');
 Route::get('restaurant/preorder/summary', [RestaurantPreOrderController::class, 'summary'])->name('preorder.summary');
 
-
-        //Payment Routes
-        
-        Route::get('/summary', function () {
-            return view('customer.preorders.summary');
-        })->name('summary');
-        
-        Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('payment');
-        Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('processPayment');      
-    });
+});
+      
 });

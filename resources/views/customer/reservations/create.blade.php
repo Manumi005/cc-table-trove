@@ -8,36 +8,100 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #f8f9fa;
+            background: url('{{ asset('images/wallpaper5.png') }}') no-repeat center center fixed;
+            background-size: cover;
             font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
+
         .container {
-            background-color: white;
-            padding: 30px;
-            margin-top: 50px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
         }
+
         h1 {
-            color: #343a40;
+            color: #fff;
             margin-bottom: 30px;
-        }
-        .form-group label {
+            font-size: 2rem;
+            text-align: center;
             font-weight: bold;
         }
+
+        .form-group label {
+            font-weight: bold;
+            color: #adb5bd;
+        }
+
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 1rem;
+            color: #fff;
+            border: 1px solid #ced4da;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+        }
+
         .text-danger {
-            color: red;
+            color: #ff6b6b;
             font-size: 0.875rem;
             margin-top: 0.25rem;
         }
+
         .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
+            background-color: #28a745;
+            border-color: #28a745;
+            padding: 10px 20px;
+            font-size: 1.125rem;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            width: 100%;
             margin-top: 20px;
         }
+
         .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
+            background-color: #218838;
+            border-color: #218838;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .form-control {
+                font-size: 0.875rem;
+                padding: 8px;
+            }
+
+            .btn-primary {
+                font-size: 1rem;
+                padding: 8px 15px;
+            }
         }
     </style>
 </head>
