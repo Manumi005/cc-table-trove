@@ -78,7 +78,7 @@
             padding: 0 20px;
             justify-content: center;
             margin-bottom: 50px;
-        }       
+        }
         .card {
             background-color: #d9edff;
             border-radius: 10px;
@@ -185,13 +185,19 @@
                 <h3>Preorder Management</h3>
                 <p>Manage and process customer preorders seamlessly.</p>
             </div>
-         
+
             <!-- Payment Verification Card -->
             <div class="card" onclick="location.href='/restaurant/payment'">
                 <img src="{{ asset('images/restaurantpayment.png') }}" alt="Payment Verification">
                 <h3>Payment Verification</h3>
                 <p>Ensure secure and verified transactions for all customer payments.</p>
             </div>
+
+            <!-- Offers Management Card -->
+            <div class="card" onclick="location.href='/restaurant/offers'">
+                <img src="{{ asset('images/restaurantoffer.png') }}" alt="Offers Management">
+                <h3>Offers Management</h3>
+                <p>Create and manage special offers to attract more customers to your restaurant.</p>
         </div>
     </div>
 

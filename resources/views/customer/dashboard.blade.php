@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #cd9cc0; 
+            background-color: #cd9cc0;
         }
 
         header {
@@ -200,6 +200,7 @@
             <ul>
             <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
             <li><a href="/customer/reservations">Reservations</a></li>
+                <li><a href="{{ route('customer.offers.index') }}">Offers & Promotions</a></li>
             </ul>
         </nav>
         <div class="search-bar">

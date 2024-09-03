@@ -11,6 +11,7 @@ use App\Http\Controllers\CustomerReservationController;
 use App\Http\Controllers\RestaurantReservationController;
 use App\Http\Controllers\RestaurantPreOrderController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\OffersController;
 use Illuminate\Support\Facades\Route;
 
 // Home Route
@@ -51,11 +52,11 @@ Route::prefix('customer')->as('customer.')->group(function () {
         Route::post('/filter-menu', [CustomerMenuController::class, 'filter'])->name('filter-menu');
         Route::post('/customer/menu/add', [CustomerMenuController::class, 'add'])->name('customer.menu.add');
     });
-   
+
     Route::get('/pre-order', function () {
         return view('pre-order');
     });
-    
+
     Route::post('/submit-order', function (Illuminate\Http\Request $request) {
         // Handle order submission
         // You can save the order to the database or perform other actions
@@ -75,7 +76,7 @@ Route::post('/submit-preorder', [PreOrderController::class, 'submitPreOrder'])->
 
 
   //Payment Routes
-        
+
 Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('payment');
   Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('process.payment');
 
@@ -131,5 +132,15 @@ Route::delete('/restaurant/preorders/{id}', [RestaurantPreOrderController::class
 Route::get('restaurant/preorder/summary', [RestaurantPreOrderController::class, 'summary'])->name('preorder.summary');
 
 });
-      
+
 });
+
+// Route for the restaurant offers index
+Route::get('/customer/offers', [OffersController::class, 'customerIndex'])->name('customer.offers.index');
+Route::get('/offers/create', [OffersController::class, 'create'])->name('restaurant.offers.create');
+Route::post('/offers', [OffersController::class, 'store'])->name('restaurant.offers.store');
+
+
+// Route for the restaurant offers index
+Route::get('/restaurant/offers', [OffersController::class, 'restaurantIndex'])->name('restaurant.offers.index');
+
