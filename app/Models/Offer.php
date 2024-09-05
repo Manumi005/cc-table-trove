@@ -20,6 +20,7 @@ class Offer extends Model
         'valid_from',
         'valid_until',
         'image',
+        'restaurant_id',
     ];
 
     // Cast attributes to their native types

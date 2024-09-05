@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Offer</title>
+    <title>Edit Offer</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
         body {
@@ -211,34 +211,37 @@
 </header>
 <div class="top">
     <img src="{{ asset('images/offer.png') }}" alt="Offer Icon" class="menu-icon">
-    <h1>Add New Offer</h1>
+    <h1>Edit Offer</h1>
 </div>
 <main>
-    <form action="{{ route('restaurant.offers.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('restaurant.offers.update', $offer->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <label for="title">Offer Title:</label>
-        <input type="text" id="title" name="title" required>
+        <input type="text" id="title" name="title" value="{{ old('title', $offer->title) }}" required>
 
         <label for="description">Description:</label>
-        <textarea id="description" name="description" rows="4" required></textarea>
+        <textarea id="description" name="description" rows="4" required>{{ old('description', $offer->description) }}</textarea>
 
         <label for="discount">Discount Percentage:</label>
-        <input type="text" id="discount" name="discount" required>
+        <input type="text" id="discount" name="discount" value="{{ old('discount', $offer->discount) }}" required>
 
         <label for="valid_from">Valid From:</label>
-        <input type="date" id="valid_from" name="valid_from" required>
+        <input type="date" id="valid_from" name="valid_from" value="{{ old('valid_from', $offer->valid_from->format('Y-m-d')) }}" required>
 
         <label for="valid_until">Valid Until:</label>
-        <input type="date" id="valid_until" name="valid_until" required>
+        <input type="date" id="valid_until" name="valid_until" value="{{ old('valid_until', $offer->valid_until->format('Y-m-d')) }}" required>
 
         <label for="image">Offer Image:</label>
         <input type="file" id="image" name="image" accept="image/*">
+        @if($offer->image)
+            <img src="{{ asset('storage/' . $offer->image) }}" alt="Current Offer Image" style="width: 150px; margin-top: 10px;">
+        @endif
 
-        <button type="submit">Add Offer</button>
+        <button type="submit">Update Offer</button>
     </form>
     <a href="{{ route('restaurant.offers.index') }}" class="cancel-link">Cancel</a>
 </main>
 </body>
-
 
 </html>

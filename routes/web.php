@@ -135,16 +135,15 @@ Route::get('restaurant/preorder/summary', [RestaurantPreOrderController::class, 
 
 });
 
-// Route for the restaurant offers index
+// Routes for customers (viewing offers)
 Route::get('/customer/offers', [OffersController::class, 'customerIndex'])->name('customer.offers.index');
-Route::get('/restaurant/offers/create', [OffersController::class, 'create'])->name('restaurant.offers.create');
-Route::post('/restaurant/offers', [OffersController::class, 'store'])->name('restaurant.offers.store');
-Route::get('/restaurant/offers/{offer}/edit', [OffersController::class, 'edit'])->name('restaurant.offers.edit');
-Route::put('/restaurant/offers/{offer}', [OffersController::class, 'update'])->name('restaurant.offers.update');
-Route::delete('/restaurant/offers/{offer}', [OffersController::class, 'destroy'])->name('restaurant.offers.destroy');
 
-
-
-// Route for the restaurant offers index
-Route::get('/restaurant/offers', [OffersController::class, 'restaurantIndex'])->name('restaurant.offers.index');
-
+// Group routes for restaurant management and apply middleware
+Route::middleware(['auth:restaurant'])->group(function () {
+    Route::get('/restaurant/offers', [OffersController::class, 'restaurantIndex'])->name('restaurant.offers.index');
+    Route::get('/restaurant/offers/create', [OffersController::class, 'create'])->name('restaurant.offers.create');
+    Route::post('/restaurant/offers', [OffersController::class, 'store'])->name('restaurant.offers.store');
+    Route::get('/restaurant/offers/{offer}/edit', [OffersController::class, 'edit'])->name('restaurant.offers.edit');
+    Route::put('/restaurant/offers/{offer}', [OffersController::class, 'update'])->name('restaurant.offers.update');
+    Route::delete('/restaurant/offers/{offer}', [OffersController::class, 'destroy'])->name('restaurant.offers.destroy');
+});

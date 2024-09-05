@@ -392,11 +392,13 @@
             <li>
                 <img src="{{ $offer->image ? asset('storage/' . $offer->image) : '' }}" alt="{{ $offer->title }}">
                 <div class="item">
+                    <a href="{{ route('restaurant.details', $offer->id) }}">
                     <h2>{{ $offer->title }}</h2>
                     <p>Description: <span>{{ $offer->description }}</span></p>
                     <p>Discount: <span>{{ $offer->discount }}%</span></p>
                     <p>Valid From: <span>{{ $offer->valid_from->format('d M Y') }}</span></p>
                     <p>Valid Until: <span>{{ $offer->valid_until->format('d M Y') }}</span></p>
+                    </a>
                 </div>
             </li>
         @endforeach

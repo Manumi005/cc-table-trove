@@ -30,4 +30,12 @@ class Restaurant extends Authenticatable
         'images' => 'array',        // Cast 'images' as an array if using 'images'
         'cuisine_type' => 'array',
     ];
+
+    /**
+     * Get the offers associated with the restaurant.
+     */
+    public function offers()
+    {
+        return $this->hasMany(Offer::class);
+    }
 }
