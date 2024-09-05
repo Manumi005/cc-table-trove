@@ -9,16 +9,22 @@ class Offer extends Model
 {
     use HasFactory;
 
+    // Specify the table if it's different from the plural of the model name
+    protected $table = 'offers';
+
+    // Define the fillable properties
     protected $fillable = [
-        'restaurant_id',
-        'offer_description',
-        'offer_start_date',
-        'offer_end_date',
+        'title',
+        'description',
+        'discount',
+        'valid_from',
+        'valid_until',
+        'image',
     ];
 
-    // Define a relationship with Restaurant model
-    public function restaurant()
-    {
-        return $this->belongsTo(Restaurant::class);
-    }
+    // Cast attributes to their native types
+    protected $casts = [
+        'valid_from' => 'datetime',
+        'valid_until' => 'datetime',
+    ];
 }

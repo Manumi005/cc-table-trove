@@ -95,15 +95,15 @@
             background-color:#6397b5;
             color: white;
             padding: 20px;
-            
-          
+
+
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
 
         .top h1 {
             margin: 0;
-           
+
             text-align: center;
             margin-top:-90px;
             margin-bottom: 30px;
@@ -162,7 +162,7 @@
             font-family: inherit; /* Inherit the font from the parent element */
             width: 100%; /* Ensure it has the same width as other input elements */
             box-sizing: border-box; /* Include padding and border in the element's width */
-        
+
         }
 
         .checkbox-group {
@@ -211,7 +211,7 @@
             height: auto;
             margin: 30px;
             margin-left: 400px
-        
+
         }
     </style>
 </head>
@@ -408,9 +408,10 @@
                         <input type="text" id="diet-other" name="diet_other" value="{{ old('diet_other') }}">
                     </div>
                 </div>
-                
+
             <div class="form-group">
                 <button type="submit">Add Menu Item</button>
+            </div>
             </div>
         </form>
     </main>

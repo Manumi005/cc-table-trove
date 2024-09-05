@@ -12,9 +12,9 @@ class CreateOffersTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->decimal('discount', 5, 2);
-            $table->date('valid_from');
-            $table->date('valid_until');
+            $table->integer('discount');
+            $table->dateTime('valid_from');
+            $table->dateTime('valid_until');
             $table->string('image')->nullable();
             $table->timestamps();
         });

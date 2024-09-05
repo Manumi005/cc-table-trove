@@ -397,12 +397,6 @@
                     <p>Discount: <span>{{ $offer->discount }}%</span></p>
                     <p>Valid From: <span>{{ $offer->valid_from->format('d M Y') }}</span></p>
                     <p>Valid Until: <span>{{ $offer->valid_until->format('d M Y') }}</span></p>
-                    <a href="{{ route('restaurant.offers.edit', $offer->id) }}">Edit</a>
-                    <form action="{{ route('restaurant.offers.destroy', $offer->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit">Delete</button>
-                    </form>
                 </div>
             </li>
         @endforeach

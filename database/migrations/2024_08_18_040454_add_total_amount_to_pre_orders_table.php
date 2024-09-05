@@ -14,7 +14,7 @@ class AddTotalAmountToPreOrdersTable extends Migration
     public function up()
     {
         Schema::table('pre_orders', function (Blueprint $table) {
-            $table->decimal('total_amount', 10, 2)->after('price')->nullable();
+            $table->decimal('total_amount', 10, 2)->nullable();
         });
     }
 

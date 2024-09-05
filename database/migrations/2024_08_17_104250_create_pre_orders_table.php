@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('pre_orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained('customer'); // Foreign key to users
+            $table->foreignId('customer_id')->constrained('customers'); // Corrected table name
             $table->json('items'); // JSON column to store multiple items with details
             $table->timestamps();
         });
