@@ -344,20 +344,19 @@
 <body>
 <header>
     <nav>
-        <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='{{ url('/') }}'">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/customer/dashboard'">
         <ul>
-            <li><a href="{{ url('/') }}">Home</a></li>
-            <li><a href="{{ url('/offers') }}">Offers & Promotions</a></li>
-            <li><a href="{{ url('/about') }}">About Us</a></li>
-            <li><a href="{{ url('/contact') }}">Contact</a></li>
+            <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
+            <li><a href="/customer/reservations">Reservations</a></li>
+            <li><a href="{{ route('customer.offers.index') }}">Offers & Promotions</a></li>
         </ul>
-        <div class="search-bar">
-            <input type="text" placeholder="Search restaurants...">
-        </div>
-        <div class="profile-icon">
-            <img src="{{ asset('images/profile-icon.png') }}" alt="Profile">
-        </div>
     </nav>
+    <div class="search-bar">
+        <input type="text" placeholder="Search...">
+        <div class="profile-icon" onclick="location.href='/customer/profile'">
+            <img src="{{ asset('images/profile.jpg') }}" alt="Profile">
+        </div>
+    </div>
 </header>
 
 <div class="top">
@@ -365,27 +364,27 @@
 </div>
 
 <main>
-    <button class="filter-button" onclick="toggleFilterModal()"><i class="fas fa-filter"></i> Filter</button>
+{{--    <button class="filter-button" onclick="toggleFilterModal()"><i class="fas fa-filter"></i> Filter</button>--}}
 
-    <!-- Filter Modal -->
-    <div id="filter-modal" class="filter-modal">
-        <div class="filter-modal-content">
-            <h2>Filter Offers</h2>
-            <label>
-                <input type="checkbox" name="offer-type" value="discount"> Discount Offers
-            </label>
-            <label>
-                <input type="checkbox" name="offer-type" value="buy-one-get-one"> Buy One Get One Free
-            </label>
-            <label>
-                <input type="checkbox" name="offer-type" value="happy-hour"> Happy Hour
-            </label>
-            <div class="slider-label">Price Range</div>
-            <input type="range" min="0" max="100" step="1" class="slider" id="price-range">
-            <button onclick="applyFilters()">Apply</button>
-            <button onclick="closeFilterModal()">Close</button>
-        </div>
-    </div>
+{{--    <!-- Filter Modal -->--}}
+{{--    <div id="filter-modal" class="filter-modal">--}}
+{{--        <div class="filter-modal-content">--}}
+{{--            <h2>Filter Offers</h2>--}}
+{{--            <label>--}}
+{{--                <input type="checkbox" name="offer-type" value="discount"> Discount Offers--}}
+{{--            </label>--}}
+{{--            <label>--}}
+{{--                <input type="checkbox" name="offer-type" value="buy-one-get-one"> Buy One Get One Free--}}
+{{--            </label>--}}
+{{--            <label>--}}
+{{--                <input type="checkbox" name="offer-type" value="happy-hour"> Happy Hour--}}
+{{--            </label>--}}
+{{--            <div class="slider-label">Price Range</div>--}}
+{{--            <input type="range" min="0" max="100" step="1" class="slider" id="price-range">--}}
+{{--            <button onclick="applyFilters()">Apply</button>--}}
+{{--            <button onclick="closeFilterModal()">Close</button>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
     <ul class="container">
         @foreach($offers as $offer)

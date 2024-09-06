@@ -9,7 +9,7 @@
         body {
             font-family: Arial, sans-serif;
             background: url('{{ asset('images/wallpaper1.jpg') }}') no-repeat center center fixed;
-            
+
             margin: 0;
             padding: 0;
             background-color: #cd9cc0; /* Use the background color from the previous page */
@@ -172,7 +172,7 @@
             width: 180px;
             height: 25px;
             margin: 0 10px;
-            
+
             transition: background-color 0.5s;
         }
 
@@ -188,6 +188,7 @@
             <ul>
                 <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
                 <li><a href="{{ route('customer.reservations.index') }}">Reservations</a></li>
+                <li><a href="{{ route('customer.offers.index') }}">Offers & Promotions</a></li>
             </ul>
         </nav>
         <div class="search-bar">
@@ -200,7 +201,7 @@
     <div class="container">
         <h1>{{ $restaurant->name }}</h1>
         <img src="{{ Storage::url($restaurant->image) }}" alt="{{ $restaurant->name }}" class="profile-image">
-        
+
         <div class="details-container">
             <div class="details">
                 <label>Contact Number:</label>

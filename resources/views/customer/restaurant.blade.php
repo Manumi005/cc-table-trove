@@ -115,8 +115,8 @@
             color: white;
             padding: 20px;
             align-items: center;
-            
-          
+
+
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
@@ -137,7 +137,7 @@
             height: auto;
             align-items:center;
         }
-    
+
 
         .restaurant-card-container {
             display: flex;
@@ -210,7 +210,7 @@
         .restaurant-card a:hover {
             background-color: #315778;
         }
-            
+
 
         .action-buttons {
             text-align: center;
@@ -252,27 +252,28 @@
             <ul>
                 <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
                 <li><a href="{{ route('customer.reservations.index') }}">Reservations</a></li>
+                <li><a href="{{ route('customer.offers.index') }}">Offers & Promotions</a></li>
             </ul>
         </nav>
         <div class="search-bar">
             <form method="GET" action="{{ route('customer.restaurants') }}">
                 <input type="text" name="query" placeholder="Search..." value="{{ request('query') }}">
-              
+
             </form>
             <div class="profile-icon" onclick="location.href='/customer/profile'">
                 <img src="{{ asset('images/profile.jpg') }}" alt="Profile">
             </div>
         </div>
     </header>
-    
+
     <div class="top">
-    <img src="{{ asset('images/restaurant.png') }}" alt="Menu Icon" class="menu-icon"> 
+    <img src="{{ asset('images/restaurant.png') }}" alt="Menu Icon" class="menu-icon">
         <h1>Restaurants</h1>
       </div>
-   
+
 
     <div class="container">
-       
+
         <div class="action-buttons">
             <a href="{{ route('customer.reservation.create') }}">Make a Reservation</a>
         </div>

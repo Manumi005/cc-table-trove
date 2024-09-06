@@ -100,7 +100,7 @@
         .header-container img {
             max-width: 50px; /* Adjust size as needed */
             margin-right: 15px;
-        }       
+        }
          .container {
             padding: 20px;
             max-width: 1200px;
@@ -174,6 +174,7 @@
         <ul>
             <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
             <li><a href="{{ route('customer.reservations.index') }}">Reservations</a></li>
+            <li><a href="{{ route('customer.offers.index') }}">Offers & Promotions</a></li>
         </ul>
     </nav>
     <div class="search-bar">
@@ -186,7 +187,7 @@
     </div>
 </header>
 <body>
-  
+
     <div class="container">
     <div class="header-container">
         <img src="{{ asset('images/restaurantreservation.png') }}" alt="Reservation Icon">

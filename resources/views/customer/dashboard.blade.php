@@ -196,7 +196,7 @@
 <body>
     <header>
         <nav>
-            <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/dashboard'"> <!-- Replace 'logo.png' with your logo image path -->
+            <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/customer/dashboard'">
             <ul>
             <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
             <li><a href="/customer/reservations">Reservations</a></li>

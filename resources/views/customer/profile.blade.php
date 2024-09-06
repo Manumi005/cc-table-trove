@@ -14,12 +14,12 @@
         }
 
         .outer-container {
-            position: absolute; 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%); 
-            width: 80%; 
-            max-width: 600px; 
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 600px;
         }
 
         header {
@@ -129,7 +129,7 @@
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            width: 50%; 
+            width: 50%;
         }
 
         .profile-info label {
@@ -160,7 +160,7 @@
         .edit-icon {
             position: absolute;
             top: 60px;
-            left: 10px; 
+            left: 10px;
             width: 30px;
             height: 30px;
             background-color: #333;
@@ -186,7 +186,7 @@
             border-radius: 5px;
             padding: 10px 20px;
             cursor: pointer;
-            margin-right: 10px; 
+            margin-right: 10px;
             transition: background-color 0.3s ease;
         }
 
@@ -255,6 +255,7 @@
         <ul>
         <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
         <li><a href="{{ route('customer.reservation.create') }}">Reservations</a></li>
+            <li><a href="{{ route('customer.offers.index') }}">Offers & Promotions</a></li>
         </ul>
     </nav>
     <div class="search-bar">
@@ -277,7 +278,7 @@
 
                     <div class="profile-info-logout">
                         <button onclick="logout()">Logout</button>
-                    </div> 
+                    </div>
                 </div>
             </div>
             <div class="profile-info">
@@ -328,9 +329,9 @@
                 <div class="scrollable-container">
                     <div class="checkbox-group">
                         @foreach ([
-                            'Peanuts', 'Gluten', 'Dairy', 'Eggs', 'Soy', 'Tree Nuts', 'Shellfish', 
-                            'Fish', 'Wheat', 'Sesame', 'Mustard', 'Sulfites', 'Lupin', 
-                            'Celery', 'Molluscs', 'Corn', 'Sunflower', 'Poppy Seeds', 
+                            'Peanuts', 'Gluten', 'Dairy', 'Eggs', 'Soy', 'Tree Nuts', 'Shellfish',
+                            'Fish', 'Wheat', 'Sesame', 'Mustard', 'Sulfites', 'Lupin',
+                            'Celery', 'Molluscs', 'Corn', 'Sunflower', 'Poppy Seeds',
                             'Buckwheat', 'Latex'] as $allergy)
                             <label>
                                 <input type="checkbox" name="allergies[]" value="{{ $allergy }}" @if(in_array($allergy, old('allergies', $user->allergies ?? []))) checked @endif>
@@ -345,7 +346,7 @@
                 <div class="scrollable-container">
                     <div class="checkbox-group">
                         @foreach ([
-                            'Vegetarian', 'Vegan', 'Non-Vegetarian', 
+                            'Vegetarian', 'Vegan', 'Non-Vegetarian',
                             'Pescatarian', 'Gluten-Free', 'Dairy-Free'] as $preference)
                             <label>
                                 <input type="checkbox" name="preferences[]" value="{{ $preference }}" @if(in_array($preference, old('preferences', $user->preferences ?? []))) checked @endif>
