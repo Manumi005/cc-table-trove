@@ -195,10 +195,10 @@
 
             <!-- Offers Management Card -->
             <div class="card" onclick="location.href='/restaurant/offers'">
-                <img src="{{ asset('images/restaurantoffer.png') }}" alt="Offers Management">
+                <img src="{{ asset('images/offersandpromo.png') }}" alt="Offers Management">
                 <h3>Offers Management</h3>
                 <p>Create and manage special offers to attract more customers to your restaurant.</p>
-        </div>
+            </div>
     </div>
 
     <!-- JavaScript for Slider -->

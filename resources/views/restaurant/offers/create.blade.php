@@ -210,7 +210,7 @@
     </div>
 </header>
 <div class="top">
-    <img src="{{ asset('images/offer.png') }}" alt="Offer Icon" class="menu-icon">
+    <img src="{{ asset('images/offers4.png') }}" alt="Offer Icon" class="menu-icon">
     <h1>Add New Offer</h1>
 </div>
 <main>

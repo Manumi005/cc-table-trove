@@ -107,7 +107,7 @@
             height: auto;
             margin: 30px;
             margin-left: 300px;
-    
+
         }
 
         .table {
@@ -123,8 +123,8 @@
             text-align: center;
             color: #333;
         }
-        
-        
+
+
         .table td {
             padding: 10px;
             border: 1px solid #333;
@@ -195,74 +195,79 @@
     </div>
 </header>
 <body>
-    <div id="app">
-        <!-- Main Content Area -->
-        <div class="container mt-4">
+<div id="app">
+    <!-- Main Content Area -->
+    <div class="container mt-4">
         <img src="{{ asset('images/restaurantreservation.png') }}" alt="reserve Icon" class="reserve-icon">
-        
-            <h1>Reservations</h1>
 
-            @if(session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
-            @endif
-            @if(session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
-            @endif
+        <h1>Reservations</h1>
 
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Customer Name</th>
-                        <th>Reservation Date</th>
-                        <th>Time Slot</th>
-                        <th>Party Size</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($reservations as $reservation)
-                        <tr>
-                            <td>{{ $reservation->customer->name }}</td>
-                            <td>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('Y-m-d') }}</td>
-                            <td>{{ $reservation->time_slot }}</td>
-                            <td>{{ $reservation->party_size }}</td>
-                            <td class="
+        @if(session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Reservation Date</th>
+                <th>Time Slot</th>
+                <th>Party Size</th>
+                <th>Special Requests</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($reservations as $reservation)
+                <tr>
+                    <td>{{ $reservation->customer->name }}</td>
+                    <td>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('Y-m-d') }}</td>
+                    <td>{{ $reservation->time_slot }}</td>
+                    <td>{{ $reservation->party_size }}</td>
+                    <td>
+                        <a href="{{ route('restaurant.customizations.show', $reservation->id) }}" class="btn btn-primary">View</a>
+                    </td>
+                    <td class="
                                 @if($reservation->status == 'Pending') bg-warning text-dark
                                 @elseif($reservation->status == 'Approved') bg-success text-white
                                 @elseif($reservation->status == 'Cancelled') bg-danger text-white
                                 @endif
-                            ">                             
-                           {{ $reservation->status }}
-                            </td>
-                            <td>
-                                @if($reservation->status == 'Pending')
-                                    <form action="{{ route('restaurant.reservation.approve', $reservation->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to approve this reservation?');">
-                                        @csrf
-                                        <button type="submit" class="btn btn-success">Approve</button>
-                                    </form>
-                                    <form action="{{ route('restaurant.reservation.cancel', $reservation->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to cancel this reservation?');">
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger">Cancel</button>
-                                    </form>
-                                @endif
-                                <form action="{{ route('restaurant.reservation.destroy', $reservation->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this reservation?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-warning">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                            ">
+                        {{ $reservation->status }}
+                    </td>
+                    <td>
+                        @if($reservation->status == 'Pending')
+                            <form action="{{ route('restaurant.reservation.approve', $reservation->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to approve this reservation?');">
+                                @csrf
+                                <button type="submit" class="btn btn-success">Approve</button>
+                            </form>
+                            <form action="{{ route('restaurant.reservation.cancel', $reservation->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to cancel this reservation?');">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Cancel</button>
+                            </form>
+                        @endif
+                        <form action="{{ route('restaurant.reservation.destroy', $reservation->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this reservation?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-warning">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
     </div>
+</div>
 
-    <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 </body>
+
 </html>

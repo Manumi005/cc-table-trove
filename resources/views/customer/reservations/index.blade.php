@@ -228,6 +228,7 @@
                         <th>Status</th>
                         <th>Actions</th>
                         <th>Pre-Order</th>
+                        <th>Special Requests</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -257,11 +258,20 @@
                             </td>
                             <td>
                                 @if($reservation->status == 'Approved')
-                                    <a href="{{ route('customer.restaurant.menu', $reservation->restaurant->id) }}" class="btn btn-primary">Pre-Order</a>
+                                    <a href="{{ route('customer.menu.ordermenu', ['restaurantId' => $reservation->restaurant->id]) }}" class="btn btn-primary">Pre-Order</a>
                                 @else
                                     <span class="text-muted">Not Available</span>
                                 @endif
                             </td>
+                            <td>
+                                @if($reservation->status == 'Approved')
+                                    <a href="{{ route('customer.reservations.customizations.create', ['restaurantId' => $reservation->restaurant->id]) }}" class="btn btn-primary">Customize Now</a>
+                                @else
+                                    <span class="text-muted">Not Available</span>
+                                @endif
+                            </td>
+
+
                         </tr>
                     @endforeach
                 </tbody>

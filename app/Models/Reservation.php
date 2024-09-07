@@ -16,6 +16,9 @@ class Reservation extends Model
         'time_slot',
         'party_size',
         'status',
+        'customizations',
+        'special_occasions',
+        'table_location',
     ];
 
     // Cast reservation_date to a date object
@@ -24,6 +27,11 @@ class Reservation extends Model
     /**
      * Get the customer that owns the reservation.
      */
+
+    protected $casts = [
+        'customizations' => 'array',
+        'special_occasions' => 'array',
+    ];
     public function customer()
     {
         return $this->belongsTo(Customer::class);

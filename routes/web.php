@@ -13,6 +13,7 @@ use App\Http\Controllers\RestaurantPreOrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\OffersController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CustomizationController;
 
 // Home Route
 Route::get('/', function () {
@@ -147,3 +148,22 @@ Route::middleware(['auth:restaurant'])->group(function () {
     Route::put('/restaurant/offers/{offer}', [OffersController::class, 'update'])->name('restaurant.offers.update');
     Route::delete('/restaurant/offers/{offer}', [OffersController::class, 'destroy'])->name('restaurant.offers.destroy');
 });
+
+Route::get('/restaurant/menu/order', [CustomerMenuController::class, 'orderMenu'])->name('customer.menu.ordermenu');
+Route::get('/customer/menu/ordermenu/{restaurantId}', [CustomerMenuController::class, 'orderMenu'])->name('customer.menu.ordermenu');
+
+
+Route::prefix('customer/reservations/customizations')->name('customer.reservations.customizations.')->group(function () {
+    Route::get('/', [CustomizationController::class, 'index'])->name('index');
+    Route::get('/create', [CustomizationController::class, 'create'])->name('create');
+    Route::post('/', [CustomizationController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [CustomizationController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [CustomizationController::class, 'update'])->name('update');
+    Route::delete('/{id}', [CustomizationController::class, 'destroy'])->name('destroy');
+});
+
+// In your web.php or routes file
+Route::get('/restaurant/customizations', [CustomizationController::class, 'restaurantCustomizations'])->name('restaurant.customizations.show');
+
+
+

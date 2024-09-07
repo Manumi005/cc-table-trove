@@ -449,23 +449,23 @@ button.preorder:focus {
         }}
     </span>
 </p>
-{{-- <i class="fas fa-shopping-cart order-icon" onclick='openQuantityModal(@json($menu))'></i>--}}
+ <i class="fas fa-shopping-cart order-icon" onclick='openQuantityModal(@json($menu))'></i>
                     </div>
                 </li>
                 @endforeach
             </div>
         </ul>
 
-{{--        <div class="quantity-modal" id="quantity-modal">--}}
-{{--            <div class="quantity-modal-content">--}}
-{{--            <h3>Add to Pre-Order</h3>--}}
-{{--            <input type="number" id="quantity-input" min="1" value="1">--}}
-{{--            <button type="button" onclick="addToCart()">Add to Cart</button>--}}
-{{--            <button type="button" onclick="closeQuantityModal()">Cancel</button>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+        <div class="quantity-modal" id="quantity-modal">
+            <div class="quantity-modal-content">
+            <h3>Add to Pre-Order</h3>
+            <input type="number" id="quantity-input" min="1" value="1">
+            <button type="button" onclick="addToCart()">Add to Cart</button>
+            <button type="button" onclick="closeQuantityModal()">Cancel</button>
+            </div>
+        </div>
 
-{{--        <button class= "preorder" onclick="location.href='{{ route('preorders.index') }}'">Go to Pre Order</button>--}}
+        <button class= "preorder" onclick="location.href='{{ route('preorders.index') }}'">Go to Pre Order</button>
     </main>
 
     <script>
@@ -516,7 +516,7 @@ button.preorder:focus {
         alert("Item added to the cart!");
 
         // Redirect to the pre-order summary page
-        window.location.href = '{{ route("preorders.index") }}';
+        {{--window.location.href = '{{ route("preorders.index") }}';--}}
     }
 
     // Update the displayed price range as the slider moves

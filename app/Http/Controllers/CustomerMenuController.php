@@ -7,13 +7,13 @@ use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 
 class CustomerMenuController extends Controller
 {
     // Show the menu page with menu items for a specific restaurant
-    public function show($restaurantId)
+    public function show($restaurantId): View
     {
-        // Validate that restaurantId is an integer
         $restaurantId = (int) $restaurantId;
         $restaurant = Restaurant::findOrFail($restaurantId);
         $menus = Menu::where('restaurant_id', $restaurantId)->get();
@@ -21,7 +21,6 @@ class CustomerMenuController extends Controller
         $user = Auth::user();
         $userAllergens = $user ? explode(',', $user->allergens) : [];
 
-        // Convert allergens and dietary_preferences to arrays
         foreach ($menus as $menu) {
             $menu->allergens = explode(',', $menu->allergens);
             $menu->dietary_preferences = explode(',', $menu->dietary_preferences);
@@ -33,7 +32,6 @@ class CustomerMenuController extends Controller
     // Filter menu items based on the selected criteria
     public function filter(Request $request)
     {
-        // Validate and sanitize inputs
         $validated = $request->validate([
             'restaurantId' => 'required|integer|exists:restaurants,id',
             'allergies' => 'array',
@@ -57,7 +55,6 @@ class CustomerMenuController extends Controller
 
         $query = Menu::where('restaurant_id', $restaurantId);
 
-        // Filter by allergies
         if (!empty($allergies)) {
             $query->where(function ($q) use ($allergies) {
                 foreach ($allergies as $allergy) {
@@ -66,7 +63,6 @@ class CustomerMenuController extends Controller
             });
         }
 
-        // Filter by dietary preferences
         if (!empty($dietary)) {
             $query->where(function ($q) use ($dietary) {
                 foreach ($dietary as $preference) {
@@ -75,12 +71,10 @@ class CustomerMenuController extends Controller
             });
         }
 
-        // Filter by price range
         $query->whereBetween('price', [1000, $priceRange]);
 
         $menus = $query->get();
 
-        // Convert allergens and dietary_preferences to arrays
         foreach ($menus as $menu) {
             $menu->allergens = explode(',', $menu->allergens);
             $menu->dietary_preferences = explode(',', $menu->dietary_preferences);
@@ -89,5 +83,24 @@ class CustomerMenuController extends Controller
         Log::info('Filtered menus', ['menus' => $menus]);
 
         return response()->json($menus);
+    }
+
+    // Show the order menu page for a specific restaurant
+    public function orderMenu($restaurantId)
+    {
+        $restaurantId = (int) $restaurantId;
+        $restaurant = Restaurant::findOrFail($restaurantId);
+        $menus = Menu::where('restaurant_id', $restaurantId)->get();
+
+        $user = Auth::user();
+        $userAllergens = $user ? explode(',', $user->allergens) : [];
+
+        foreach ($menus as $menu) {
+            $menu->allergens = explode(',', $menu->allergens);
+            $menu->dietary_preferences = explode(',', $menu->dietary_preferences);
+        }
+
+        return view('customer.menu.ordermenu', compact('restaurant', 'menus', 'userAllergens'));
+
     }
 }
