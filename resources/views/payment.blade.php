@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #f8f9fa;
             font-family: Arial, sans-serif;
+            background: url('{{ asset('images/background.jpg') }}') no-repeat center center fixed;
+            background-size: cover;
             margin: 0;
             padding: 0;
         }
@@ -178,11 +179,17 @@
         <img src="https://img.icons8.com/color/48/000000/mastercard.png" alt="MasterCard">
         <img src="https://img.icons8.com/color/48/000000/amex.png" alt="American Express">
     </div>
-    <form action="{{ route('processPayment') }}" method="POST">
+    @if (session('message'))
+        <div class="alert alert-info text-center">
+            {{ session('message') }}
+        </div>
+    @endif
+    <form id="paymentForm" action="{{ route('processPayment') }}" method="POST">
         @csrf
         <div class="form-group">
             <label for="cardNumber">Card Number</label>
-            <input type="text" class="form-control" id="cardNumber" name="cardNumber" required maxlength="19" pattern="\d{16,19}" placeholder="1234 5678 9012 3456" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\d{4})(?=\d)/g, '$1 ')">
+            <input type="text" class="form-control" id="cardNumber" name="cardNumber" required >
+            <div id="cardNumberError" class="text-danger error-message" style="display: none;">Card number must be 16 digits.</div>
             @error('cardNumber')
                 <div class="text-danger error-message">{{ $message }}</div>
             @enderror
@@ -190,6 +197,7 @@
         <div class="form-group">
             <label for="cardName">Name on Card</label>
             <input type="text" class="form-control" id="cardName" name="cardName" required>
+            <div id="cardNameError" class="text-danger error-message" style="display: none;">Name on card is required.</div>
             @error('cardName')
                 <div class="text-danger error-message">{{ $message }}</div>
             @enderror
@@ -264,14 +272,38 @@
         </div>
         <button type="submit" class="btn btn-primary btn-block">Pay Now</button>
     </form>
-    <div class="security-note text-center">
-        <p>Your payment is secure with our SSL encryption.</p>
-    </div>
-    
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.getElementById('paymentForm').addEventListener('submit', function(event) {
+        const cardNumber = document.getElementById('cardNumber').value.replace(/\s+/g, '');
+        const cardName = document.getElementById('cardName').value.trim();
+        const cardNumberError = document.getElementById('cardNumberError');
+        const cardNameError = document.getElementById('cardNameError');
+
+        let valid = true;
+
+        if (cardNumber.length !== 16) {
+            cardNumberError.style.display = 'block';
+            valid = false;
+        } else {
+            cardNumberError.style.display = 'none';
+        }
+
+        if (cardName === '') {
+            cardNameError.style.display = 'block';
+            valid = false;
+        } else {
+            cardNameError.style.display = 'none';
+        }
+
+        if (!valid) {
+            event.preventDefault();
+        }
+    });
+</script>
 </body>
 </html>

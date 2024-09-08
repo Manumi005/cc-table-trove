@@ -76,9 +76,18 @@ Route::get('/preorder/summary', [PreOrderController::class, 'summary'])->name('p
 Route::post('/submit-preorder', [PreOrderController::class, 'submitPreOrder'])->name('submit.preorder');
 
 // Payment Routes
-Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('payment');
-Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('process.payment');
+// Route to show the payment form
+Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('showPaymentForm');
+Route::post('/processPayment', [PaymentController::class, 'processPayment'])->name('processPayment');
+Route::get('/orderSummary', function () {
+    return view('customer.orderSummary');
+})->name('orderSummary');
 
+
+Route::post('/order/approve', [OrderController::class, 'approveOrder'])->name('order.approve');
+Route::post('/order/cancel', [OrderController::class, 'cancelOrder'])->name('order.cancel');
+
+Route::get('/restaurant/payment', [PaymentController::class, 'showPaymentVerification'])->name('restaurant.payment');
 // Restaurant Routes
 Route::prefix('restaurant')->as('restaurant.')->group(function () {
     // Authentication Routes
