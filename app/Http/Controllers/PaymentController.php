@@ -1,28 +1,35 @@
 <?php
+// app/Http/Controllers/PaymentController.php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
+    // Method to show the payment form
     public function showPaymentForm()
     {
-        return view('customer.preorders.payment');
+        return view('payment'); // This should match the name of your view file
     }
 
+    // Method to process the payment
     public function processPayment(Request $request)
     {
+        // Handle the payment processing logic here
+        // For example, you can validate the request and process the payment
+
         $request->validate([
-            'cardNumber' => 'required|digits:16',
+            'cardNumber' => 'required|numeric',
             'cardName' => 'required|string',
             'cardType' => 'required|string',
             'bankName' => 'required|string',
-            'cvv' => 'required|digits_between:3,4',
-            'expirationMonth' => 'required|string',
+            'cvv' => 'required|numeric',
+            'expirationMonth' => 'required|numeric',
         ]);
 
-        // Process the payment here
+        // Process the payment...
 
-        return redirect()->route('summary')->with('success', 'Payment processed successfully!');
+        return redirect()->back()->with('success', 'Payment processed successfully!');
     }
 }

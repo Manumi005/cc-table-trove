@@ -304,49 +304,31 @@
         border: 1px solid #ccc;
         border-radius: 5px;
     }
-    /* Your existing styles */
 
-/* Add these styles for the 'Go to Pre Order' button */
-button.preorder {
-    background-color: #6C63FF; /* Match the color theme */
-    color: #fff; /* White text color */
-    border: none; /* Remove default border */
-    border-radius: 5px; /* Rounded corners */
-    padding: 10px 20px; /* Spacing around the text */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 1rem; /* Font size */
-    text-align: center; /* Center the text */
-    display: block; /* Block level element */
-    margin: 20px auto; /* Center the button horizontally with margin */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
-}
-
-button.preorder:hover {
-    background-color: #5a54d7; /* Slightly darker shade on hover */
-    transform: scale(1.05); /* Slightly increase size on hover */
-}
-
-button.preorder:focus {
-    outline: none; /* Remove default outline */
-}
-
-
-    .quantity-modal-content button {
+    /* Add these styles for the 'Go to Pre Order' button */
+    button.preorder {
         background-color: #6C63FF;
         color: #fff;
         border: none;
-        padding: 10px 15px;
         border-radius: 5px;
+        padding: 10px 20px;
         cursor: pointer;
         font-size: 1rem;
-        margin-right: 10px;
+        text-align: center;
+        display: block;
+        margin: 20px auto;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    button.preorder:hover {
+        background-color: #5a54c1;
+        transform: scale(1.05);
     }
 </style>
 
 <body>
 
     <header>
-
         <nav>
             <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/customer/dashboard'">
             <ul>
@@ -382,7 +364,7 @@ button.preorder:focus {
                         <legend>Allergies</legend>
                         @foreach(['Peanuts', 'Gluten', 'Dairy', 'Eggs', 'Soy', 'Tree Nuts', 'Shellfish', 'Fish', 'Wheat', 'Sesame', 'Mustard', 'Sulfites', 'Lupin', 'Celery', 'Molluscs', 'Corn', 'Sunflower', 'Poppy Seeds'] as $allergy)
                         <label>
-                            <input type="checkbox" name="allergy[]" value="{{ $allergy }}" {{ in_array($allergy, $userAllergens) ? 'checked' : '' }}>
+                            <input type="checkbox" name="allergies[]" value="{{ $allergy }}">
                             {{ $allergy }}
                         </label>
                         @endforeach
@@ -402,127 +384,121 @@ button.preorder:focus {
                     <!-- Price Range -->
                     <fieldset>
                         <legend>Price Range</legend>
-                        <input type="range" id="price-range" min="0" max="1000" step="10" value="500" class="slider">
-                        <p class="slider-label">Up to Rs. <span id="price-value">500</span></p>
+                        <input type="range" id="price-range" name="priceRange" min="500" max="15000" step="10" value="15000" class="slider">
+                        <p class="slider-label">Up to Rs. <span id="price-value">15000</span></p>
                     </fieldset>
 
-                    <!-- Apply Button -->
+                    <!-- Apply Filters Button -->
                     <button type="button" onclick="applyFilters()">Apply Filters</button>
-                    <button type="button" onclick="closeFilterModal()">Close</button>
+                    <button type="button" id="close-filter-modal">Close</button>
                 </form>
             </div>
         </div>
 
         <ul id="menu-list">
             <div class="container">
-
                 @foreach ($menus as $menu)
-                <li>
+                <li data-allergies="{{ json_encode($menu->allergens) }}" data-dietary="{{ json_encode($menu->dietary_preferences) }}" data-price="{{ $menu->price }}">
                     <img src="{{ $menu->image ? asset('storage/' . $menu->image) : '' }}" alt="{{ $menu->name }}">
                     <div class="details">
                         <h2>{{ $menu->name }}</h2>
                         <p class="price">Rs. {{ number_format($menu->price, 2) }}</p>
                         <p>Category:
-    <span>
-        {{
-            is_array($menu->category)
-            ? implode(', ', array_filter($menu->category))
-            : ($menu->category ? implode(', ', array_filter(json_decode($menu->category))) : 'N/A')
-        }}
-    </span>
-</p>
-<p>Allergens:
-    <span>
-        {{
-            is_array($menu->allergens)
-            ? implode(', ', array_filter($menu->allergens))
-            : ($menu->allergens ? implode(', ', array_filter(json_decode($menu->allergens))) : 'N/A')
-        }}
-    </span>
-</p>
-<p>Dietary:
-    <span>
-        {{
-            is_array($menu->dietary)
-            ? implode(', ', array_filter($menu->dietary))
-            : ($menu->dietary ? implode(', ', array_filter(json_decode($menu->dietary))) : 'N/A')
-        }}
-    </span>
-</p>
-{{-- <i class="fas fa-shopping-cart order-icon" onclick='openQuantityModal(@json($menu))'></i>--}}
+                            <span>
+                                {{
+                                    is_array($menu->category)
+                                    ? implode(', ', array_filter($menu->category))
+                                    : ($menu->category ? implode(', ', array_filter(json_decode($menu->category))) : 'N/A')
+                                }}
+                            </span>
+                        </p>
+                        <p>Allergens:
+                            <span>
+                                {{
+                                    is_array($menu->allergens)
+                                    ? implode(', ', array_filter($menu->allergens))
+                                    : ($menu->allergens ? implode(', ', array_filter(json_decode($menu->allergens))) : 'N/A')
+                                }}
+                            </span>
+                        </p>
+                        <p>Dietary:
+                            <span>
+                                {{
+                                    is_array($menu->dietary)
+                                    ? implode(', ', array_filter($menu->dietary))
+                                    : ($menu->dietary ? implode(', ', array_filter(json_decode($menu->dietary))) : 'N/A')
+                                }}
+                            </span>
+                        </p>
+                        <p>Description: <span>{{ $menu->description }}</span></p>
                     </div>
                 </li>
                 @endforeach
             </div>
         </ul>
-
-{{--        <div class="quantity-modal" id="quantity-modal">--}}
-{{--            <div class="quantity-modal-content">--}}
-{{--            <h3>Add to Pre-Order</h3>--}}
-{{--            <input type="number" id="quantity-input" min="1" value="1">--}}
-{{--            <button type="button" onclick="addToCart()">Add to Cart</button>--}}
-{{--            <button type="button" onclick="closeQuantityModal()">Cancel</button>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-
-{{--        <button class= "preorder" onclick="location.href='{{ route('preorders.index') }}'">Go to Pre Order</button>--}}
     </main>
 
     <script>
-    // Function to open the filter modal
-    function openFilterModal() {
-        document.getElementById('filter-modal').style.display = 'flex';
-    }
+  // Function to open the filter modal
+function openFilterModal() {
+    document.getElementById('filter-modal').style.display = 'flex';
+}
 
-    // Function to close the filter modal
-    function closeFilterModal() {
-        document.getElementById('filter-modal').style.display = 'none';
-    }
+// Function to close the filter modal
+function closeFilterModal() {
+    document.getElementById('filter-modal').style.display = 'none';
+}
 
-    // Function to apply filters (you can implement filtering logic here)
-    function applyFilters() {
+// Add event listener to close the filter modal when clicking outside the modal content
+window.onclick = function(event) {
+    const modal = document.getElementById('filter-modal');
+    if (event.target == modal) {
         closeFilterModal();
     }
+};
 
-    // Function to open the quantity modal
-    function openQuantityModal(menu) {
-        document.getElementById('quantity-modal').style.display = 'flex';
-        document.getElementById('quantity-input').dataset.menu = JSON.stringify(menu);
-    }
+// Update the displayed price value when slider is moved
+const priceRange = document.getElementById('price-range');
+const priceValue = document.getElementById('price-value');
+priceRange.oninput = function() {
+    priceValue.innerHTML = this.value;
+};
 
-    // Function to close the quantity modal
-    function closeQuantityModal() {
-        document.getElementById('quantity-modal').style.display = 'none';
-    }
+// Function to apply filters to the menu
+function applyFilters() {
+    const selectedAllergies = Array.from(document.querySelectorAll('input[name="allergies[]"]:checked')).map(e => e.value);
+    const selectedDietary = Array.from(document.querySelectorAll('input[name="dietary[]"]:checked')).map(e => e.value);
+    const maxPrice = document.getElementById('price-range').value;
 
-    // Function to add an item to the cart and redirect to the pre-order summary page
-    function addToCart() {
-        var quantity = document.getElementById('quantity-input').value;
-        var menu = JSON.parse(document.getElementById('quantity-input').dataset.menu);
+    const menuItems = document.querySelectorAll('#menu-list .container li');
 
-        // Retrieve existing pre-order items from localStorage
-        var preOrderItems = JSON.parse(localStorage.getItem('preOrderItems')) || [];
+    menuItems.forEach(item => {
+        const itemAllergies = JSON.parse(item.dataset.allergies || '[]');
+        const itemDietary = JSON.parse(item.dataset.dietary || '[]');
+        const itemPrice = parseFloat(item.dataset.price);
 
-        // Add new item to the pre-order items array
-        preOrderItems.push({
-            name: menu.name,
-            price: menu.price,
-            quantity: parseInt(quantity)
-        });
+        // Check if item matches the selected filters
+        const matchesAllergies = selectedAllergies.every(allergy => !itemAllergies.includes(allergy));
+        const matchesDietary = selectedDietary.every(dietary => itemDietary.includes(dietary));
+        const matchesPrice = itemPrice <= maxPrice;
 
-        // Store updated pre-order items back to localStorage
-        localStorage.setItem('preOrderItems', JSON.stringify(preOrderItems));
-
-        alert("Item added to the cart!");
-
-        // Redirect to the pre-order summary page
-        window.location.href = '{{ route("preorders.index") }}';
-    }
-
-    // Update the displayed price range as the slider moves
-    document.getElementById('price-range').addEventListener('input', function () {
-        document.getElementById('price-value').textContent = this.value;
+        if (matchesAllergies && matchesDietary && matchesPrice) {
+            item.style.display = 'flex';
+        } else {
+            item.style.display = 'none';
+        }
     });
-</script>
+
+    closeFilterModal();
+}
+
+// Add event listener to close button
+document.getElementById('close-filter-modal').addEventListener('click', closeFilterModal);
+
+// Add event listener to filter button
+document.querySelector('.filter-button').addEventListener('click', openFilterModal);</script>
+
+
 </body>
+
 </html>

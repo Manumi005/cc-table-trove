@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pre-Order Summary</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-  <style>
+    <style>
         body {
             font-family: Arial, sans-serif;
             background: url('{{ asset('images/wallpaper2.jpg') }}') no-repeat center center fixed;
@@ -101,9 +100,7 @@
             }
         }
     </style>
-
-    </style>
-    </style>
+</head>
 <body>
     <div class="container mt-5">
         <h2>Pre-Order Summary</h2>
@@ -123,7 +120,7 @@
         <div id="totalAmount" class="mt-3">
             <strong>Total Amount: Rs. 0.00</strong>
         </div>
-        <a href="{{ route('payment') }}" class="btn btn-primary mt-3">Proceed to Payment</a>
+        <a href="{{ route('showPaymentForm') }}" class="btn btn-primary mt-3">Proceed to Payment</a>
     </div>
 
     <script>

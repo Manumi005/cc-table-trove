@@ -101,6 +101,5 @@ class CustomerMenuController extends Controller
         }
 
         return view('customer.menu.ordermenu', compact('restaurant', 'menus', 'userAllergens'));
-
     }
 }
