@@ -449,6 +449,7 @@ button.preorder:focus {
         }}
     </span>
 </p>
+<p>Description: <span>{{ $menu->description }}</span></p>
  <i class="fas fa-shopping-cart order-icon" onclick='openQuantityModal(@json($menu))'></i>
                     </div>
                 </li>
