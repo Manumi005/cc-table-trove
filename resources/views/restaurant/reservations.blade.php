@@ -233,7 +233,7 @@
                     <td>{{ $reservation->time_slot }}</td>
                     <td>{{ $reservation->party_size }}</td>
                     <td>
-                        <a href="{{ route('restaurant.customizations.show', $reservation->id) }}" class="btn btn-primary">View</a>
+                        <a href="{{ route('restaurant.customizations', $reservation->id) }}" class="btn btn-primary">View</a>
                     </td>
                     <td class="
                                 @if($reservation->status == 'Pending') bg-warning text-dark

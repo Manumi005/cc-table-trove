@@ -97,7 +97,7 @@
 <body>
 <div class="container">
     <h1>Create Customizations</h1>
-    <form action="{{ route('customer.reservations.customizations.store') }}" method="POST">
+    <form action="{{ route('customer.reservations.customizations.store', ['reservation_id' => $reservationId]) }}" method="POST">
         @csrf
 
         <!-- Dropdown to select a reservation -->
@@ -178,12 +178,11 @@
         <!-- Additional Requests -->
         <div class="form-group">
             <label for="additional_requests">Additional Requests</label>
-            <textarea class="form-control" name="additional_requests" id="additional_requests" rows="3">{{ isset($customization) ? $customization->additional_requests : '' }}</textarea>
+            <textarea class="form-control" name="additional_requests" id="additional_requests" rows="3"></textarea>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit Customizations</button>
     </form>
 </div>
 </body>
-
 </html>

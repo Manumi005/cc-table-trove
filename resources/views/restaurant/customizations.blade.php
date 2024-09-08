@@ -112,11 +112,12 @@
 
     @if($customizations->isEmpty())
         <p>No customizations found.</p>
+        <a href="{{ route('customer.reservations.customizations.create', ['reservation_id' => $reservationId]) }}" class="btn btn-primary">Create a Customization</a>
     @else
         @foreach($customizations as $customization)
             <div class="customization-summary">
                 <h4>
-                    Reservation Customization
+                    Reservation Customization For
                     {{ $customization->reservation->customer->name ?? 'N/A' }} -
                     {{ \Carbon\Carbon::parse($customization->reservation->reservation_date ?? '')->format('Y-m-d') }}
                 </h4>
@@ -139,14 +140,14 @@
                 <p><strong>Additional Requests:</strong> {{ $customization->additional_requests }}</p>
 
 {{--                <!-- Edit and Delete Buttons -->--}}
-{{--                <a href="{{ route('customer.reservations.customizations.edit', $customization->id) }}" class="edit-btn">Edit Customization</a>--}}
+{{--                <a href="{{ route('customer.reservations.customizations.edit', ['reservation_id' => $customization->reservation_id, 'id' => $customization->id]) }}" class="edit-btn">Edit Customization</a>--}}
 
-{{--                <form action="{{ route('customer.reservations.customizations.destroy', $customization->id) }}" method="POST" style="display:inline;">--}}
+{{--                <form action="{{ route('customer.reservations.customizations.destroy', ['reservation_id' => $customization->reservation_id, 'id' => $customization->id]) }}" method="POST" style="display:inline;">--}}
 {{--                    @csrf--}}
 {{--                    @method('DELETE')--}}
 {{--                    <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this customization?')">Delete</button>--}}
 {{--                </form>--}}
-            </div>
+{{--            </div>--}}
         @endforeach
     @endif
     <a href="/restaurant/reservations" class="btn btn-primary ml-2">Return to Reservation Management</a>

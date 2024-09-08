@@ -265,7 +265,7 @@
                             </td>
                             <td>
                                 @if($reservation->status == 'Approved')
-                                    <a href="{{ route('customer.reservations.customizations.create', ['reservation_id' => $reservation->id]) }}" class="btn btn-primary">Create Customization</a>
+                                    <a href="{{ route('customer.reservations.customizations.index', ['reservation_id' => $reservation->id]) }}" class="btn btn-primary">Create Customization</a>
                                 @else
                                     <span class="text-muted">Not Available</span>
                                 @endif

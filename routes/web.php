@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\Auth\CustomerAuthController;
 use App\Http\Controllers\Auth\RestaurantAuthController;
 use App\Http\Controllers\RestaurantProfileController;
@@ -23,11 +24,11 @@ Route::get('/', function () {
 // Customer Routes
 Route::prefix('customer')->as('customer.')->group(function () {
     // Authentication Routes
-        Route::get('login', [CustomerAuthController::class, 'showLoginForm'])->name('login');
-        Route::post('login', [CustomerAuthController::class, 'login']);
-        Route::get('register', [CustomerAuthController::class, 'showRegistrationForm'])->name('register');
-        Route::post('register', [CustomerAuthController::class, 'register']);
-        Route::post('logout', [CustomerAuthController::class, 'logout'])->name('logout');
+    Route::get('login', [CustomerAuthController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [CustomerAuthController::class, 'login']);
+    Route::get('register', [CustomerAuthController::class, 'showRegistrationForm'])->name('register');
+    Route::post('register', [CustomerAuthController::class, 'register']);
+    Route::post('logout', [CustomerAuthController::class, 'logout'])->name('logout');
 
     // Authenticated Routes
     Route::middleware('auth:customer')->group(function () {
@@ -44,28 +45,27 @@ Route::prefix('customer')->as('customer.')->group(function () {
         Route::post('reserve', [CustomerReservationController::class, 'store'])->name('reservations.store');
         Route::get('reservation/{id}', [CustomerReservationController::class, 'show'])->name('reservation.show');
         Route::delete('reserve/{id}', [CustomerReservationController::class, 'destroy'])->name('reservations.destroy');
+
+        // Customizations Routes
+        Route::prefix('reservations/{reservation_id}/customizations')->name('reservations.customizations.')->group(function () {
+            Route::get('/', [CustomizationController::class, 'index'])->name('index');
+            Route::get('/create', [CustomizationController::class, 'create'])->name('create');
+            Route::post('/', [CustomizationController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [CustomizationController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [CustomizationController::class, 'update'])->name('update');
+            Route::delete('/{id}', [CustomizationController::class, 'destroy'])->name('destroy');
+        });
     });
 
     // Restaurant Routes
-        Route::get('restaurants', [CustomerController::class, 'listRestaurants'])->name('restaurants');
-        Route::get('restaurant/{id}', [CustomerController::class, 'showRestaurant'])->name('restaurant.details');
-        Route::get('restaurant/{id}/menu', [CustomerMenuController::class, 'show'])->name('restaurant.menu');
-        Route::post('/filter-menu', [CustomerMenuController::class, 'filter'])->name('filter-menu');
-        Route::post('/customer/menu/add', [CustomerMenuController::class, 'add'])->name('customer.menu.add');
-    });
+    Route::get('restaurants', [CustomerController::class, 'listRestaurants'])->name('restaurants');
+    Route::get('restaurant/{id}', [CustomerController::class, 'showRestaurant'])->name('restaurant.details');
+    Route::get('restaurant/{id}/menu', [CustomerMenuController::class, 'show'])->name('restaurant.menu');
+    Route::post('/filter-menu', [CustomerMenuController::class, 'filter'])->name('filter-menu');
+    Route::post('/customer/menu/add', [CustomerMenuController::class, 'add'])->name('customer.menu.add');
+});
 
-    Route::get('/pre-order', function () {
-        return view('pre-order');
-    });
-
-    Route::post('/submit-order', function (Illuminate\Http\Request $request) {
-        // Handle order submission
-        // You can save the order to the database or perform other actions
-        return response()->json(['success' => true]);
-    });
-
-
-
+// Pre-Order Routes
 Route::get('/preorders', [PreOrderController::class, 'index'])->name('preorders.index');
 Route::get('/preorders/create', [PreOrderController::class, 'create'])->name('preorders.create');
 Route::post('/preorders', [PreOrderController::class, 'store'])->name('preorders.store');
@@ -75,21 +75,18 @@ Route::delete('/preorders/{id}', [PreOrderController::class, 'destroy'])->name('
 Route::get('/preorder/summary', [PreOrderController::class, 'summary'])->name('preorder.summary');
 Route::post('/submit-preorder', [PreOrderController::class, 'submitPreOrder'])->name('submit.preorder');
 
-
-  //Payment Routes
-
+// Payment Routes
 Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('payment');
-  Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('process.payment');
-
+Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('process.payment');
 
 // Restaurant Routes
 Route::prefix('restaurant')->as('restaurant.')->group(function () {
     // Authentication Routes
-        Route::get('login', [RestaurantAuthController::class, 'showLoginForm'])->name('login');
-        Route::post('login', [RestaurantAuthController::class, 'login']);
-        Route::get('register', [RestaurantAuthController::class, 'showRegistrationForm'])->name('register');
-        Route::post('register', [RestaurantAuthController::class, 'register']);
-        Route::post('logout', [RestaurantAuthController::class, 'logout'])->name('logout');
+    Route::get('login', [RestaurantAuthController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [RestaurantAuthController::class, 'login']);
+    Route::get('register', [RestaurantAuthController::class, 'showRegistrationForm'])->name('register');
+    Route::post('register', [RestaurantAuthController::class, 'register']);
+    Route::post('logout', [RestaurantAuthController::class, 'logout'])->name('logout');
 
     // Authenticated Routes
     Route::middleware('auth:restaurant')->group(function () {
@@ -125,15 +122,13 @@ Route::prefix('restaurant')->as('restaurant.')->group(function () {
 
         // Pre-Order Routes
         Route::get('/restaurant/preorders', [RestaurantPreOrderController::class, 'index'])->name('preorders.index');
-Route::get('/restaurant/preorders/create', [RestaurantPreOrderController::class, 'create'])->name('preorders.create');
-Route::post('/restaurant/preorders', [RestaurantPreOrderController::class, 'store'])->name('preorders.store');
-Route::get('/restaurant/preorders/{id}/edit', [RestaurantPreOrderController::class, 'edit'])->name('preorders.edit');
-Route::put('/restaurant/preorders/{id}', [RestaurantPreOrderController::class, 'update'])->name('preorders.update');
-Route::delete('/restaurant/preorders/{id}', [RestaurantPreOrderController::class, 'destroy'])->name('preorders.destroy');
-Route::get('restaurant/preorder/summary', [RestaurantPreOrderController::class, 'summary'])->name('preorder.summary');
-
-});
-
+        Route::get('/restaurant/preorders/create', [RestaurantPreOrderController::class, 'create'])->name('preorders.create');
+        Route::post('/restaurant/preorders', [RestaurantPreOrderController::class, 'store'])->name('preorders.store');
+        Route::get('/restaurant/preorders/{id}/edit', [RestaurantPreOrderController::class, 'edit'])->name('preorders.edit');
+        Route::put('/restaurant/preorders/{id}', [RestaurantPreOrderController::class, 'update'])->name('preorders.update');
+        Route::delete('/restaurant/preorders/{id}', [RestaurantPreOrderController::class, 'destroy'])->name('preorders.destroy');
+        Route::get('restaurant/preorder/summary', [RestaurantPreOrderController::class, 'summary'])->name('preorder.summary');
+    });
 });
 
 // Routes for customers (viewing offers)
@@ -149,11 +144,12 @@ Route::middleware(['auth:restaurant'])->group(function () {
     Route::delete('/restaurant/offers/{offer}', [OffersController::class, 'destroy'])->name('restaurant.offers.destroy');
 });
 
+// Additional Routes
 Route::get('/restaurant/menu/order', [CustomerMenuController::class, 'orderMenu'])->name('customer.menu.ordermenu');
 Route::get('/customer/menu/ordermenu/{restaurantId}', [CustomerMenuController::class, 'orderMenu'])->name('customer.menu.ordermenu');
 
-
-Route::prefix('customer/reservations/customizations')->name('customer.reservations.customizations.')->group(function () {
+// Consolidated Customization Routes
+Route::prefix('customer/reservations/{reservation_id}/customizations')->name('customer.reservations.customizations.')->group(function () {
     Route::get('/', [CustomizationController::class, 'index'])->name('index');
     Route::get('/create', [CustomizationController::class, 'create'])->name('create');
     Route::post('/', [CustomizationController::class, 'store'])->name('store');
@@ -162,15 +158,6 @@ Route::prefix('customer/reservations/customizations')->name('customer.reservatio
     Route::delete('/{id}', [CustomizationController::class, 'destroy'])->name('destroy');
 });
 
-// In your web.php or routes file
-Route::get('/restaurant/customizations', [CustomizationController::class, 'restaurantCustomizations'])->name('restaurant.customizations.show');
-
-Route::get('/customer/customizations', [CustomizationController::class, 'index'])
-    ->name('customer.customizations.index');
-
-Route::put('/customer/customizations/{customization}', [CustomizationController::class, 'update'])->name('customer.reservations.customizations.update');
-Route::get('/customizations/create/{reservation_id}', [CustomizationController::class, 'create'])->name('customer.reservations.customizations.create');
-// In your web.php or routes file
-Route::get('/customer/reservations/customizations/create/{reservation_id}', [CustomizationController::class, 'create'])->name('customer.reservations.customizations.create');
-
+Route::get('/restaurant/customizations/{id}', [CustomizationController::class, 'show'])->name('restaurant.customizations.show');
+Route::get('/restaurant/customizations/{reservation}', [CustomizationController::class, 'show'])->name('restaurant.customizations');
 

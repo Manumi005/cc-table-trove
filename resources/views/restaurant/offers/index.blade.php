@@ -203,7 +203,7 @@
             width: 80px;
             height: auto;
             margin: 30px;
-            margin-left: 400px;
+            margin-left: 220px;
         }
     </style>
 </head>

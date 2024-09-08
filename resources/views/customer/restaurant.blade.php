@@ -76,27 +76,21 @@
 
         .search-bar {
             display: flex;
-            align-items: center;
+            align-items: right;
+            flex-grow: 1;
+            justify-content: right;
+            margin: 0 20px;
         }
-
         .search-bar input {
-            padding: 5px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            margin-right: 10px;
-            outline: none;
-        }
-
-        .search-bar button {
             padding: 5px 10px;
             font-size: 16px;
             border: none;
-            border-radius: 5px;
-            background-color: #ff69b4; /* Pink color */
-            color: #fff;
-            cursor: pointer;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 300px;
+            background-color: #d9edff;
         }
+
 
         .search-bar button:hover {
             background-color: #ff45a1; /* Darker pink on hover */
@@ -111,12 +105,16 @@
         .profile-icon img {
             width: 30px;
             height: 30px;
+            margin-right: -10px;
+            margin-left: 10px;
             border-radius: 50%;
         }
 
         .container {
             width: 90%;
-            margin: auto;
+            margin: 0 auto;
+            margin-top: -60px;
+
             padding: 20px;
             padding-top: 80px; /* Adjust padding to account for fixed header */
         }
@@ -141,6 +139,7 @@
             border-radius: 15px;
             width: 100px;
             height: auto;
+            margin-top: 100px;
         }
 
         .restaurant-card-container {
@@ -215,6 +214,7 @@
         }
 
         .action-buttons {
+
             text-align: center;
             margin-bottom: 20px;
         }
@@ -260,7 +260,7 @@
     <div class="search-bar">
         <form method="GET" action="{{ route('customer.restaurants') }}">
             <input type="text" name="query" placeholder="Search..." value="{{ request('query') }}">
-            <button type="submit">Search</button>
+
         </form>
         <div class="profile-icon" onclick="location.href='/customer/profile'">
             <img src="{{ asset('images/profile.jpg') }}" alt="Profile">

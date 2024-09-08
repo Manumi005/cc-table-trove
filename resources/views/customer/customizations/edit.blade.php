@@ -106,7 +106,7 @@
         </div>
     @endif
     <h1>Edit Customizations</h1>
-    <form action="{{ route('customer.reservations.customizations.update', $customization->id) }}" method="POST">
+        <form action="{{ route('customer.reservations.customizations.update', ['reservation_id' => $customization->reservation_id, 'id' => $customization->id]) }}" method="POST">
         @csrf
         @method('PUT')
 
