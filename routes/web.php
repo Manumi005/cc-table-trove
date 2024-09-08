@@ -15,6 +15,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\OffersController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomizationController;
+use App\Http\Controllers\ReviewController;
 
 // Home Route
 Route::get('/', function () {
@@ -161,3 +162,15 @@ Route::prefix('customer/reservations/{reservation_id}/customizations')->name('cu
 Route::get('/restaurant/customizations/{id}', [CustomizationController::class, 'show'])->name('restaurant.customizations.show');
 Route::get('/restaurant/customizations/{reservation}', [CustomizationController::class, 'show'])->name('restaurant.customizations');
 
+// Review Routes
+Route::post('/reviews/store', [ReviewController::class, 'store'])->name('reviews.store');
+Route::get('/reviews/{restaurantId}', [ReviewController::class, 'show'])->name('reviews.show');
+Route::get('restaurants/{id}', [ReviewController::class, 'show'])->name('customer.restaurant.details');
+
+
+// Payment Routes
+// Route to show the payment form
+Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('payment');
+
+// Route to process the payment
+Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('process.payment');

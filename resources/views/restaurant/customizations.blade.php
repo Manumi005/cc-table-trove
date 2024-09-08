@@ -112,7 +112,6 @@
 
     @if($customizations->isEmpty())
         <p>No customizations found.</p>
-        <a href="{{ route('customer.reservations.customizations.create', ['reservation_id' => $reservationId]) }}" class="btn btn-primary">Create a Customization</a>
     @else
         @foreach($customizations as $customization)
             <div class="customization-summary">
