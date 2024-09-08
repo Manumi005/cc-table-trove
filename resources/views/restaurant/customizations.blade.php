@@ -138,16 +138,7 @@
                 <p><strong>Table Location:</strong> {{ $customization->table_location }}</p>
 
                 <p><strong>Additional Requests:</strong> {{ $customization->additional_requests }}</p>
-
-{{--                <!-- Edit and Delete Buttons -->--}}
-{{--                <a href="{{ route('customer.reservations.customizations.edit', ['reservation_id' => $customization->reservation_id, 'id' => $customization->id]) }}" class="edit-btn">Edit Customization</a>--}}
-
-{{--                <form action="{{ route('customer.reservations.customizations.destroy', ['reservation_id' => $customization->reservation_id, 'id' => $customization->id]) }}" method="POST" style="display:inline;">--}}
-{{--                    @csrf--}}
-{{--                    @method('DELETE')--}}
-{{--                    <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this customization?')">Delete</button>--}}
-{{--                </form>--}}
-{{--            </div>--}}
+            </div>
         @endforeach
     @endif
     <a href="/restaurant/reservations" class="btn btn-primary ml-2">Return to Reservation Management</a>
