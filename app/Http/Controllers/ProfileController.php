@@ -12,7 +12,7 @@ class ProfileController extends Controller
     {
         // Fetch the authenticated user
         $user = Auth::user();
-        
+
         // Return the profile view with user data
         return view('customer.profile', compact('user'));
     }
@@ -29,7 +29,7 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
 
-       
+
         // Validate the incoming request
         $request->validate([
             'name' => 'required|string|max:255',
