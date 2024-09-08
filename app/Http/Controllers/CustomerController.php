@@ -12,10 +12,19 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function listRestaurants()
+    public function listRestaurants(Request $request)
     {
-        $restaurants = Restaurant::all(); // Fetch all restaurants
-        return view('customer.restaurant', compact('restaurants')); // Return view with restaurants
+        $query = $request->input('query');
+
+        if ($query) {
+            $restaurants = Restaurant::where('name', 'like', "%{$query}%")
+                ->orWhere('details', 'like', "%{$query}%")
+                ->get();
+        } else {
+            $restaurants = Restaurant::all();
+        }
+
+        return view('customer.restaurant', ['restaurants' => $restaurants]); // Use the correct view path
     }
 
     /**
@@ -26,7 +35,7 @@ class CustomerController extends Controller
      */
     public function showRestaurant($id)
     {
-        $restaurant = Restaurant::findOrFail($id); // Fetch specific restaurant
-        return view('customer.restaurant-details', compact('restaurant')); // Return view with restaurant details
+        $restaurant = Restaurant::findOrFail($id);
+        return view('customer.restaurant-details', ['restaurant' => $restaurant]);
     }
 }

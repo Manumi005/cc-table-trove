@@ -20,6 +20,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
         }
 
         nav {
@@ -80,6 +85,7 @@
             border: none;
             border-radius: 5px;
             margin-right: 10px;
+            outline: none;
         }
 
         .search-bar button {
@@ -90,6 +96,10 @@
             background-color: #ff69b4; /* Pink color */
             color: #fff;
             cursor: pointer;
+        }
+
+        .search-bar button:hover {
+            background-color: #ff45a1; /* Darker pink on hover */
         }
 
         .profile-icon {
@@ -108,36 +118,30 @@
             width: 90%;
             margin: auto;
             padding: 20px;
+            padding-top: 80px; /* Adjust padding to account for fixed header */
         }
 
         .top {
-            background-color:#8a6378;
+            background-color: #8a6378;
             color: white;
             padding: 20px;
-            align-items: center;
-
-
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
+            text-align: center;
         }
+
         .top h1 {
-            margin: 0 0 10px;
+            margin: 0;
             font-size: 40px;
             color: #fff;
-            margin-top:-70px;
-            text-align:center;
-            margin-bottom:50px;
             font-weight: bold; /* Make the heading bold */
         }
 
         .top img {
-            border-radius: 15px; /* Same radius as the card for consistency */
-            margin-left: 390px ;
+            border-radius: 15px;
             width: 100px;
             height: auto;
-            align-items:center;
         }
-
 
         .restaurant-card-container {
             display: flex;
@@ -191,7 +195,7 @@
             left: 15px;
             right: 15px;
             display: flex;
-            justify-content: space-between; /* Keep buttons side by side */
+            justify-content: space-between;
         }
 
         .restaurant-card a {
@@ -201,16 +205,14 @@
             text-decoration: none;
             border-radius: 15px;
             text-align: center;
-
             transition: background-color 0.3s;
             flex: 1;
-            margin: 0 5px; /* Add spacing between buttons */
+            margin: 0 5px;
         }
 
         .restaurant-card a:hover {
             background-color: #315778;
         }
-
 
         .action-buttons {
             text-align: center;
@@ -246,54 +248,54 @@
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/customer/dashboard'">
-            <ul>
-                <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
-                <li><a href="{{ route('customer.reservations.index') }}">Reservations</a></li>
-                <li><a href="{{ route('customer.offers.index') }}">Offers & Promotions</a></li>
-            </ul>
-        </nav>
-        <div class="search-bar">
-            <form method="GET" action="{{ route('customer.restaurants') }}">
-                <input type="text" name="query" placeholder="Search..." value="{{ request('query') }}">
-
-            </form>
-            <div class="profile-icon" onclick="location.href='/customer/profile'">
-                <img src="{{ asset('images/profile.jpg') }}" alt="Profile">
-            </div>
+<header>
+    <nav>
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/customer/dashboard'">
+        <ul>
+            <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
+            <li><a href="{{ route('customer.reservations.index') }}">Reservations</a></li>
+            <li><a href="{{ route('customer.offers.index') }}">Offers & Promotions</a></li>
+        </ul>
+    </nav>
+    <div class="search-bar">
+        <form method="GET" action="{{ route('customer.restaurants') }}">
+            <input type="text" name="query" placeholder="Search..." value="{{ request('query') }}">
+            <button type="submit">Search</button>
+        </form>
+        <div class="profile-icon" onclick="location.href='/customer/profile'">
+            <img src="{{ asset('images/profile.jpg') }}" alt="Profile">
         </div>
-    </header>
+    </div>
+</header>
 
-    <div class="top">
+<div class="top">
     <img src="{{ asset('images/restaurant.png') }}" alt="Menu Icon" class="menu-icon">
-        <h1>Restaurants</h1>
-      </div>
+    <h1>Restaurants</h1>
+</div>
 
-
-    <div class="container">
-
-        <div class="action-buttons">
-            <a href="{{ route('customer.reservation.create') }}">Make a Reservation</a>
-        </div>
-        <div class="restaurant-card-container">
-            @if($restaurants->isEmpty())
-                <p>No restaurants found matching your search criteria.</p>
-            @else
-                @foreach($restaurants as $restaurant)
-                    <div class="restaurant-card">
-                        <img src="{{ Storage::url($restaurant->image) }}" alt="{{ $restaurant->name }}">
-                        <div class="restaurant-card-content">
-                            <h2>{{ $restaurant->name }}</h2>
-                            <p>{{ $restaurant->details }}</p>
+<div class="container">
+    <div class="action-buttons">
+        <a href="{{ route('customer.reservation.create') }}">Make a Reservation</a>
+    </div>
+    <div class="restaurant-card-container">
+        @if($restaurants->isEmpty())
+            <p>No restaurants found matching your search criteria.</p>
+        @else
+            @foreach($restaurants as $restaurant)
+                <div class="restaurant-card">
+                    <img src="{{ Storage::url($restaurant->image) }}" alt="{{ $restaurant->name }}">
+                    <div class="restaurant-card-content">
+                        <h2>{{ $restaurant->name }}</h2>
+                        <p>{{ $restaurant->details }}</p>
+                        <div class="button-container">
                             <a href="{{ route('customer.restaurant.details', $restaurant->id) }}">View Details</a>
                             <a href="{{ route('customer.restaurant.menu', $restaurant->id) }}">View Menu</a>
                         </div>
                     </div>
-                @endforeach
-            @endif
-        </div>
+                </div>
+            @endforeach
+        @endif
     </div>
+</div>
 </body>
 </html>

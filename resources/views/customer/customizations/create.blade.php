@@ -100,6 +100,18 @@
     <form action="{{ route('customer.reservations.customizations.store') }}" method="POST">
         @csrf
 
+        <!-- Dropdown to select a reservation -->
+        <div class="form-group">
+            <label for="reservation_id">Select Reservation</label>
+            <select class="form-control" name="reservation_id" id="reservation_id">
+                @foreach($reservations as $reservation)
+                    <option value="{{ $reservation->id }}">
+                        {{ $reservation->customer->name }} - {{ \Carbon\Carbon::parse($reservation->reservation_date)->format('Y-m-d') }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
         <!-- Selectable Options -->
         <div class="form-group">
             <label for="customizations">Seating Customizations</label>
@@ -169,9 +181,9 @@
             <textarea class="form-control" name="additional_requests" id="additional_requests" rows="3">{{ isset($customization) ? $customization->additional_requests : '' }}</textarea>
         </div>
 
-
         <button type="submit" class="btn btn-primary">Submit Customizations</button>
     </form>
 </div>
 </body>
+
 </html>

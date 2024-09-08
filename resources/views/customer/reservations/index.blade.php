@@ -235,7 +235,7 @@
                     @foreach($reservations as $reservation)
                         <tr>
                             <td>{{ $reservation->restaurant->name }}</td>
-                            <td>{{ $reservation->reservation_date }}</td>
+                            <td>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('Y-m-d') }}</td>
                             <td>{{ $reservation->time_slot }}</td>
                             <td>{{ $reservation->party_size }}</td>
                             <td class="
@@ -265,7 +265,7 @@
                             </td>
                             <td>
                                 @if($reservation->status == 'Approved')
-                                    <a href="{{ route('customer.reservations.customizations.create', ['restaurantId' => $reservation->restaurant->id]) }}" class="btn btn-primary">Customize Now</a>
+                                    <a href="{{ route('customer.reservations.customizations.create', ['reservation_id' => $reservation->id]) }}" class="btn btn-primary">Create Customization</a>
                                 @else
                                     <span class="text-muted">Not Available</span>
                                 @endif

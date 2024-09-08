@@ -9,9 +9,9 @@ class Customer extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 
-        'email', 
-        'contact_number', 
+        'name',
+        'email',
+        'contact_number',
         'password',
         'allergies',
         'preferences',
@@ -30,5 +30,9 @@ class Customer extends Authenticatable
     public function profile()
     {
         return $this->hasOne(Profile::class);
+    }
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
     }
 }

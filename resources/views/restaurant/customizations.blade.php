@@ -115,7 +115,11 @@
     @else
         @foreach($customizations as $customization)
             <div class="customization-summary">
-                <h4>Reservation Customization</h4>
+                <h4>
+                    Reservation Customization
+                    {{ $customization->reservation->customer->name ?? 'N/A' }} -
+                    {{ \Carbon\Carbon::parse($customization->reservation->reservation_date ?? '')->format('Y-m-d') }}
+                </h4>
                 <p><strong>Seating:</strong></p>
                 <ul>
                     @foreach(json_decode($customization->customizations) as $item)
@@ -134,7 +138,14 @@
 
                 <p><strong>Additional Requests:</strong> {{ $customization->additional_requests }}</p>
 
-                <!-- Edit and Delete Buttons -->
+{{--                <!-- Edit and Delete Buttons -->--}}
+{{--                <a href="{{ route('customer.reservations.customizations.edit', $customization->id) }}" class="edit-btn">Edit Customization</a>--}}
+
+{{--                <form action="{{ route('customer.reservations.customizations.destroy', $customization->id) }}" method="POST" style="display:inline;">--}}
+{{--                    @csrf--}}
+{{--                    @method('DELETE')--}}
+{{--                    <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this customization?')">Delete</button>--}}
+{{--                </form>--}}
             </div>
         @endforeach
     @endif

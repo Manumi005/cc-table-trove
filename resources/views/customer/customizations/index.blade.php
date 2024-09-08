@@ -115,7 +115,11 @@
     @else
         @foreach($customizations as $customization)
             <div class="customization-summary">
-                <h4>Reservation Customization</h4>
+                <h4>
+                    Reservation Customization For
+                    {{ $customization->reservation->customer->name ?? 'N/A' }} -
+                    {{ \Carbon\Carbon::parse($customization->reservation->reservation_date ?? '')->format('Y-m-d') }}
+                </h4>
                 <p><strong>Seating:</strong></p>
                 <ul>
                     @foreach(json_decode($customization->customizations) as $item)

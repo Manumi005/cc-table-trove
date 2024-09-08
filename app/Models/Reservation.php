@@ -44,4 +44,8 @@ class Reservation extends Model
     {
         return $this->belongsTo(Restaurant::class);
     }
+    public function customizations()
+    {
+        return $this->hasMany(Customization::class);
+    }
 }

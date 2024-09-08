@@ -165,5 +165,12 @@ Route::prefix('customer/reservations/customizations')->name('customer.reservatio
 // In your web.php or routes file
 Route::get('/restaurant/customizations', [CustomizationController::class, 'restaurantCustomizations'])->name('restaurant.customizations.show');
 
+Route::get('/customer/customizations', [CustomizationController::class, 'index'])
+    ->name('customer.customizations.index');
+
+Route::put('/customer/customizations/{customization}', [CustomizationController::class, 'update'])->name('customer.reservations.customizations.update');
+Route::get('/customizations/create/{reservation_id}', [CustomizationController::class, 'create'])->name('customer.reservations.customizations.create');
+// In your web.php or routes file
+Route::get('/customer/reservations/customizations/create/{reservation_id}', [CustomizationController::class, 'create'])->name('customer.reservations.customizations.create');
 
 

@@ -96,10 +96,22 @@
 </head>
 <body>
 <div class="container">
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <h1>Edit Customizations</h1>
     <form action="{{ route('customer.reservations.customizations.update', $customization->id) }}" method="POST">
         @csrf
         @method('PUT')
+
+        <!-- Hidden field for reservation_id -->
+        <input type="hidden" name="reservation_id" value="{{ $customization->reservation_id }}">
 
         <!-- Selectable Options -->
         <div class="form-group">
