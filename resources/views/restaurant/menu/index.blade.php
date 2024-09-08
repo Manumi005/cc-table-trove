@@ -12,7 +12,7 @@
             margin: 0;
             padding: 0;
             background: url('{{ asset('images/wallpaper1.jpg') }}') no-repeat center center fixed;
-           
+
         }
 
         header {
@@ -83,7 +83,7 @@
         }
         .profile-icon {
             margin-left: 15px;
-            
+
             cursor: pointer;
         }
         .profile-icon img {
@@ -96,8 +96,8 @@
             background-color:#6397b5;
             color: white;
             padding: 20px;
-            
-          
+
+
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
@@ -116,7 +116,7 @@
             margin-top: 10px;
             padding: 10px 20px;
             background-color: #4CAF50;
-            
+
             color: white;
             text-decoration: none;
             border-radius: 5px;
@@ -132,8 +132,8 @@
             padding: 20px;
             max-width: 1200px;
             margin: auto;
-            
-            
+
+
         }
 
         ul {
@@ -229,7 +229,7 @@ form {
     height: auto;
     margin: 30px;
    margin-left: 400px
- 
+
 }
     </style>
 </head>
@@ -238,10 +238,11 @@ form {
         <nav>
             <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/restaurant/dashboard'"> <!-- Replace 'logo.png' with your logo image path -->
             <ul>
-                <li> <a href='/restaurant/menu'>Menu Management</a></li>
+                <li><a href='/restaurant/menu'>Menu Management</a></li>
                 <li><a href="/restaurant/reservations">Reservation Management</a></li>
-                <li> <a href='/pre-order'>Pre-Order Management</a></li>
-                <li> <a href='/payment-verification'>Payment Verification</a></li>
+                <li><a href='/pre-order'>Pre-Order Management</a></li>
+                <li><a href='/payment-verification'>Payment Verification</a></li>
+                <li><a href='/restaurant/offers'>Offers Management</a></li>
             </ul>
         </nav>
         <div class="search-bar">
@@ -268,29 +269,29 @@ form {
                             <h2>{{ $menu->name }}</h2>
                             <p>Description: <span>{{ $menu->description }}</span></p>
                             <p>Price: <span>Rs.{{ number_format($menu->price, 2) }}</span></p>
-                            <p>Category: 
+                            <p>Category:
                                         <span>
                                             {{
-                                                is_array(json_decode($menu->category)) 
-                                                ? implode(', ', array_filter(json_decode($menu->category))) 
+                                                is_array(json_decode($menu->category))
+                                                ? implode(', ', array_filter(json_decode($menu->category)))
                                                 : ($menu->category ?: 'N/A')
                                             }}
                                         </span>
                                     </p>
-                                    <p>Allergens: 
+                                    <p>Allergens:
                                         <span>
                                             {{
-                                                is_array(json_decode($menu->allergens)) 
-                                                ? implode(', ', array_filter(json_decode($menu->allergens))) 
+                                                is_array(json_decode($menu->allergens))
+                                                ? implode(', ', array_filter(json_decode($menu->allergens)))
                                                 : ($menu->allergens ?: 'N/A')
                                             }}
                                         </span>
                                     </p>
-<p>Dietary: 
+<p>Dietary:
     <span>
         {{
-            is_array(json_decode($menu->dietary)) 
-            ? implode(', ', array_filter(json_decode($menu->dietary))) 
+            is_array(json_decode($menu->dietary))
+            ? implode(', ', array_filter(json_decode($menu->dietary)))
             : ($menu->dietary ?: 'N/A')
         }}
     </span>
