@@ -213,8 +213,16 @@
                 <label>Opening Hours:</label>
                 <p>{{ $restaurant->opening_hours_start }} - {{ $restaurant->opening_hours_end }}</p>
                 <label>Cuisine Type:</label>
-                <p>{{ implode(', ', json_decode($restaurant->cuisine_type, true)) }}</p>
-                <label>Details:</label>
+                <p>
+                    @php
+                        $cuisineTypes = json_decode($restaurant->cuisine_type, true);
+                    @endphp
+                    @if(is_array($cuisineTypes))
+                        {{ implode(', ', $cuisineTypes) }}
+                    @else
+                        {{ $restaurant->cuisine_type }} <!-- Fallback to the string itself if it's not an array -->
+                    @endif
+                </p>
                 <p>{{ $restaurant->details }}</p>
             </div>
         </div>
