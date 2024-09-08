@@ -16,18 +16,19 @@ class OffersController extends Controller
     }
 
     // Method for listing restaurant-specific offers (restaurant view)
+    // In OffersController.php
     public function restaurantIndex()
     {
-        // Ensure the user is authenticated
         if (!Auth::guard('restaurant')->check()) {
             return redirect()->route('login')->withErrors('Please login to access this page.');
         }
 
         $restaurantId = Auth::guard('restaurant')->id();
-        $offers = Offer::where('restaurant_id', $restaurantId)->get();
+        $offers = Offer::where('restaurant_id', $restaurantId)->with('restaurant')->get();
 
         return view('restaurant.offers.index', compact('offers'));
     }
+
 
     // Show the form for creating a new offer
     public function create()

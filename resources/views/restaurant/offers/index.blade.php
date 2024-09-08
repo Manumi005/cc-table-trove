@@ -239,6 +239,7 @@
                     <img src="{{ $offer->image ? asset('storage/' . $offer->image) : '' }}" alt="{{ $offer->title }}">
                     <div class="item">
                         <h2>{{ $offer->title }}</h2>
+                        <p>Restaurant: <span>{{ $offer->restaurant->name }}</span></p> <!-- Add this line -->
                         <p>Description: <span>{{ $offer->description }}</span></p>
                         <p>Discount: <span>{{ $offer->discount }}%</span></p>
                         <p>Valid From: <span>{{ $offer->valid_from->format('d M Y') }}</span></p>

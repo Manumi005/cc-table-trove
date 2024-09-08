@@ -28,4 +28,9 @@ class Offer extends Model
         'valid_from' => 'datetime',
         'valid_until' => 'datetime',
     ];
+
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class);
+    }
 }
