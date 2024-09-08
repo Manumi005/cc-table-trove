@@ -421,10 +421,11 @@
 <body>
 <header>
     <nav>
-        <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/customers/dashboard'">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/customer/dashboard'">
         <ul>
             <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
             <li><a href="{{ route('customer.reservations.index') }}">Reservations</a></li>
+            <li><a href="{{ route('customer.offers.index') }}">Offers & Promotions</a></li>
         </ul>
     </nav>
     <div class="search-bar">
@@ -531,7 +532,6 @@
                 <div class="review-body">
                     <p>{{ $review->review }}</p>
                 </div>
-                <a href="#" class="share-btn">Share</a>
             </div>
         @empty
             <p>No reviews yet.</p>
