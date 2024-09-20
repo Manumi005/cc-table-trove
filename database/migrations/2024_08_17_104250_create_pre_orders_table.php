@@ -15,9 +15,14 @@ return new class extends Migration
     {
         Schema::create('pre_orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained('customers'); // Corrected table name
-            $table->json('items'); // JSON column to store multiple items with details
+            $table->unsignedBigInteger('reservation_id');
+            $table->unsignedBigInteger('menu_id'); // Changed from menus_id to menu_id
+            $table->integer('quantity');
             $table->timestamps();
+
+            // Foreign keys
+            $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
+            $table->foreign('menu_id')->references('id')->on('menus')->onDelete('cascade'); // Changed to menu_id
         });
     }
 

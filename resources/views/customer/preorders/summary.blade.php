@@ -120,10 +120,10 @@
         <div id="totalAmount" class="mt-3">
             <strong>Total Amount: Rs. 0.00</strong>
         </div>
-        <form id="paymentForm" action="{{ route('showPaymentForm') }}" method="GET">
-            <input type="hidden" id="totalAmountInput" name="totalAmount" value="0.00">
-            <button type="submit" class="btn btn-primary mt-3">Proceed to Payment</button>
-        </form>
+{{--        <form id="paymentForm" action="{{ route('showPaymentForm') }}" method="GET">--}}
+{{--            <input type="hidden" id="totalAmountInput" name="totalAmount" value="0.00">--}}
+{{--            <button type="submit" class="btn btn-primary mt-3">Proceed to Payment</button>--}}
+{{--        </form>--}}
     </div>
 
     <script>

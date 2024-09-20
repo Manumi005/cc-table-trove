@@ -67,14 +67,16 @@ Route::prefix('customer')->as('customer.')->group(function () {
 });
 
 // Pre-Order Routes
-Route::get('/preorders', [PreOrderController::class, 'index'])->name('preorders.index');
-Route::get('/preorders/create', [PreOrderController::class, 'create'])->name('preorders.create');
+Route::get('/preorders/{reservation}', [PreOrderController::class, 'index'])->name('preorders.index');
+Route::get('/preorders/create/{reservation}', [PreOrderController::class, 'create'])->name('preorders.create'); // Pass reservation_id
 Route::post('/preorders', [PreOrderController::class, 'store'])->name('preorders.store');
-Route::get('/preorders/{id}/edit', [PreOrderController::class, 'edit'])->name('preorders.edit');
-Route::put('/preorders/{id}', [PreOrderController::class, 'update'])->name('preorders.update');
-Route::delete('/preorders/{id}', [PreOrderController::class, 'destroy'])->name('preorders.destroy');
+Route::get('/preorders/{preorder}/edit', [PreOrderController::class, 'edit'])->name('preorders.edit');
+Route::put('/preorders/{preorder}', [PreOrderController::class, 'update'])->name('preorders.update');
+Route::delete('/preorders/{preorder}', [PreOrderController::class, 'destroy'])->name('preorders.destroy');
 Route::get('/preorder/summary', [PreOrderController::class, 'summary'])->name('preorder.summary');
-Route::post('/submit-preorder', [PreOrderController::class, 'submitPreOrder'])->name('submit.preorder');
+Route::post('/submit-preorder/{reservation}', [PreOrderController::class, 'submitPreOrder'])->name('submit.preorder');
+Route::post('/preorders/{id}/adjust-quantity', [PreOrderController::class, 'adjustQuantity'])->name('preorders.adjustQuantity');
+Route::delete('/preorders/{id}', [PreOrderController::class, 'destroy'])->name('preorders.destroy');
 
 // Payment Routes
 // Route to show the payment form
@@ -157,6 +159,7 @@ Route::middleware(['auth:restaurant'])->group(function () {
 // Additional Routes
 Route::get('/restaurant/menu/order', [CustomerMenuController::class, 'orderMenu'])->name('customer.menu.ordermenu');
 Route::get('/customer/menu/ordermenu/{restaurantId}', [CustomerMenuController::class, 'orderMenu'])->name('customer.menu.ordermenu');
+Route::get('/customer/menu/ordermenu/{restaurantId}/{reservationId}', [CustomerMenuController::class, 'showOrderMenu'])->name('customer.menu.ordermenu');
 
 // Consolidated Customization Routes
 Route::prefix('customer/reservations/{reservation_id}/customizations')->name('customer.reservations.customizations.')->group(function () {
@@ -183,3 +186,5 @@ Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('pay
 
 // Route to process the payment
 Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('process.payment');
+
+

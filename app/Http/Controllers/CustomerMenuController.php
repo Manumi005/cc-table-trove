@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use App\Models\Restaurant;
+use App\Models\Reservation; // Add this line
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -101,5 +102,15 @@ class CustomerMenuController extends Controller
         }
 
         return view('customer.menu.ordermenu', compact('restaurant', 'menus', 'userAllergens'));
+    }
+
+    // Show order menu page with reservation details
+    public function showOrderMenu($restaurantId, $reservationId)
+    {
+        $restaurant = Restaurant::findOrFail($restaurantId);
+        $menus = Menu::where('restaurant_id', $restaurantId)->get();
+        $reservation = Reservation::findOrFail($reservationId); // Pass reservation to the view
+
+        return view('customer.menu.ordermenu', compact('restaurant', 'menus', 'reservation'));
     }
 }

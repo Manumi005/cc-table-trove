@@ -9,14 +9,16 @@ class PreOrder extends Model
 {
     use HasFactory;
 
-    // Table name if it's not the plural of the model name
-    protected $table = 'pre_orders';
+    protected $fillable = ['reservation_id', 'menu_id', 'quantity'];
 
-    // Fillable fields
-    protected $fillable = ['customer_id', 'items'];
+    // Define relationships
+    public function reservation()
+    {
+        return $this->belongsTo(Reservation::class);
+    }
 
-    // Cast items as an array for easy access
-    protected $casts = [
-        'items' => 'array',
-    ];
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class, 'menu_id');
+    }
 }

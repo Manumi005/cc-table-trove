@@ -69,7 +69,6 @@
         right: 0;
         background: #fff;
         transition: width 0.3s ease;
-        -webkit-transition: width 0.3s ease;
     }
 
     nav ul li a:hover::after {
@@ -80,9 +79,9 @@
 
     .search-bar {
         display: flex;
-        align-items: right;
+        align-items: flex-end;
         flex-grow: 1;
-        justify-content: right;
+        justify-content: flex-end;
         margin: 0 20px;
     }
 
@@ -277,253 +276,210 @@
     }
 
     .quantity-modal {
-        display: none;
+        display: none; /* Ensure it's hidden by default */
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        align-items: center;
-        justify-content: center;
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        align-items: center; /* Center items vertically */
+        justify-content: center; /* Center items horizontally */
+        z-index: 1000; /* Ensure it's above other content */
     }
 
     .quantity-modal-content {
-        background: #fff;
+        background: #cce3f3; /* Match the filter modal background */
         padding: 20px;
         border-radius: 8px;
         width: 80%;
-        max-width: 400px;
+        max-width: 400px; /* Adjust the max width if needed */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center; /* Center text inside the modal */
     }
 
-    .quantity-modal-content input {
-        width: 100%;
+    .quantity-modal-content h2 {
+        margin-bottom: 15px; /* Add space below the heading */
+    }
+
+    .quantity-modal-content input[type="number"] {
         padding: 10px;
-        margin: 10px 0;
         border: 1px solid #ccc;
         border-radius: 5px;
+        width: calc(100% - 20px); /* Full width minus padding */
+        margin-bottom: 15px; /* Space below the input */
     }
-    /* Your existing styles */
-
-/* Add these styles for the 'Go to Pre Order' button */
-button.preorder {
-    background-color: #6C63FF; /* Match the color theme */
-    color: #fff; /* White text color */
-    border: none; /* Remove default border */
-    border-radius: 5px; /* Rounded corners */
-    padding: 10px 20px; /* Spacing around the text */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 1rem; /* Font size */
-    text-align: center; /* Center the text */
-    display: block; /* Block level element */
-    margin: 20px auto; /* Center the button horizontally with margin */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
-}
-
-button.preorder:hover {
-    background-color: #5a54d7; /* Slightly darker shade on hover */
-    transform: scale(1.05); /* Slightly increase size on hover */
-}
-
-button.preorder:focus {
-    outline: none; /* Remove default outline */
-}
-
 
     .quantity-modal-content button {
-        background-color: #6C63FF;
-        color: #fff;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 1rem;
-        margin-right: 10px;
+        background-color: #6C63FF; /* Match the button color theme */
+        color: #fff; /* White text */
+        border: none; /* Remove default border */
+        padding: 10px 15px; /* Spacing */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer; /* Pointer cursor */
+        font-size: 1rem; /* Font size */
+        transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+        margin: 5px; /* Space between buttons */
+    }
+
+    .quantity-modal-content button:hover {
+        background-color: #5a54d7; /* Darker shade on hover */
+        transform: scale(1.05); /* Slightly increase size on hover */
+    }
+
+    /* Add these styles for the 'Go to Pre Order' button */
+    button.preorder {
+        background-color: #6C63FF; /* Match the color theme */
+        color: #fff; /* White text color */
+        border: none; /* Remove default border */
+        border-radius: 5px; /* Rounded corners */
+        padding: 10px 20px; /* Spacing around the text */
+        cursor: pointer; /* Pointer cursor on hover */
+        font-size: 1rem; /* Font size */
+        text-align: center; /* Center the text */
+        display: block; /* Block level element */
+        margin: 20px auto; /* Center the button horizontally with margin */
+        transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+    }
+
+    button.preorder:hover {
+        background-color: #5a54d7; /* Slightly darker shade on hover */
+        transform: scale(1.05); /* Slightly increase size on hover */
+    }
+
+    button.preorder:focus {
+        outline: none; /* Remove default outline */
+    }
+
+    .quantity-btn {
+        background-color: #6C63FF; /* Match the color theme */
+        color: #fff; /* White text color */
+        border: none; /* Remove default border */
+        border-radius: 5px; /* Rounded corners */
+        padding: 10px 15px; /* Spacing around the text */
+        cursor: pointer; /* Pointer cursor on hover */
+        font-size: 1rem; /* Font size */
+        transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+    }
+
+    .quantity-btn:hover {
+        background-color: #5a54d7; /* Slightly darker shade on hover */
+        transform: scale(1.05); /* Slightly increase size on hover */
     }
 </style>
-
 <body>
-
-    <header>
-
-        <nav>
-            <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/customer/dashboard'">
-            <ul>
-                <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
-                <li><a href="{{ route('customer.reservations.index') }}">Reservations</a></li>
-            </ul>
-        </nav>
-        <div class="search-bar">
-            <form method="GET" action="{{ route('customer.restaurants') }}">
-                <input type="text" name="query" placeholder="Search..." value="{{ request('query') }}">
-            </form>
-            <div class="profile-icon" onclick="location.href='/customer/profile'">
-                <img src="{{ asset('images/profile.jpg') }}" alt="Profile">
-            </div>
+<header>
+    <nav>
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/customer/dashboard'">
+        <ul>
+            <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
+            <li><a href="{{ route('customer.reservations.index') }}">Reservations</a></li>
+        </ul>
+    </nav>
+    <div class="search-bar">
+        <form method="GET" action="{{ route('customer.restaurants') }}">
+            <input type="text" name="query" placeholder="Search..." value="{{ request('query') }}">
+        </form>
+        <div class="profile-icon" onclick="location.href='/customer/profile'">
+            <img src="{{ asset('images/profile.jpg') }}" alt="Profile">
         </div>
-    </header>
-
-    <div class="top">
-        <h1>Menu for {{ $restaurant->name }}</h1>
     </div>
+</header>
 
-    <main>
-        <button class="filter-button" onclick="openFilterModal()">
-            <i class="fas fa-filter"></i> Filter
-        </button>
+<div class="top">
+    <h1>Menu for {{ $restaurant->name }}</h1>
+</div>
 
-        <div class="filter-modal" id="filter-modal">
-            <div class="filter-modal-content">
-                <h2>Filter Options</h2>
-                <form id="filter-form">
-                    <!-- Allergies -->
-                    <fieldset>
-                        <legend>Allergies</legend>
-                        @foreach(['Peanuts', 'Gluten', 'Dairy', 'Eggs', 'Soy', 'Tree Nuts', 'Shellfish', 'Fish', 'Wheat', 'Sesame', 'Mustard', 'Sulfites', 'Lupin', 'Celery', 'Molluscs', 'Corn', 'Sunflower', 'Poppy Seeds'] as $allergy)
-                        <label>
-                            <input type="checkbox" name="allergy[]" value="{{ $allergy }}" {{ in_array($allergy, $userAllergens) ? 'checked' : '' }}>
-                            {{ $allergy }}
-                        </label>
-                        @endforeach
-                    </fieldset>
-
-                    <!-- Dietary Preferences -->
-                    <fieldset>
-                        <legend>Dietary Preferences</legend>
-                        @foreach(['Vegetarian', 'Vegan', 'Non-Vegetarian', 'Pescatarian', 'Halal', 'Kosher'] as $dietary)
-                        <label>
-                            <input type="checkbox" name="dietary[]" value="{{ $dietary }}">
-                            {{ $dietary }}
-                        </label>
-                        @endforeach
-                    </fieldset>
-
-                    <!-- Price Range -->
-                    <fieldset>
-                        <legend>Price Range</legend>
-                        <input type="range" id="price-range" min="0" max="1000" step="10" value="500" class="slider">
-                        <p class="slider-label">Up to Rs. <span id="price-value">500</span></p>
-                    </fieldset>
-
-                    <!-- Apply Button -->
-                    <button type="button" onclick="applyFilters()">Apply Filters</button>
-                    <button type="button" onclick="closeFilterModal()">Close</button>
-                </form>
-            </div>
-        </div>
-
-        <ul id="menu-list">
-            <div class="container">
-
-                @foreach ($menus as $menu)
+<main>
+    <ul id="menu-list">
+        <div class="container">
+            @foreach ($menus as $menu)
                 <li>
                     <img src="{{ $menu->image ? asset('storage/' . $menu->image) : '' }}" alt="{{ $menu->name }}">
                     <div class="details">
                         <h2>{{ $menu->name }}</h2>
                         <p class="price">Rs. {{ number_format($menu->price, 2) }}</p>
-                        <p>Category:
-    <span>
-        {{
-            is_array($menu->category)
-            ? implode(', ', array_filter($menu->category))
-            : ($menu->category ? implode(', ', array_filter(json_decode($menu->category))) : 'N/A')
-        }}
-    </span>
-</p>
-<p>Allergens:
-    <span>
-        {{
-            is_array($menu->allergens)
-            ? implode(', ', array_filter($menu->allergens))
-            : ($menu->allergens ? implode(', ', array_filter(json_decode($menu->allergens))) : 'N/A')
-        }}
-    </span>
-</p>
-<p>Dietary:
-    <span>
-        {{
-            is_array($menu->dietary)
-            ? implode(', ', array_filter($menu->dietary))
-            : ($menu->dietary ? implode(', ', array_filter(json_decode($menu->dietary))) : 'N/A')
-        }}
-    </span>
-</p>
-<p>Description: <span>{{ $menu->description }}</span></p>
- <i class="fas fa-shopping-cart order-icon" onclick='openQuantityModal(@json($menu))'></i>
+                        <p>Category: {{ implode(', ', json_decode($menu->category) ?? ['N/A']) }}</p>
+                        <p>Allergens: {{ implode(', ', json_decode($menu->allergens) ?? ['N/A']) }}</p>
+                        <p>Dietary: {{ implode(', ', json_decode($menu->dietary) ?? ['N/A']) }}</p>
+                        <p>Description: {{ $menu->description }}</p>
+                        <button class="quantity-btn" onclick="openQuantityModal({{ $menu->id }})">Add to Cart</button>
                     </div>
                 </li>
-                @endforeach
-            </div>
-        </ul>
-
-        <div class="quantity-modal" id="quantity-modal">
-            <div class="quantity-modal-content">
-            <h3>Add to Pre-Order</h3>
-            <input type="number" id="quantity-input" min="1" value="1">
-            <button type="button" onclick="addToCart()">Add to Cart</button>
-            <button type="button" onclick="closeQuantityModal()">Cancel</button>
-            </div>
+            @endforeach
         </div>
+    </ul>
 
-        <button class= "preorder" onclick="location.href='{{ route('preorders.index') }}'">Go to Pre Order</button>
-    </main>
+    <!-- Ensure reservation ID is passed to the "Go to Pre-Order" button -->
+    <button class="preorder" onclick="window.location.href='{{ route('preorders.index', ['reservation' => $reservation->id]) }}'">Go to Pre-Order</button>
 
-    <script>
-    // Function to open the filter modal
-    function openFilterModal() {
-        document.getElementById('filter-modal').style.display = 'flex';
-    }
 
-    // Function to close the filter modal
-    function closeFilterModal() {
-        document.getElementById('filter-modal').style.display = 'none';
-    }
+</main>
 
-    // Function to apply filters (you can implement filtering logic here)
-    function applyFilters() {
-        closeFilterModal();
-    }
+<!-- Quantity Modal -->
+<div id="quantity-modal" class="quantity-modal" style="display:none;">
+    <div class="quantity-modal-content">
+        <h2>Select Quantity</h2>
+        <input type="number" id="quantity-input" min="1" placeholder="Enter Value">
+        <div>
+            <button onclick="addToCart()">Add to Cart</button>
+            <button onclick="closeQuantityModal()">Cancel</button>
+        </div>
+    </div>
+</div>
 
-    // Function to open the quantity modal
-    function openQuantityModal(menu) {
+<script>
+    let currentMenuId = null;
+    let reservationId = "{{ $reservation->id ?? '' }}"; // Ensure $reservation is passed to the view
+
+    function openQuantityModal(menuId) {
         document.getElementById('quantity-modal').style.display = 'flex';
-        document.getElementById('quantity-input').dataset.menu = JSON.stringify(menu);
+        currentMenuId = menuId;
     }
 
-    // Function to close the quantity modal
     function closeQuantityModal() {
         document.getElementById('quantity-modal').style.display = 'none';
     }
 
-    // Function to add an item to the cart and redirect to the pre-order summary page
     function addToCart() {
-        var quantity = document.getElementById('quantity-input').value;
-        var menu = JSON.parse(document.getElementById('quantity-input').dataset.menu);
+        let quantity = document.getElementById('quantity-input').value;
 
-        // Retrieve existing pre-order items from localStorage
-        var preOrderItems = JSON.parse(localStorage.getItem('preOrderItems')) || [];
+        if (!quantity || quantity <= 0) {
+            alert('Please enter a valid quantity.');
+            return;
+        }
 
-        // Add new item to the pre-order items array
-        preOrderItems.push({
-            name: menu.name,
-            price: menu.price,
-            quantity: parseInt(quantity)
-        });
+        let preOrderData = {
+            reservation_id: reservationId,
+            menu_id: currentMenuId,
+            quantity: quantity,
+            _token: "{{ csrf_token() }}"
+        };
 
-        // Store updated pre-order items back to localStorage
-        localStorage.setItem('preOrderItems', JSON.stringify(preOrderItems));
-
-        alert("Item added to the cart!");
-
-        // Redirect to the pre-order summary page
-        {{--window.location.href = '{{ route("preorders.index") }}';--}}
+        fetch("{{ route('preorders.store') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-Token": preOrderData._token
+            },
+            body: JSON.stringify(preOrderData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    closeQuantityModal();
+                } else {
+                    alert(data.message || 'Failed to add item to pre-order');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
-
-    // Update the displayed price range as the slider moves
-    document.getElementById('price-range').addEventListener('input', function () {
-        document.getElementById('price-value').textContent = this.value;
-    });
 </script>
+
 </body>
+
+
 </html>

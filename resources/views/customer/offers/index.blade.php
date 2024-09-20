@@ -263,7 +263,7 @@
 <main>
     <div class="grid-container">
         @foreach($offers as $offer)
-            <a href="{{ route('restaurant.details', $offer->restaurant->id) }}" class="offer-card">
+            <a href="{{ route('customer.restaurant.details', $offer->restaurant->id) }}" class="offer-card">
             <img class="offer-image" src="{{ $offer->image ? asset('storage/' . $offer->image) : '' }}" alt="{{ $offer->title }}">
                 <div class="promo-tag">{{ $offer->discount }}% OFF</div>
                 <div class="offer-content">

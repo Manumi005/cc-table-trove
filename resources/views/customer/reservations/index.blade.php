@@ -258,7 +258,7 @@
                             </td>
                             <td>
                                 @if($reservation->status == 'Approved')
-                                    <a href="{{ route('customer.menu.ordermenu', ['restaurantId' => $reservation->restaurant->id]) }}" class="btn btn-primary">Pre-Order</a>
+                                    <a href="{{ route('customer.menu.ordermenu', ['restaurantId' => $reservation->restaurant->id, 'reservationId' => $reservation->id]) }}" class="btn btn-primary">Pre-Order</a>
                                 @else
                                     <span class="text-muted">Not Available</span>
                                 @endif

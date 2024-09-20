@@ -3,18 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\PreOrder;
+use App\Models\Reservation; // Import the Reservation model
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class PreOrderController extends Controller
 {
-    // Display all pre-orders
-    public function index()
+    // Display all pre-orders for a specific reservation
+    public function index($reservation_id)
     {
-        $preOrders = PreOrder::all();
-        return view('customer.preorders.index', compact('preOrders'));
-    }
+        // Fetch the reservation details
+        $reservation = Reservation::findOrFail($reservation_id);
 
+        // Fetch pre-orders related to the specific reservation
+        $preorders = PreOrder::where('reservation_id', $reservation_id)
+            ->with('menu')
+            ->get();
+
+        // Pass both reservation and pre-order data to the view
+        return view('customer.preorders.index', compact('preorders', 'reservation'));
+    }
     // Show the form for creating a new pre-order
     public function create()
     {
@@ -24,7 +32,24 @@ class PreOrderController extends Controller
     // Store a new pre-order
     public function store(Request $request)
     {
-        // Code for storing a new pre-order can be added here
+        $request->validate([
+            'reservation_id' => 'required|exists:reservations,id',
+            'menu_id' => 'required|exists:menus,id',
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        try {
+            PreOrder::create([
+                'reservation_id' => $request->reservation_id,
+                'menu_id' => $request->menu_id,
+                'quantity' => $request->quantity,
+            ]);
+
+            return response()->json(['success' => true, 'message' => 'Item added to pre-order!']);
+        } catch (\Exception $e) {
+            Log::error('Error adding to pre-order:', ['error' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => 'Error adding item to pre-order.']);
+        }
     }
 
     // Submit the pre-order
@@ -36,11 +61,8 @@ class PreOrderController extends Controller
             // Validate the pre-order items
             $validated = $request->validate([
                 'preorder_items' => 'required|array',
-                'preorder_items.*.menu_item_id' => 'required|integer',
+                'preorder_items.*.menu_id' => 'required|integer|exists:menus,id',
                 'preorder_items.*.quantity' => 'required|integer|min:1',
-                'preorder_items.*.price' => 'required|numeric',
-                'preorder_items.*.total_price' => 'required|numeric',
-                'preorder_items.*.user_id' => 'required|integer',
             ]);
 
             if (empty($preOrderItems)) {
@@ -48,10 +70,13 @@ class PreOrderController extends Controller
             }
 
             // Save pre-order to the database
-            $preOrder = new PreOrder();
-            $preOrder->items = $preOrderItems;
-            $preOrder->user_id = auth()->id(); // Assuming you want to save the user who made the pre-order
-            $preOrder->save();
+            foreach ($preOrderItems as $item) {
+                PreOrder::create([
+                    'reservation_id' => auth()->user()->currentReservationId(), // Assuming user has a method to get the current reservation
+                    'menu_id' => $item['menu_id'],
+                    'quantity' => $item['quantity'],
+                ]);
+            }
 
             // Store pre-order items in the session to show in the summary
             session(['preOrderItems' => $preOrderItems]);
@@ -69,4 +94,34 @@ class PreOrderController extends Controller
         $preOrderItems = session('preOrderItems', []);
         return view('customer.preorders.summary', compact('preOrderItems'));
     }
+    public function adjustQuantity(Request $request, $id)
+    {
+        $request->validate([
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        try {
+            $preOrder = PreOrder::findOrFail($id);
+            $preOrder->update(['quantity' => $request->quantity]);
+
+            return response()->json(['success' => true, 'message' => 'Quantity adjusted successfully!']);
+        } catch (\Exception $e) {
+            Log::error('Error adjusting quantity:', ['error' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => 'Error adjusting quantity.']);
+        }
+    }
+    public function destroy($id)
+    {
+        try {
+            $preOrder = PreOrder::findOrFail($id);
+            $preOrder->delete();
+
+            return response()->json(['success' => true, 'message' => 'Item removed from pre-order!']);
+        } catch (\Exception $e) {
+            Log::error('Error removing item:', ['error' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => 'Error removing item.']);
+        }
+    }
+
+
 }
