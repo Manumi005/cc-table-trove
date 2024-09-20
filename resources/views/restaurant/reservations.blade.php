@@ -167,14 +167,19 @@
             color: #fff !important;
         }
         .btn-success { background-color: #28a745; }
+        .btn-success { background-color: #28a745; }
         .btn-danger { background-color: #dc3545; }
         .btn-warning { background-color: #ffc107; }
+        .btn-primary { background-color: #c19a6b; }
+        .btn-primary1 { background-color: #d98cb3; }
         .btn:hover {
             background-color: #248958;
         }
         .btn-success:hover { background-color: #218838; }
         .btn-danger:hover { background-color: #c82333; }
         .btn-warning:hover { background-color: #e0a800; }
+        .btn-primary:hover { background-color: #b86b45; }
+        .btn-primary1:hover { background-color: #c072a4; }
     </style>
 </head>
 <header>
@@ -222,6 +227,7 @@
                 <th>Time Slot</th>
                 <th>Party Size</th>
                 <th>Special Requests</th>
+                <th>Pre-Orders</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
@@ -235,6 +241,9 @@
                     <td>{{ $reservation->party_size }}</td>
                     <td>
                         <a href="{{ route('restaurant.customizations', $reservation->id) }}" class="btn btn-primary">View</a>
+                    </td>
+                    <td>
+                        <a href ="{{ route('restaurant.preorders.index', ['reservation' => $reservation->id]) }}" class="btn btn-primary1">View</a>
                     </td>
                     <td class="
                                 @if($reservation->status == 'Pending') bg-warning text-dark

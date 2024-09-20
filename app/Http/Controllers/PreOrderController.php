@@ -122,6 +122,21 @@ class PreOrderController extends Controller
             return response()->json(['success' => false, 'message' => 'Error removing item.']);
         }
     }
+    public function restaurantPreordersIndex($reservation_id)
+    {
+        // Fetch the reservation details
+        $reservation = Reservation::findOrFail($reservation_id);
+
+        // Fetch pre-orders related to the specific reservation
+        $preorders = PreOrder::where('reservation_id', $reservation_id)
+            ->with('menu')
+            ->get();
+
+        // Pass both reservation and pre-order data to the new restaurant view
+        return view('restaurant.preorders.index', compact('preorders', 'reservation'));
+    }
+
+
 
 
 }

@@ -160,7 +160,7 @@
 <body>
 <main class="container">
     <div class="restaurant-info">
-        <h1 id="restaurant-name">Place your order and enjoy dining</h1>
+        <h1 id="restaurant-name">Pre-Order Summary</h1>
     </div>
 
     <ul id="menu-list" class="list-unstyled">
@@ -178,7 +178,6 @@
     </div>
 
     <div class="preorder-summary">
-        <h3>Pre-Order Summary</h3>
         <table class="table table-bordered">
             <thead>
             <tr>
