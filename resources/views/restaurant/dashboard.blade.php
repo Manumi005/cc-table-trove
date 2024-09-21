@@ -179,12 +179,12 @@
                 <p>Handle customer reservations efficiently with our intuitive tools.</p>
             </div>
 
-            <!-- Preorder Management Card -->
-            <div class="card" onclick="location.href='{{ route('preorder.summary') }}'">
-                <img src="{{ asset('images/restaurantpreorder.png') }}" alt="Preorder Management">
-                <h3>Preorder Management</h3>
-                <p>Manage and process customer preorders seamlessly.</p>
-            </div>
+{{--            <!-- Preorder Management Card -->--}}
+{{--            <div class="card" onclick="location.href='{{ route('preorder.summary') }}'">--}}
+{{--                <img src="{{ asset('images/restaurantpreorder.png') }}" alt="Preorder Management">--}}
+{{--                <h3>Preorder Management</h3>--}}
+{{--                <p>Manage and process customer preorders seamlessly.</p>--}}
+{{--            </div>--}}
 
              <!-- Payment Verification Card -->
              <div class="card" onclick="location.href='{{ route('restaurant.payment') }}'">

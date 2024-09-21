@@ -403,7 +403,7 @@
                         <p>Allergens: {{ implode(', ', json_decode($menu->allergens) ?? ['N/A']) }}</p>
                         <p>Dietary: {{ implode(', ', json_decode($menu->dietary) ?? ['N/A']) }}</p>
                         <p>Description: {{ $menu->description }}</p>
-                        <button class="quantity-btn" onclick="openQuantityModal({{ $menu->id }})">Add to Cart</button>
+                        <button class="quantity-btn" data-menu-id="{{ $menu->id }}" onclick="openQuantityModal({{ $menu->id }})">Add to Cart</button>
                     </div>
                 </li>
             @endforeach
@@ -431,8 +431,14 @@
 <script>
     let currentMenuId = null;
     let reservationId = "{{ $reservation->id ?? '' }}"; // Ensure $reservation is passed to the view
+    let addedItems = []; // Array to track items already in cart
 
     function openQuantityModal(menuId) {
+        // Check if the item is already in the cart
+        if (addedItems.includes(menuId)) {
+            alert("Item already in Cart");
+            return; // Prevent opening the modal
+        }
         document.getElementById('quantity-modal').style.display = 'flex';
         currentMenuId = menuId;
     }
@@ -456,21 +462,23 @@
             _token: "{{ csrf_token() }}"
         };
 
+        // Send the data to the server
         fetch("{{ route('preorders.store') }}", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "X-CSRF-Token": preOrderData._token
             },
-            body: JSON.stringify(preOrderData)
+            body: JSON.stringify(preOrderData),
         })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
+            .then(response => {
+                if (response.ok) {
+                    // Add the item to the 'addedItems' array to prevent duplicate adding
+                    addedItems.push(currentMenuId);
+                    alert('Item added to cart');
                     closeQuantityModal();
                 } else {
-                    alert(data.message || 'Failed to add item to pre-order');
+                    alert('Failed to add item to cart.');
                 }
             })
             .catch(error => {
@@ -478,6 +486,8 @@
             });
     }
 </script>
+
+
 
 </body>
 

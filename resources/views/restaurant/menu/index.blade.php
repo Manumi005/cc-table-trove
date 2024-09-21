@@ -240,7 +240,7 @@ form {
             <ul>
                 <li><a href='/restaurant/menu'>Menu Management</a></li>
                 <li><a href="/restaurant/reservations">Reservation Management</a></li>
-                <li><a href='/pre-order'>Pre-Order Management</a></li>
+{{--                <li><a href='/pre-order'>Pre-Order Management</a></li>--}}
                 <li><a href='/payment-verification'>Payment Verification</a></li>
                 <li><a href='/restaurant/offers'>Offers Management</a></li>
             </ul>
