@@ -181,3 +181,4 @@ Route::post('/process-payment', [PaymentController::class, 'processPayment'])->n
 Route::get('/restaurant/preorders/{reservation}', [PreOrderController::class, 'restaurantPreordersIndex'])
     ->name('restaurant.preorders.index');
 
+Route::get('/customer/payment', [PaymentController::class, 'show'])->name('customer.payment');

@@ -40,4 +40,8 @@ class PaymentController extends Controller
         // Logic to retrieve payment verification data if needed
         return view('restaurant.paymentVerification');
     }
+    public function show()
+    {
+        return view('customer.payment');
+    }
 }

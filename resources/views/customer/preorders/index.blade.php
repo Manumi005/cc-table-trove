@@ -211,7 +211,9 @@
             <strong>Total: Rs. {{ number_format($preorders->sum(fn($preorder) => $preorder->quantity * $preorder->menu->price), 2) }}</strong>
         </div>
     </div>
+    <button id="proceedToPaymentBtn" class="btn btn-success" onclick="proceedToPayment()">Proceed to Payment</button><br>
     <button id="returnToMenuBtn" class="btn btn-submit" onclick="returnToMenu()">Return to Menu</button>
+
 </main>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -272,6 +274,10 @@
     function returnToMenu() {
         const ordermenuUrl = "{{ route('customer.menu.ordermenu', ['restaurantId' => $reservation->restaurant->id, 'reservationId' => $reservation->id]) }}";
         window.location.href = ordermenuUrl;
+    }
+    function proceedToPayment() {
+        const paymentUrl = "{{ route('customer.payment') }}";
+        window.location.href = paymentUrl;
     }
 </script>
 </body>
