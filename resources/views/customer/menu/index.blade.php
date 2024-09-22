@@ -440,63 +440,92 @@
 
     <script>
   // Function to open the filter modal
-function openFilterModal() {
-    document.getElementById('filter-modal').style.display = 'flex';
-}
+  function openFilterModal() {
+      document.getElementById('filter-modal').style.display = 'flex';
+  }
 
-// Function to close the filter modal
-function closeFilterModal() {
-    document.getElementById('filter-modal').style.display = 'none';
-}
+  // Function to close the filter modal
+  function closeFilterModal() {
+      document.getElementById('filter-modal').style.display = 'none';
+  }
 
-// Add event listener to close the filter modal when clicking outside the modal content
-window.onclick = function(event) {
-    const modal = document.getElementById('filter-modal');
-    if (event.target == modal) {
-        closeFilterModal();
+  // Add event listener to close the filter modal when clicking outside the modal content
+  window.onclick = function (event) {
+      const modal = document.getElementById('filter-modal');
+      if (event.target == modal) {
+          closeFilterModal();
+      }
+  };
+
+  // Update the displayed price value when the slider is moved
+  const priceRange = document.getElementById('price-range');
+  const priceValue = document.getElementById('price-value');
+  priceRange.oninput = function () {
+      priceValue.innerHTML = this.value;
+  };
+
+  
+    function applyFilters() {
+        let allergies = [];
+        let dietary = [];
+        let maxPrice = document.getElementById("price-range").value;
+
+        // Collect selected allergens
+        document.querySelectorAll('input[name="allergies[]"]:checked').forEach((checkbox) => {
+            allergies.push(checkbox.value);
+        });
+
+        // Collect selected dietary preferences
+        document.querySelectorAll('input[name="dietary[]"]:checked').forEach((checkbox) => {
+            dietary.push(checkbox.value);
+        });
+
+        // Filter the menu items
+        let menuItems = document.querySelectorAll('#menu-list li');
+
+        menuItems.forEach((item) => {
+            let itemAllergies = JSON.parse(item.getAttribute('data-allergies'));
+            let itemDietary = JSON.parse(item.getAttribute('data-dietary'));
+            let itemPrice = parseFloat(item.getAttribute('data-price'));
+
+            // Filter based on allergens
+            let matchesAllergies = allergies.every(allergy => !itemAllergies.includes(allergy));
+
+            // Filter based on dietary preferences
+            let matchesDietary = dietary.every(diet => itemDietary.includes(diet));
+
+            // Filter based on price
+            let matchesPrice = itemPrice <= maxPrice;
+
+            // Show/Hide item based on filter conditions
+            if (matchesAllergies && matchesDietary && matchesPrice) {
+                item.style.display = 'flex'; // Show item if it matches all conditions
+            } else {
+                item.style.display = 'none'; // Hide item if it doesn't match
+            }
+        });
     }
-};
 
-// Update the displayed price value when slider is moved
-const priceRange = document.getElementById('price-range');
-const priceValue = document.getElementById('price-value');
-priceRange.oninput = function() {
-    priceValue.innerHTML = this.value;
-};
-
-// Function to apply filters to the menu
-function applyFilters() {
-    const selectedAllergies = Array.from(document.querySelectorAll('input[name="allergies[]"]:checked')).map(e => e.value);
-    const selectedDietary = Array.from(document.querySelectorAll('input[name="dietary[]"]:checked')).map(e => e.value);
-    const maxPrice = document.getElementById('price-range').value;
-
-    const menuItems = document.querySelectorAll('#menu-list .container li');
-
-    menuItems.forEach(item => {
-        const itemAllergies = JSON.parse(item.dataset.allergies || '[]');
-        const itemDietary = JSON.parse(item.dataset.dietary || '[]');
-        const itemPrice = parseFloat(item.dataset.price);
-
-        // Check if item matches the selected filters
-        const matchesAllergies = selectedAllergies.every(allergy => !itemAllergies.includes(allergy));
-        const matchesDietary = selectedDietary.every(dietary => itemDietary.includes(dietary));
-        const matchesPrice = itemPrice <= maxPrice;
-
-        if (matchesAllergies && matchesDietary && matchesPrice) {
-            item.style.display = 'flex';
-        } else {
-            item.style.display = 'none';
-        }
+    // Update price label as slider moves
+    document.getElementById("price-range").addEventListener("input", function() {
+        document.getElementById("price-value").innerText = this.value;
     });
 
-    closeFilterModal();
-}
+    // Close modal on button click
+    document.getElementById("close-filter-modal").addEventListener("click", function() {
+        document.getElementById("filter-modal").style.display = "none";
+    });
 
-// Add event listener to close button
-document.getElementById('close-filter-modal').addEventListener('click', closeFilterModal);
+    function openFilterModal() {
+        document.getElementById("filter-modal").style.display = "flex";
+    }
 
-// Add event listener to filter button
-document.querySelector('.filter-button').addEventListener('click', openFilterModal);</script>
+
+
+</script>
+
+
+
 
 
 </body>

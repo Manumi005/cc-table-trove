@@ -22,10 +22,12 @@ class CustomerMenuController extends Controller
         $user = Auth::user();
         $userAllergens = $user ? explode(',', $user->allergens) : [];
 
+        // Format allergens and dietary preferences
         foreach ($menus as $menu) {
-            $menu->allergens = explode(',', $menu->allergens);
-            $menu->dietary_preferences = explode(',', $menu->dietary_preferences);
+            $menu->allergens = json_encode(array_filter(explode(',', $menu->allergens)));
+            $menu->dietary_preferences = json_encode(array_filter(explode(',', $menu->dietary_preferences)));
         }
+
 
         return view('customer.menu.index', compact('restaurant', 'menus', 'userAllergens'));
     }
@@ -104,13 +106,12 @@ class CustomerMenuController extends Controller
         return view('customer.menu.ordermenu', compact('restaurant', 'menus', 'userAllergens'));
     }
 
-    // Show order menu page with reservation details
-    public function showOrderMenu($restaurantId, $reservationId)
-    {
-        $restaurant = Restaurant::findOrFail($restaurantId);
-        $menus = Menu::where('restaurant_id', $restaurantId)->get();
-        $reservation = Reservation::findOrFail($reservationId); // Pass reservation to the view
-
-        return view('customer.menu.ordermenu', compact('restaurant', 'menus', 'reservation'));
-    }
+  // Show order menu page with reservation details
+  public function showOrderMenu($restaurantId, $reservationId)
+  {
+      $restaurant = Restaurant::findOrFail($restaurantId);
+      $menus = Menu::where('restaurant_id', $restaurantId)->get();
+      $reservation = Reservation::findOrFail($reservationId); // Pass reservation to the view
+      return view('customer.menu.ordermenu', compact('restaurant', 'menus', 'reservation'));
+  }
 }
