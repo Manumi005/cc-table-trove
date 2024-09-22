@@ -374,6 +374,7 @@
         <ul>
             <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
             <li><a href="{{ route('customer.reservations.index') }}">Reservations</a></li>
+            <li><a href="{{ route('customer.offers.index') }}">Offers & Promotions</a></li>
         </ul>
     </nav>
     <div class="search-bar">
@@ -391,10 +392,57 @@
 </div>
 
 <main>
+    <button class="filter-button" onclick="openFilterModal()">
+        <i class="fas fa-filter"></i> Filter
+    </button>
+
+    <div class="filter-modal" id="filter-modal">
+        <div class="filter-modal-content">
+            <h2>Filter Options</h2>
+            <form id="filter-form">
+                <!-- Allergies -->
+                <fieldset>
+                    <legend>Allergies</legend>
+                    @foreach(['Peanuts', 'Gluten', 'Dairy', 'Eggs', 'Soy', 'Tree Nuts', 'Shellfish', 'Fish', 'Wheat', 'Sesame', 'Mustard', 'Sulfites', 'Lupin', 'Celery', 'Molluscs', 'Corn', 'Sunflower', 'Poppy Seeds'] as $allergy)
+                        <label>
+                            <input type="checkbox" name="allergies[]" value="{{ $allergy }}">
+                            {{ $allergy }}
+                        </label>
+                    @endforeach
+                </fieldset>
+
+                <!-- Dietary Preferences -->
+                <fieldset>
+                    <legend>Dietary Preferences</legend>
+                    @foreach(['Vegetarian', 'Vegan', 'Non-Vegetarian', 'Pescatarian', 'Halal', 'Kosher'] as $dietary)
+                        <label>
+                            <input type="checkbox" name="dietary[]" value="{{ $dietary }}">
+                            {{ $dietary }}
+                        </label>
+                    @endforeach
+                </fieldset>
+
+                <!-- Price Range -->
+                <fieldset>
+                    <legend>Price Range</legend>
+                    <input type="range" id="price-range" name="priceRange" min="500" max="15000" step="10" value="15000" class="slider">
+                    <p class="slider-label">Up to Rs. <span id="price-value">15000</span></p>
+                </fieldset>
+
+                <!-- Apply Filters Button -->
+                <button type="button" onclick="applyFilters()">Apply Filters</button>
+                <button type="button" id="close-filter-modal">Close</button>
+            </form>
+        </div>
+    </div>
+
     <ul id="menu-list">
         <div class="container">
             @foreach ($menus as $menu)
-                <li>
+                <li data-allergies='{{ json_encode(json_decode($menu->allergens)) }}'
+                    data-dietary='{{ json_encode(json_decode($menu->dietary)) }}'
+                    data-price="{{ $menu->price }}">
+
                     <img src="{{ $menu->image ? asset('storage/' . $menu->image) : '' }}" alt="{{ $menu->name }}">
                     <div class="details">
                         <h2>{{ $menu->name }}</h2>
@@ -403,7 +451,7 @@
                         <p>Allergens: {{ implode(', ', json_decode($menu->allergens) ?? ['N/A']) }}</p>
                         <p>Dietary: {{ implode(', ', json_decode($menu->dietary) ?? ['N/A']) }}</p>
                         <p>Description: {{ $menu->description }}</p>
-                        <button class="quantity-btn" data-menu-id="{{ $menu->id }}" onclick="openQuantityModal({{ $menu->id }})">Add to Cart</button>
+                        <button class="quantity-btn" onclick="openQuantityModal({{ $menu->id }})">Add to Cart</button>
                     </div>
                 </li>
             @endforeach
@@ -431,14 +479,8 @@
 <script>
     let currentMenuId = null;
     let reservationId = "{{ $reservation->id ?? '' }}"; // Ensure $reservation is passed to the view
-    let addedItems = []; // Array to track items already in cart
 
     function openQuantityModal(menuId) {
-        // Check if the item is already in the cart
-        if (addedItems.includes(menuId)) {
-            alert("Item already in Cart");
-            return; // Prevent opening the modal
-        }
         document.getElementById('quantity-modal').style.display = 'flex';
         currentMenuId = menuId;
     }
@@ -462,31 +504,128 @@
             _token: "{{ csrf_token() }}"
         };
 
-        // Send the data to the server
         fetch("{{ route('preorders.store') }}", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "X-CSRF-Token": preOrderData._token
             },
-            body: JSON.stringify(preOrderData),
+            body: JSON.stringify(preOrderData)
         })
-            .then(response => {
-                if (response.ok) {
-                    // Add the item to the 'addedItems' array to prevent duplicate adding
-                    addedItems.push(currentMenuId);
-                    alert('Item added to cart');
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
                     closeQuantityModal();
                 } else {
-                    alert('Failed to add item to cart.');
+                    alert(data.message || 'Failed to add item to pre-order');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     }
-</script>
+    function openFilterModal() {
+        document.getElementById('filter-modal').style.display = 'flex';
+    }
 
+    // Function to close the filter modal
+    function closeFilterModal() {
+        document.getElementById('filter-modal').style.display = 'none';
+    }
+
+    // Add event listener to close the filter modal when clicking outside the modal content
+    window.onclick = function (event) {
+        const modal = document.getElementById('filter-modal');
+        if (event.target == modal) {
+            closeFilterModal();
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Add event listeners to the filter checkboxes and price range slider
+        document.querySelectorAll('input[name="allergies[]"], input[name="dietary[]"], #price-range').forEach((element) => {
+            element.addEventListener('change', applyFilters);
+        });
+    });
+
+    // Update the displayed price value when the slider is moved
+    const priceRange = document.getElementById('price-range');
+    const priceValue = document.getElementById('price-value');
+    priceRange.oninput = function () {
+        priceValue.innerHTML = this.value;
+    };
+
+
+    function applyFilters() {
+        let allergies = [];
+        let dietary = [];
+        let maxPrice = document.getElementById("price-range").value;
+
+        // Collect selected allergens
+        document.querySelectorAll('input[name="allergies[]"]:checked').forEach((checkbox) => {
+            allergies.push(checkbox.value);
+        });
+
+        // Collect selected dietary preferences
+        document.querySelectorAll('input[name="dietary[]"]:checked').forEach((checkbox) => {
+            dietary.push(checkbox.value);
+        });
+
+        // Filter the menu items
+        let menuItems = document.querySelectorAll('#menu-list li');
+
+        menuItems.forEach((item) => {
+            let itemAllergies = [];
+            let itemDietary = [];
+            try {
+                itemAllergies = JSON.parse(item.getAttribute('data-allergies')) || [];
+                itemDietary = JSON.parse(item.getAttribute('data-dietary')) || [];
+            } catch (error) {
+                console.error("Failed to parse allergens or dietary data:", error);
+            }
+
+            let itemPrice = parseFloat(item.getAttribute('data-price'));
+
+            // Filter based on allergens
+            let matchesAllergies = allergies.every(allergy => !itemAllergies.includes(allergy));
+
+            // Filter based on dietary preferences
+            let matchesDietary = dietary.every(diet => itemDietary.includes(diet));
+
+            // Filter based on price
+            let matchesPrice = itemPrice <= maxPrice;
+
+            // Show/Hide item based on filter conditions
+            if (matchesAllergies && matchesDietary && matchesPrice) {
+                item.style.display = 'flex'; // Show item if it matches all conditions
+            } else {
+                item.style.display = 'none'; // Hide item if it doesn't match
+            }
+        });
+
+    }
+
+    // Update price label as slider moves
+    document.getElementById("price-range").addEventListener("input", function() {
+        document.getElementById("price-value").innerText = this.value;
+    });
+
+    // Close modal on button click
+    document.getElementById("close-filter-modal").addEventListener("click", function() {
+        document.getElementById("filter-modal").style.display = "none";
+    });
+
+    function openFilterModal() {
+        document.getElementById("filter-modal").style.display = "flex";
+    }
+
+    function closeFilterModal() {
+        document.getElementById("filter-modal").style.display = "none";
+    }
+
+
+</script>
 
 
 </body>
