@@ -71,6 +71,36 @@
                 font-size: 1rem;
             }
         }
+
+        .card {
+            cursor: pointer;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .card h3 {
+            margin-top: 10px;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #666;
+        }
     </style>
 </head>
 <body>
@@ -82,10 +112,11 @@
             </div>
         @endif
         <div class="summary-details">
-            <p><strong>Payment Status:</strong> {{ session('message') }}</p>
+            <p><strong>Payment Status:</strong> {{ session('paymentStatus', 'Payment Failed') }}</p>
             <p><strong>Order Status:</strong> {{ session('orderStatus', 'Pending Approval') }}</p>
+            <p><strong>Payment Amount:</strong> ${{ session('paymentAmount', '0.00') }}</p>
         </div>
-        <a href="{{ route('showPaymentForm') }}" class="btn btn-primary mt-3">Back to Payment</a>
-    </div>
+
+       
 </body>
 </html>

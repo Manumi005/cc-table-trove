@@ -182,3 +182,7 @@ Route::get('/restaurant/preorders/{reservation}', [PreOrderController::class, 'r
     ->name('restaurant.preorders.index');
 
 Route::get('/customer/payment', [PaymentController::class, 'show'])->name('customer.payment');
+
+
+//Pre order verification page 
+Route::get('/restaurant/payment', [PreOrderController::class, 'payment'])->name('restaurant.payment');

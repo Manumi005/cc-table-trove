@@ -23,6 +23,7 @@ class PreOrderController extends Controller
         // Pass both reservation and pre-order data to the view
         return view('customer.preorders.index', compact('preorders', 'reservation'));
     }
+
     // Show the form for creating a new pre-order
     public function create()
     {
@@ -94,6 +95,8 @@ class PreOrderController extends Controller
         $preOrderItems = session('preOrderItems', []);
         return view('customer.preorders.summary', compact('preOrderItems'));
     }
+
+    // Adjust the quantity of a pre-order item
     public function adjustQuantity(Request $request, $id)
     {
         $request->validate([
@@ -110,6 +113,8 @@ class PreOrderController extends Controller
             return response()->json(['success' => false, 'message' => 'Error adjusting quantity.']);
         }
     }
+
+    // Remove a pre-order item
     public function destroy($id)
     {
         try {
@@ -122,6 +127,8 @@ class PreOrderController extends Controller
             return response()->json(['success' => false, 'message' => 'Error removing item.']);
         }
     }
+
+    // Display pre-orders for a specific reservation in the restaurant view
     public function restaurantPreordersIndex($reservation_id)
     {
         // Fetch the reservation details
@@ -136,7 +143,18 @@ class PreOrderController extends Controller
         return view('restaurant.preorders.index', compact('preorders', 'reservation'));
     }
 
+    // Display the payment verification page
+    public function payment()
+    {
+        $preorders = PreOrder::where('reservation_id', auth()->user()->currentReservationId())
+            ->with('menu')
+            ->get();
 
-
-
+        return view('restaurant.payment', [
+            'preorders' => $preorders,
+            'paymentStatus' => 'Payment Successful',
+            'orderStatus' => 'Approved',
+            'paymentAmount' => $preorders->sum(fn($preorder) => $preorder->quantity * $preorder->menu->price)
+        ]);
+    }
 }
