@@ -104,19 +104,46 @@
     </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h2>Order Summary</h2>
-        @if (session('message'))
-            <div class="alert alert-info text-center">
-                {{ session('message') }}
-            </div>
-        @endif
-        <div class="summary-details">
-            <p><strong>Payment Status:</strong> {{ session('paymentStatus', 'Payment Failed') }}</p>
-            <p><strong>Order Status:</strong> {{ session('orderStatus', 'Pending Approval') }}</p>
-            <p><strong>Payment Amount:</strong> ${{ session('paymentAmount', '0.00') }}</p>
+<div class="container mt-5">
+    <h2>Order Summary</h2>
+    @if (session('message'))
+        <div class="alert alert-info text-center">
+            {{ session('message') }}
         </div>
+    @endif
 
-       
+    <div class="preorder-summary">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            @forelse ($preorders as $preorder)
+                <tr>
+                    <td>{{ $preorder->menu->name }}</td>
+                    <td>{{ number_format($preorder->menu->price, 2) }}</td>
+                    <td>{{ $preorder->quantity }}</td>
+                    <td>{{ number_format($preorder->menu->price * $preorder->quantity, 2) }}</td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="4" class="text-center">No items in pre-order.</td>
+                </tr>
+            @endforelse
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="3" class="text-right"><strong>Total Amount:</strong></td>
+                <td><strong>{{ number_format($preorders->sum(fn($preorder) => $preorder->quantity * $preorder->menu->price), 2) }}</strong></td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
 </body>
 </html>

@@ -47,7 +47,11 @@ class PaymentController extends Controller
         $reservation->payment_status = true;
         $reservation->save();
 
-        // Redirect with a success message
-        return redirect()->back()->with('message', 'Payment successful!');
+        // Redirect with a success message to the order summary page
+        return redirect()->route('orderSummary', [
+            'restaurantId' => $reservation->restaurant_id, // Change this to the correct field
+            'reservationId' => $reservation->id
+        ])->with('message', 'Payment Successful!');
     }
 }
+

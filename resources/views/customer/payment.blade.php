@@ -191,7 +191,7 @@
 
         <div class="form-group">
             <label for="cardNumber">Card Number</label>
-            <input type="text" class="form-control" id="cardNumber" name="cardNumber" required>
+            <input type="text" class="form-control" id="cardNumber" name="cardNumber" required maxlength="16" pattern="\d{16}" title="Card number must be 16 digits.">
             <div id="cardNumberError" class="text-danger error-message" style="display: none;">Card number must be 16 digits.</div>
             @error('cardNumber')
             <div class="text-danger error-message">{{ $message }}</div>
@@ -221,7 +221,7 @@
 
         <div class="form-group">
             <label for="cvv">CVV</label>
-            <input type="password" class="form-control" id="cvv" name="cvv" required maxlength="4" pattern="\d{3,4}" placeholder="123">
+            <input type="password" class="form-control" id="cvv" name="cvv" required maxlength="3" pattern="\d{3}" placeholder="123">
             @error('cvv')
             <div class="text-danger error-message">{{ $message }}</div>
             @enderror
@@ -262,6 +262,7 @@
                     @enderror
                 </div>
             </div>
+            <div id="expirationDateError" class="text-danger error-message" style="display: none;">Expiration date must be in the future.</div>
         </div>
 
         <button type="submit" class="btn btn-primary btn-block">Pay Now</button>
@@ -276,10 +277,16 @@
         const cardNumber = document.getElementById('cardNumber').value.replace(/\s+/g, '');
         const cardName = document.getElementById('cardName').value.trim();
         const cardNumberError = document.getElementById('cardNumberError');
-        const cardNameError = document.getElementById('cardNameError');
+        const currentDate = new Date();
+        const expirationMonth = parseInt(document.getElementById('expirationMonth').value);
+        const expirationYear = parseInt(document.getElementById('expirationYear').value);
+        const expirationDateError = document.getElementById('expirationDateError');
+        const cvv = document.getElementById('cvv').value;
+        const cvvError = document.getElementById('cvvError');
 
         let valid = true;
 
+        // Validate Card Number
         if (cardNumber.length !== 16) {
             cardNumberError.style.display = 'block';
             valid = false;
@@ -287,11 +294,28 @@
             cardNumberError.style.display = 'none';
         }
 
+        // Validate Name on Card
         if (cardName === '') {
             cardNameError.style.display = 'block';
             valid = false;
         } else {
             cardNameError.style.display = 'none';
+        }
+
+        // Validate CVV
+        if (cvv.length !== 3) {
+            cvvError.style.display = 'block';
+            valid = false;
+        } else {
+            cvvError.style.display = 'none';
+        }
+
+        // Validate Expiration Date
+        if (expirationYear < currentDate.getFullYear() || (expirationYear === currentDate.getFullYear() && expirationMonth < currentDate.getMonth() + 1)) {
+            expirationDateError.style.display = 'block';
+            valid = false;
+        } else {
+            expirationDateError.style.display = 'none';
         }
 
         if (!valid) {
@@ -301,4 +325,3 @@
 </script>
 </body>
 </html>
-

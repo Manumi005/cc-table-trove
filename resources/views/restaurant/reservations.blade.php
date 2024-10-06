@@ -226,6 +226,7 @@
                 <th>Reservation Date</th>
                 <th>Time Slot</th>
                 <th>Party Size</th>
+                <th>Payments Status</th>
                 <th>Special Requests</th>
                 <th>Pre-Orders</th>
                 <th>Status</th>
@@ -239,6 +240,13 @@
                     <td>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('Y-m-d') }}</td>
                     <td>{{ $reservation->time_slot }}</td>
                     <td>{{ $reservation->party_size }}</td>
+                    <td>
+                        @if($reservation->payment_status == '0')
+                            Not Paid
+                        @else
+                            Paid
+                        @endif
+                    </td>
                     <td>
                         <a href="{{ route('restaurant.customizations', $reservation->id) }}" class="btn btn-primary">View</a>
                     </td>

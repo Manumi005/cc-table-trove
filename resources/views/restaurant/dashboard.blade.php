@@ -186,12 +186,12 @@
 {{--                <p>Manage and process customer preorders seamlessly.</p>--}}
 {{--            </div>--}}
 
-             <!-- Payment Verification Card -->
-             <div class="card" onclick="location.href='{{ route('restaurant.payment') }}'">
-                <img src="{{ asset('images/restaurantpayment.png') }}" alt="Payment Verification">
-                <h3>Payment Verification</h3>
-                <p>Ensure secure and verified transactions for all customer payments.</p>
-            </div>
+{{--             <!-- Payment Verification Card -->--}}
+{{--             <div class="card" onclick="location.href='{{ route('restaurant.payment') }}'">--}}
+{{--                <img src="{{ asset('images/restaurantpayment.png') }}" alt="Payment Verification">--}}
+{{--                <h3>Payment Verification</h3>--}}
+{{--                <p>Ensure secure and verified transactions for all customer payments.</p>--}}
+{{--            </div>--}}
 
             <!-- Offers Management Card -->
             <div class="card" onclick="location.href='/restaurant/offers'">

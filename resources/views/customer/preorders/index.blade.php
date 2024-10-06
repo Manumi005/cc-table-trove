@@ -349,7 +349,8 @@
             <strong>Total: Rs. {{ number_format($preorders->sum(fn($preorder) => $preorder->quantity * $preorder->menu->price), 2) }}</strong>
         </div>
     </div>
-    <button id="proceedToPaymentBtn" class="btn btn-success" onclick="proceedToPayment()">Proceed to Payment</button><br>
+
+    <button id="proceedToPaymentBtn" class="btn btn-success" onclick="proceedToPayment()" {{ $preorders->isEmpty() ? 'disabled' : '' }}>Proceed to Payment</button><br>
     <button id="returnToMenuBtn" class="btn btn-submit" onclick="returnToMenu()">Return to Menu</button>
 
 </main>

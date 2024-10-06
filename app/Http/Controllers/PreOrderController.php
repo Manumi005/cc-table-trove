@@ -157,4 +157,19 @@ class PreOrderController extends Controller
             'paymentAmount' => $preorders->sum(fn($preorder) => $preorder->quantity * $preorder->menu->price)
         ]);
     }
+    public function orderSummary($restaurantId, $reservationId)
+    {
+        // Fetch the reservation details
+        $reservation = Reservation::findOrFail($reservationId);
+
+        // Fetch pre-orders related to the specific reservation
+        $preorders = PreOrder::where('reservation_id', $reservationId)
+            ->with('menu')
+            ->get();
+
+        // Pass both reservation and pre-order data to the view
+        return view('customer.orderSummary', compact('preorders', 'reservation'));
+    }
+
+
 }

@@ -226,6 +226,7 @@
                         <th>Time</th>
                         <th>Guests</th>
                         <th>Status</th>
+                        <th>Payment Status</th>
                         <th>Actions</th>
                         <th>Pre-Order</th>
                         <th>Special Requests</th>
@@ -245,6 +246,13 @@
                                 @endif
                             ">
                                 {{ $reservation->status }}
+                            </td>
+                            <td>
+                                @if($reservation->payment_status == '0')
+                                    Not Paid
+                                @else
+                                    Paid
+                                @endif
                             </td>
                             <td>
                                 <!-- Cancel reservation button -->
