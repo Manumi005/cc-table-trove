@@ -82,7 +82,7 @@ Route::delete('/preorders/{id}', [PreOrderController::class, 'destroy'])->name('
 // Route to show the payment form
 Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('showPaymentForm');
 Route::post('/processPayment', [PaymentController::class, 'processPayment'])->name('processPayment');
-Route::get('/customer/{restaurantId}/{reservationId}/orderSummary', [PreOrderController::class, 'orderSummary'])
+Route::get('/customer/orderSummary/{restaurantId}/{reservationId}/', [PreOrderController::class, 'orderSummary'])
     ->name('orderSummary');
 
 

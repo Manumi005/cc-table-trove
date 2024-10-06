@@ -214,7 +214,7 @@
         <!-- Check if there are no reservations -->
         @if($reservations->isEmpty())
             <div class="alert alert-info">
-                You have no reservations yet. <a href="/customer/reservations/create" class="btn btn-primary ml-2">Make a New Reservation</a>
+                You have no reservations yet.
             </div>
         @else
             <!-- Reservations table -->
@@ -226,7 +226,6 @@
                         <th>Time</th>
                         <th>Guests</th>
                         <th>Status</th>
-                        <th>Payment Status</th>
                         <th>Actions</th>
                         <th>Pre-Order</th>
                         <th>Special Requests</th>
@@ -248,13 +247,6 @@
                                 {{ $reservation->status }}
                             </td>
                             <td>
-                                @if($reservation->payment_status == '0')
-                                    Not Paid
-                                @else
-                                    Paid
-                                @endif
-                            </td>
-                            <td>
                                 <!-- Cancel reservation button -->
                                 <form action="{{ route('customer.reservations.destroy', $reservation->id) }}" method="POST" style="display: inline-block;">
                                     @csrf
@@ -266,7 +258,12 @@
                             </td>
                             <td>
                                 @if($reservation->status == 'Approved')
-                                    <a href="{{ route('customer.menu.ordermenu', ['restaurantId' => $reservation->restaurant->id, 'reservationId' => $reservation->id]) }}" class="btn btn-primary">Pre-Order</a>
+                                    @if($reservation->payment_status == '0')
+                                        <a href="{{ route('customer.menu.ordermenu', ['restaurantId' => $reservation->restaurant->id, 'reservationId' => $reservation->id]) }}" class="btn btn-primary">Pre-Order</a>
+                                    @else
+                                        <a href="{{ route('orderSummary', ['restaurantId' => $reservation->restaurant->id, 'reservationId' => $reservation->id]) }}" class="btn btn-primary">View Summary</a>
+                                    @endif
+
                                 @else
                                     <span class="text-muted">Not Available</span>
                                 @endif

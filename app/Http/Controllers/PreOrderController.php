@@ -40,18 +40,33 @@ class PreOrderController extends Controller
         ]);
 
         try {
-            PreOrder::create([
-                'reservation_id' => $request->reservation_id,
-                'menu_id' => $request->menu_id,
-                'quantity' => $request->quantity,
-            ]);
+            // Check if the same menu item already exists for the given reservation
+            $existingPreOrder = PreOrder::where('reservation_id', $request->reservation_id)
+                ->where('menu_id', $request->menu_id)
+                ->first();
 
-            return response()->json(['success' => true, 'message' => 'Item added to pre-order!']);
+            if ($existingPreOrder) {
+                // If it exists, update the quantity instead of creating a new entry
+                $existingPreOrder->quantity += $request->quantity;
+                $existingPreOrder->save();
+
+                return response()->json(['success' => true, 'message' => 'Item quantity updated in pre-order!']);
+            } else {
+                // If it doesn't exist, create a new pre-order entry
+                PreOrder::create([
+                    'reservation_id' => $request->reservation_id,
+                    'menu_id' => $request->menu_id,
+                    'quantity' => $request->quantity,
+                ]);
+
+                return response()->json(['success' => true, 'message' => 'Item added to pre-order!']);
+            }
         } catch (\Exception $e) {
             Log::error('Error adding to pre-order:', ['error' => $e->getMessage()]);
             return response()->json(['success' => false, 'message' => 'Error adding item to pre-order.']);
         }
     }
+
 
     // Submit the pre-order
     public function submitPreOrder(Request $request)

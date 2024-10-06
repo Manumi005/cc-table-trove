@@ -144,6 +144,7 @@
             </tfoot>
         </table>
     </div>
+    <a href="/customer/reservations" class="btn btn-primary ml-2">Return to your Reservations</a>
 </div>
 </body>
 </html>
