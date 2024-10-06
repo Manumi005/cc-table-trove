@@ -253,8 +253,8 @@
     <nav>
         <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/customer/dashboard'">
         <ul>
-        <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
-        <li><a href="{{ route('customer.reservation.create') }}">Reservations</a></li>
+            <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
+            <li><a href="{{ route('customer.reservation.create') }}">Reservations</a></li>
             <li><a href="{{ route('customer.offers.index') }}">Offers & Promotions</a></li>
         </ul>
     </nav>
@@ -262,7 +262,8 @@
         <input type="text" placeholder="Search...">
         <!div class="profile-icon" onclick="location.href='{{ route('customer.profile.show') }}'">
         <div class="profile-icon" onclick="location.href='/customer/profile'">
-            <img src="{{ asset('images/profile.jpg') }}" alt="Profile">
+            <img src="{{ $user->image ? Storage::url($user->image) : asset('images/profile.jpg') }}" alt="{{ $user->name }}" class="profile-image">
+
         </div>
     </div>
 </header>
@@ -272,7 +273,7 @@
             <button class="edit-icon" onclick="document.getElementById('editModal').style.display='block'">✎</button>
             <div class="profile-info">
                 <div class="profile-info-left">
-                    <img src="{{ asset('images/profile.jpg') }}" alt="Profile Image">
+                    <img src="{{ $user->image ? Storage::url($user->image) : asset('images/profile.jpg') }}" alt="{{ $user->name }}" class="profile-image">
                 </div>
                 <div class="profile-info-right">
 
@@ -312,6 +313,12 @@
         <form action="{{ route('customer.profile.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+
+            <!-- Profile Image Upload -->
+            <div class="form-control">
+                <label for="image">Profile Image</label>
+                <input type="file" id="image" name="image" class="form-control">
+            </div>
             <div class="profile-info">
                 <label for="editName">Name:</label>
                 <input type="text" id="editName" name="name" value="{{ old('name', $user->name) }}">
