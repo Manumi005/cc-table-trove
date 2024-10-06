@@ -2,46 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function showPaymentForm(Request $request)
+    // Show the payment page
+    public function showPaymentPage($restaurantId, $reservationId)
     {
-        $totalAmount = $request->query('totalAmount', '0.00');
-        return view('payment', compact('totalAmount'));
+        // Find the reservation
+        $reservation = Reservation::find($reservationId);
+
+        // If the reservation doesn't exist, return with an error message
+        if (!$reservation) {
+            return redirect()->back()->with('message', 'Reservation not found.');
+        }
+
+        // Pass the reservation data to the view
+        return view('customer.payment', compact('reservation'));
     }
 
+    // Process the payment
     public function processPayment(Request $request)
     {
-        // Validate the request data
+        // Validate the payment fields
         $request->validate([
             'cardNumber' => 'required|digits:16',
-            'cardName' => 'required|string',
-            'cardType' => 'required|string',
-            'bankName' => 'required|string',
+            'cardName' => 'required|string|max:255',
+            'cardType' => 'required',
             'cvv' => 'required|digits_between:3,4',
-            'expirationMonth' => 'required|digits:2',
-            'expirationYear' => 'required|digits:4',
+            'expirationMonth' => 'required',
+            'expirationYear' => 'required',
         ]);
 
-        // Simulate payment processing
-        $paymentSuccess = rand(0, 1) == 1;
-        $price = $request->input('totalAmount', '0.00');
+        // Find the reservation by its ID
+        $reservation = Reservation::find($request->input('reservationId'));
 
-        if ($paymentSuccess) {
-            return redirect()->route('orderSummary')->with('message', 'Payment Successful')->with('price', $price);
-        } else {
-            return redirect()->back()->with('message', 'Sorry, your payment failed. Try again');
+        // Check if the reservation exists
+        if (!$reservation) {
+            return redirect()->back()->with('message', 'Reservation not found.');
         }
-    }
-    public function showPaymentVerification()
-    {
-        // Logic to retrieve payment verification data if needed
-        return view('restaurant.paymentVerification');
-    }
-    public function show()
-    {
-        return view('customer.payment');
+
+        // Update the payment_status to true
+        $reservation->payment_status = true;
+        $reservation->save();
+
+        // Redirect with a success message
+        return redirect()->back()->with('message', 'Payment successful!');
     }
 }

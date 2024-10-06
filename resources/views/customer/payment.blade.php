@@ -186,22 +186,27 @@
     @endif
     <form id="paymentForm" action="{{ route('processPayment') }}" method="POST">
         @csrf
+        <!-- Hidden field for reservationId -->
+        <input type="hidden" name="reservationId" value="{{ $reservation->id }}">
+
         <div class="form-group">
             <label for="cardNumber">Card Number</label>
-            <input type="text" class="form-control" id="cardNumber" name="cardNumber" required >
+            <input type="text" class="form-control" id="cardNumber" name="cardNumber" required>
             <div id="cardNumberError" class="text-danger error-message" style="display: none;">Card number must be 16 digits.</div>
             @error('cardNumber')
-                <div class="text-danger error-message">{{ $message }}</div>
+            <div class="text-danger error-message">{{ $message }}</div>
             @enderror
         </div>
+
         <div class="form-group">
             <label for="cardName">Name on Card</label>
             <input type="text" class="form-control" id="cardName" name="cardName" required>
             <div id="cardNameError" class="text-danger error-message" style="display: none;">Name on card is required.</div>
             @error('cardName')
-                <div class="text-danger error-message">{{ $message }}</div>
+            <div class="text-danger error-message">{{ $message }}</div>
             @enderror
         </div>
+
         <div class="form-group">
             <label for="cardType">Card Type</label>
             <select class="form-control" id="cardType" name="cardType" required>
@@ -210,30 +215,18 @@
                 <option value="American Express">American Express</option>
             </select>
             @error('cardType')
-                <div class="text-danger error-message">{{ $message }}</div>
+            <div class="text-danger error-message">{{ $message }}</div>
             @enderror
         </div>
-        <div class="form-group">
-            <label for="bankName">Bank Name</label>
-            <select class="form-control" id="bankName" name="bankName" required>
-                <option value="Commercial Bank">Commercial Bank</option>
-                <option value="Hatton National Bank">Hatton National Bank</option>
-                <option value="Bank Of Ceylon">Bank Of Ceylon</option>
-                <option value="People's Bank">People's Bank</option>
-                <option value="Sampath Bank">Sampath Bank</option>
-                <option value="National Savings Bank">National Savings Bank</option>
-            </select>
-            @error('bankName')
-                <div class="text-danger error-message">{{ $message }}</div>
-            @enderror
-        </div>
+
         <div class="form-group">
             <label for="cvv">CVV</label>
             <input type="password" class="form-control" id="cvv" name="cvv" required maxlength="4" pattern="\d{3,4}" placeholder="123">
             @error('cvv')
-                <div class="text-danger error-message">{{ $message }}</div>
+            <div class="text-danger error-message">{{ $message }}</div>
             @enderror
         </div>
+
         <div class="form-group">
             <label for="expirationMonth">Expiration Date</label>
             <div class="row">
@@ -254,7 +247,7 @@
                         <option value="12">December</option>
                     </select>
                     @error('expirationMonth')
-                        <div class="text-danger error-message">{{ $message }}</div>
+                    <div class="text-danger error-message">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-6">
@@ -265,11 +258,12 @@
                         @endfor
                     </select>
                     @error('expirationYear')
-                        <div class="text-danger error-message">{{ $message }}</div>
+                    <div class="text-danger error-message">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
         </div>
+
         <button type="submit" class="btn btn-primary btn-block">Pay Now</button>
     </form>
 </div>
@@ -307,3 +301,4 @@
 </script>
 </body>
 </html>
+

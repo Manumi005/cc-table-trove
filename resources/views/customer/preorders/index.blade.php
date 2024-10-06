@@ -73,25 +73,25 @@
         }
 
         .preorder-summary table {
-    border-collapse: collapse; /* Ensures borders don't have gaps */
-}
+            border-collapse: collapse; /* Ensures borders don't have gaps */
+        }
 
-.preorder-summary table,
-.preorder-summary table th,
-.preorder-summary table td {
-    border: 1px solid black; /* Sets the border color to black */
-}
+        .preorder-summary table,
+        .preorder-summary table th,
+        .preorder-summary table td {
+            border: 1px solid black; /* Sets the border color to black */
+        }
 
-.preorder-summary table th {
-    text-align: center;
-    background-color: #d63f77 !important; /* Dark pink color with higher priority */
-    color: #fff !important;
-}
+        .preorder-summary table th {
+            text-align: center;
+            background-color: #d63f77 !important; /* Dark pink color with higher priority */
+            color: #fff !important;
+        }
 
-.preorder-summary table td {
-    text-align: center;
-    background-color: #fdd8e9;
-}
+        .preorder-summary table td {
+            text-align: center;
+            background-color: #fdd8e9;
+        }
 
         .fixed-bottom-btn {
             position: fixed;
@@ -107,25 +107,25 @@
             transition: background-color 0.3s ease;
         }
         .btn-submit {
-    background-color: #715193;
-    border-color: #4b0082;
-    color: #fff;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-    position: relative;
-    margin-top: 20px;
-    transtion: background-color 0.3s ease;
-}
+            background-color: #715193;
+            border-color: #4b0082;
+            color: #fff;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            position: relative;
+            margin-top: 20px;
+            transtion: background-color 0.3s ease;
+        }
 
-.btn-submit:hover {
-    background-color: #3e0074;
-    color: #fff;
-    border-color: #3e0074;
-}
+        .btn-submit:hover {
+            background-color: #3e0074;
+            color: #fff;
+            border-color: #3e0074;
+        }
 
-.fixed-bottom-btn {
-    display: none;
-}
+        .fixed-bottom-btn {
+            display: none;
+        }
 
 
         .btn-primary:hover {
@@ -157,7 +157,145 @@
         }
     </style>
 </head>
+<style>
+    /* Your existing styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f9;
+        background: url('{{ asset('images/wallpaper3.jpg') }}') no-repeat center center fixed;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 60px;
+    }
+
+    nav {
+        display: flex;
+        align-items: center;
+    }
+
+    nav img {
+        cursor: pointer;
+        width: 150px;
+        height: auto;
+        margin-right: 20px;
+    }
+
+    nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    nav ul li {
+        margin: 0 15px;
+    }
+
+    nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        position: relative;
+    }
+
+    nav ul li a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        display: block;
+        margin-top: 5px;
+        right: 0;
+        background: #fff;
+        transition: width 0.3s ease;
+    }
+
+    nav ul li a:hover::after {
+        width: 100%;
+        left: 0;
+        background-color: #fff;
+    }
+
+    .search-bar {
+        display: flex;
+        align-items: flex-end;
+        flex-grow: 1;
+        justify-content: flex-end;
+        margin: 0 20px;
+    }
+
+    .search-bar input {
+        padding: 5px 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 30px;
+        width: 100%;
+        max-width: 300px;
+        background-color: #d9edff;
+    }
+
+    .profile-icon {
+        margin-left: 40px;
+        margin-right: -20px;
+        cursor: pointer;
+    }
+
+    .profile-icon img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+
+    .top {
+        background-color: #8a6378;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .top h1 {
+        margin: 0;
+        font-size: 2.5rem;
+    }
+
+    main {
+        padding: 20px;
+        max-width: 1200px;
+        margin: auto;
+        background-color: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+</style>
 <body>
+<header>
+    <nav>
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" onclick="location.href='/customer/dashboard'">
+        <ul>
+            <li><a href="{{ route('customer.restaurants') }}">Restaurants</a></li>
+            <li><a href="{{ route('customer.reservations.index') }}">Reservations</a></li>
+            <li><a href="{{ route('customer.offers.index') }}">Offers & Promotions</a></li>
+        </ul>
+    </nav>
+    <div class="search-bar">
+        <form method="GET" action="{{ route('customer.restaurants') }}">
+            <input type="text" name="query" placeholder="Search..." value="{{ request('query') }}">
+        </form>
+        <div class="profile-icon" onclick="location.href='/customer/profile'">
+            <img src="{{ asset('images/profile.jpg') }}" alt="Profile">
+        </div>
+    </div>
+</header>
 <main class="container">
     <div class="restaurant-info">
         <h1 id="restaurant-name">Pre-Order Summary</h1>
@@ -271,13 +409,14 @@
         }
     }
 
+    function proceedToPayment() {
+        const paymentUrl = "{{ route('customer.payment', [$reservation->restaurant->id, $reservation->id]) }}";
+        window.location.href = paymentUrl;
+    }
+
     function returnToMenu() {
         const ordermenuUrl = "{{ route('customer.menu.ordermenu', ['restaurantId' => $reservation->restaurant->id, 'reservationId' => $reservation->id]) }}";
         window.location.href = ordermenuUrl;
-    }
-    function proceedToPayment() {
-        const paymentUrl = "{{ route('customer.payment') }}";
-        window.location.href = paymentUrl;
     }
 </script>
 </body>

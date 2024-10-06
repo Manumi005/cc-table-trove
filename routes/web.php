@@ -78,10 +78,6 @@ Route::post('/submit-preorder/{reservation}', [PreOrderController::class, 'submi
 Route::post('/preorders/{id}/adjust-quantity', [PreOrderController::class, 'adjustQuantity'])->name('preorders.adjustQuantity');
 Route::delete('/preorders/{id}', [PreOrderController::class, 'destroy'])->name('preorders.destroy');
 
-// Payment Routes
-// Route to show the payment form
-Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('showPaymentForm');
-Route::post('/processPayment', [PaymentController::class, 'processPayment'])->name('processPayment');
 Route::get('/orderSummary', function () {
     return view('customer.orderSummary');
 })->name('orderSummary');
@@ -90,7 +86,6 @@ Route::get('/orderSummary', function () {
 Route::post('/order/approve', [OrderController::class, 'approveOrder'])->name('order.approve');
 Route::post('/order/cancel', [OrderController::class, 'cancelOrder'])->name('order.cancel');
 
-Route::get('/restaurant/payment', [PaymentController::class, 'showPaymentVerification'])->name('restaurant.payment');
 // Restaurant Routes
 Route::prefix('restaurant')->as('restaurant.')->group(function () {
     // Authentication Routes
@@ -170,19 +165,6 @@ Route::post('/reviews/store', [ReviewController::class, 'store'])->name('reviews
 Route::get('/reviews/{restaurantId}', [ReviewController::class, 'show'])->name('reviews.show');
 Route::get('restaurants/{id}', [ReviewController::class, 'show'])->name('customer.restaurant.details');
 
-
-// Payment Routes
-// Route to show the payment form
-Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('payment');
-
-// Route to process the payment
-Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('process.payment');
-
-Route::get('/restaurant/preorders/{reservation}', [PreOrderController::class, 'restaurantPreordersIndex'])
-    ->name('restaurant.preorders.index');
-
-Route::get('/customer/payment', [PaymentController::class, 'show'])->name('customer.payment');
-
-
-//Pre order verification page 
-Route::get('/restaurant/payment', [PreOrderController::class, 'payment'])->name('restaurant.payment');
+Route::post('/customer/payment/process', [PaymentController::class, 'processPayment'])->name('processPayment');
+Route::get('/customer/{restaurant}/reservation/{reservation}/payment', [PaymentController::class, 'showPaymentPage'])->name('customer.payment');
+Route::get('/customer/preorders', [PreOrderController::class, 'index'])->name('customer.preorders');

@@ -14,6 +14,7 @@ class Reservation extends Model
         'reservation_date',
         'time_slot',
         'party_size',
+        'payment_status',
         'status',
         'customizations',
         'special_occasions',
