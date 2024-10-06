@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Review;
 use App\Models\Restaurant;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -37,4 +38,32 @@ class ReviewController extends Controller
 
         return view('customer.restaurant-details', compact('restaurant', 'reviews'));
     }
+    public function index($id)
+    {
+        $restaurant = Restaurant::findOrFail($id);
+        // Use the passed restaurant ID to fetch reviews
+        $reviews = Review::where('restaurant_id', $id)->get();
+        return view('restaurant.reviews', compact('reviews'));
+    }
+
+    public function flag($id)
+    {
+        $review = Review::findOrFail($id);
+        $review->flag_status = 1; // Set the flag status to 1 (flagged)
+        $review->save();
+
+        return redirect()->back()->with('success', 'Review flagged successfully!');
+    }
+
+    public function unflag($id)
+    {
+        $review = Review::findOrFail($id);
+        $review->flag_status = 0; // Set the flag status to 1 (flagged)
+        $review->save();
+
+        return redirect()->back()->with('success', 'Review unflagged successfully!');
+    }
+
+
+
 }

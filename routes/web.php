@@ -167,7 +167,7 @@ Route::get('/restaurant/customizations/{reservation}', [CustomizationController:
 // Review Routes
 Route::post('/reviews/store', [ReviewController::class, 'store'])->name('reviews.store');
 Route::get('/reviews/{restaurantId}', [ReviewController::class, 'show'])->name('reviews.show');
-Route::get('restaurants/{id}', [ReviewController::class, 'show'])->name('customer.restaurant.details');
+Route::get('/customer/restaurantdetails/{id}', [ReviewController::class, 'show'])->name('customer.restaurant.details');
 
 
 // Payment Routes
@@ -190,3 +190,9 @@ Route::post('/customer/payment/process', [PaymentController::class, 'processPaym
 Route::get('/customer/{restaurant}/{reservation}', [PaymentController::class, 'showPaymentPage'])->name('customer.payment');
 Route::get('/customer/preorders', [PreOrderController::class, 'index'])->name('customer.preorders');
 Route::get('/customer/preorders/{preorder}', [PreOrderController::class, 'show'])->name('customer.preorders.show');
+
+Route::get('/restaurant/{restaurant_id}/reviews', [ReviewController::class, 'index'])->name('restaurant.reviews');
+Route::post('/reviews/{id}/flag', [ReviewController::class, 'flag'])->name('reviews.flag');
+Route::post('/reviews/{id}/unflag', [ReviewController::class, 'unflag'])->name('reviews.unflag');
+
+

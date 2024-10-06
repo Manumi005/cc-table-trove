@@ -11,7 +11,7 @@ class Review extends Model
 
     protected $table = 'reviews';
 
-    protected $fillable = ['restaurant_id', 'user_name', 'rating', 'review'];
+    protected $fillable = ['restaurant_id', 'user_name', 'rating', 'review', 'flag_status'];
 
     // Remove relationships involving customer_id
 }

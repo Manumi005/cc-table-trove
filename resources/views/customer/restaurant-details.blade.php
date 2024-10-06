@@ -122,7 +122,7 @@
         }
 
         .profile-image {
-            width: 90%;
+            width: 70%; /* Adjusted from 90% to 70% */
             height: auto;
             object-fit: cover;
             border-radius: 8px;
@@ -242,11 +242,10 @@
             margin: 50px auto;
             background-color: #fff;
             padding: 20px;
-            c
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
         }
+
 
         .comments-container h2 {
             margin-top: 0;
@@ -396,8 +395,11 @@
         }
 
         .review {
-            border-bottom: 1px solid #eaeaea;
-            padding: 10px 0;
+            border-bottom: 1px solid #eaeaea; /* Add separation between reviews */
+            padding: 15px; /* Add padding to each review */
+            margin-bottom: 10px; /* Add margin for spacing */
+            border-radius: 5px; /* Round corners */
+            background-color: #f9f9f9; /* Light background for reviews */
         }
 
         .review:last-child {
@@ -408,6 +410,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .review-header h4 {
+            margin: 0; /* Remove default margin */
+            color: #333; /* Darker text color */
+        }
+
+        .review-header span {
+            color: #999; /* Lighter color for timestamps */
+            font-size: 0.9em; /* Slightly smaller text */
         }
 
 
@@ -516,25 +528,29 @@
         </div>
 
         @forelse($reviews as $review)
-            <div class="review">
-                <div class="review-header">
-                    <div class="stars">
-                        @for($i = 1; $i <= 5; $i++)
-                            @if($i <= $review->rating)
-                                ★
-                            @else
-                                ☆
-                            @endif
-                        @endfor
+            @if($review->flag_status === 0)
+                <div class="review">
+                    <div class="review-header">
+                        <div class="stars">
+                            @for($i = 1; $i <= 5; $i++)
+                                @if($i <= $review->rating)
+                                    ★
+                                @else
+                                    ☆
+                                @endif
+                            @endfor
+                        </div>
+                        <p class="review-meta">{{ $review->user_name }} - {{ $review->created_at->format('F d, Y') }}</p>
                     </div>
-                    <p>{{ $review->user_name }} - {{ $review->created_at->format('F d, Y') }}</p>
+                    <div class="review-body">
+                        <p class="review-text">{{ $review->review }}</p>
+                    </div>
                 </div>
-                <div class="review-body">
-                    <p>{{ $review->review }}</p>
-                </div>
-            </div>
+            @endif
         @empty
-            <p>No reviews yet.</p>
+            <div class="no-reviews">
+                <p>No reviews yet.</p>
+            </div>
         @endforelse
     </div>
 </div>
